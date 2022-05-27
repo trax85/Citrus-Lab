@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         pa = findViewById(R.id.viewPager);
+        //Disable swipe left and right
+        pa.setUserInputEnabled(false);
         FragmentManager fm = getSupportFragmentManager();
         VPAdaptor sa = new VPAdaptor(fm, getLifecycle());
         pa.setAdapter(sa);

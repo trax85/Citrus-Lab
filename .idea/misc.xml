@@ -3,12 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Admin2/AndroidStudioProjects/MyApplication3/app/src/main/res/drawable/action_bar.xml" value="0.2085" />
+        <entry key="..\:/Users/Admin2/AndroidStudioProjects/MyApplication3/app/src/main/res/drawable/bottpagetxtbox.xml" value="0.2085" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/MyApplication3/app/src/main/res/drawable/circle_progress.xml" value="0.168" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/MyApplication3/app/src/main/res/drawable/circle_progress1.xml" value="0.168" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/MyApplication3/app/src/main/res/drawable/circle_progress2.xml" value="0.168" />
+        <entry key="..\:/Users/Admin2/AndroidStudioProjects/MyApplication3/app/src/main/res/drawable/dialog_bg.xml" value="0.2085" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/MyApplication3/app/src/main/res/drawable/green_curved_layout.xml" value="0.2085" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/MyApplication3/app/src/main/res/drawable/text_view_rounded.xml" value="0.2085" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/Admin2/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/bottomsheetlayout.xml" value="0.23505434782608695" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/fragment_blank.xml" value="0.23007246376811594" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/fragment_display.xml" value="0.23007246376811594" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/MyApplication3/app/src/main/res/layout/fragment_home.xml" value="0.4944237918215613" />

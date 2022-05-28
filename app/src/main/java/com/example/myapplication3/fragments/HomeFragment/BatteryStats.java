@@ -17,7 +17,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class BatteryStats {
+public class BatteryStats implements Runnable{
     private static final String TAG = "BattstatsAct";
     HomeFragment homeFragment;
     Shell.Result BattRes;
@@ -27,32 +27,25 @@ public class BatteryStats {
     float temps;
     int currNow, volt, capacity, totalCap;
 
-    @SuppressLint("SetTextI18n")
-    public void StartBattStats(HomeFragment fragment){
-        ExecutorService service = Executors.newSingleThreadExecutor();
-        Handler handler = new Handler(Looper.getMainLooper());
+    public void setBattClass(HomeFragment fragment){
+        homeFragment = fragment;
+    }
 
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void run(){
+        Handler handler = new Handler(Looper.getMainLooper());
         //Log.d(TAG, "Enter Thread");
-        service.execute(() -> {
-            while(true){
-                homeFragment = fragment;
-                handler.post(() -> {
-                    BattRes = Shell.cmd("cat /sys/class/power_supply/battery/voltage_now").exec();
-                    out = BattRes.getOut();
-                    volt = Integer.parseInt(out.get(0));
-                    // Update Cpustats UI elements
-                    homeFragment.textView4.setText(capacity + "%");
-                    homeFragment.textView5.setText(chargeRes +" " + volt+ "mV");
-                    homeFragment.textView6.setText(temps + " C" + "\u00B0");
-                    homeFragment.textView7.setText(totalCap+ "Mah");
-                    //Log.d(TAG, "Set");
-                });
-                try {
-                    TimeUnit.MILLISECONDS.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
+        handler.post(() -> {
+            BattRes = Shell.cmd("cat /sys/class/power_supply/battery/voltage_now").exec();
+            out = BattRes.getOut();
+            volt = Integer.parseInt(out.get(0));
+            // Update Cpustats UI elements
+            homeFragment.textView4.setText(capacity + "%");
+            homeFragment.textView5.setText(chargeRes +" " + volt+ "mV");
+            homeFragment.textView6.setText(temps + " C" + "\u00B0");
+            homeFragment.textView7.setText(totalCap+ "Mah");
+            //Log.d(TAG, "Set");
         });
     }
 

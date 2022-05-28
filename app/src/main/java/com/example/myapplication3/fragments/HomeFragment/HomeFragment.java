@@ -19,6 +19,12 @@ import android.widget.TextView;
 
 import com.example.myapplication3.R;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator;
 
 
@@ -28,6 +34,8 @@ public class HomeFragment extends Fragment {
     MemoryStats memoryStats = new MemoryStats();
     SystemInfo systemInfo = new SystemInfo();
     private static final String TAG = "HomeActivity";
+    IntentFilter filter = new IntentFilter();
+    ScheduledThreadPoolExecutor executor;
     CircularProgressIndicator cProgressIndicator1, cProgressIndicator2, cProgressIndicator3;
     TextView textView1, textView2, textView3, textView4, textView5, textView6, textView7,
             textView8, textView9, textView10, textView11, textView12, textView13;
@@ -43,7 +51,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        IntentFilter filter = new IntentFilter();
+
         //Cpu stats Ui elements
         cProgressIndicator1 = view.findViewById(R.id.circular_progress1);
         cProgressIndicator2 = view.findViewById(R.id.circular_progress2);
@@ -71,10 +79,30 @@ public class HomeFragment extends Fragment {
         filter.addAction(Intent.ACTION_BATTERY_CHANGED);
         Log.d(TAG, "Register battery status receiver.");
         getActivity().registerReceiver(batteryStats.mBroadcastReceiver, filter);
-        //Start threads
-        cpuStats.StartCPUprogBar(this);
-        batteryStats.StartBattStats(this);
-        memoryStats.StartMemStats(this);
+        cpuStats.setCpuClass(this);
+        batteryStats.setBattClass(this);
+        memoryStats.setMemClass(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        //Kill all threads
+        executor.shutdown();
+        Log.d(TAG,"Paused fragment");
+        getActivity().unregisterReceiver(batteryStats.mBroadcastReceiver);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //Init and Start threads
+        executor = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(5);
+        executor.scheduleWithFixedDelay(cpuStats,0,1000, TimeUnit.MILLISECONDS);
+        executor.scheduleWithFixedDelay(batteryStats,0,1300, TimeUnit.MILLISECONDS);
+        executor.scheduleWithFixedDelay(memoryStats,0,1700, TimeUnit.MILLISECONDS);
         systemInfo.StartSysStats(this);
+        Log.d(TAG,"Resumed fragment");
+        getActivity().registerReceiver(batteryStats.mBroadcastReceiver, filter);
     }
 }

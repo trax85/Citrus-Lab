@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
@@ -8,543 +9,578 @@
     android:background="@color/black"
     tools:context=".fragments.HomeFragment.HomeFragment">
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout1"
-        android:layout_width="358dp"
-        android:layout_height="190dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/green_curved_layout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.005">
+    <com.google.android.material.appbar.AppBarLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:background="@color/black"
+        android:theme="@style/myTheme.ActionBar.Text">
 
-        <antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
-            android:id="@+id/circular_progress1"
-            android:layout_width="101dp"
-            android:layout_height="101dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="center"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="73dp"
-            android:layout_marginEnd="246dp"
-            android:layout_marginBottom="19dp"
-            app:direction="clockwise"
-            app:drawDot="false"
-            app:enableProgressAnimation="true"
-            app:progressColor="#4CAF50"
-            app:startAngle="90"
-            app:textSize="0sp" />
+       <com.google.android.material.appbar.CollapsingToolbarLayout
+           android:layout_width="match_parent"
+           android:layout_height="170dp"
+           app:layout_scrollFlags="scroll|exitUntilCollapsed"
+           app:contentScrim="#242424"
+           app:title="DashBoard " >
 
-        <antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
-            android:id="@+id/circular_progress2"
-            android:layout_width="101dp"
-            android:layout_height="101dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="center"
-            android:layout_marginStart="130dp"
-            android:layout_marginTop="73dp"
-            android:layout_marginEnd="130dp"
-            android:layout_marginBottom="19dp"
-            app:direction="clockwise"
-            app:drawDot="false"
-            app:enableProgressAnimation="true"
-            app:progressColor="#4CAF50"
-            app:startAngle="90"
-            app:textSize="0sp" />
+           <androidx.appcompat.widget.Toolbar
+               android:id="@+id/toolbar1"
+               android:layout_width="match_parent"
+               android:layout_height="?attr/actionBarSize"
+               app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+               app:layout_collapseMode="pin"/>
 
-        <antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
-            android:id="@+id/circular_progress3"
-            android:layout_width="101dp"
-            android:layout_height="101dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="center"
-            android:layout_marginStart="244dp"
-            android:layout_marginTop="73dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginBottom="19dp"
-            app:direction="clockwise"
-            app:drawDot="false"
-            app:enableProgressAnimation="true"
-            app:progressColor="#4CAF50"
-            app:startAngle="90"
-            app:textSize="0sp" />
+       </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="274dp"
-            android:layout_marginBottom="124dp"
-            android:fontFamily="@font/nunito_sans_black"
-            android:text="Little"
-            android:letterSpacing="0.04"
-            android:textAlignment="center"
-            android:textColor="#90A4AE"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" >
 
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="167dp"
-            android:layout_marginBottom="124dp"
-            android:fontFamily="@font/nunito_sans_black"
-            android:text="Big"
-            android:letterSpacing="0.04"
-            android:textAlignment="center"
-            android:textColor="#90A4AE"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content" >
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="41dp"
-            android:layout_marginBottom="124dp"
-            android:fontFamily="@font/nunito_sans_black"
-            android:text="Prime"
-            android:letterSpacing="0.04"
-            android:textAlignment="center"
-            android:textColor="#90A4AE"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+        <RelativeLayout
+            android:id="@+id/relativeLayout1"
+            android:layout_width="358dp"
+            android:layout_height="190dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/green_curved_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.49"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.005">
 
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="65dp"
-            android:layout_height="29dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="264dp"
-            android:layout_marginBottom="51dp"
-            android:text="Mhz"
-            android:textAlignment="center"
-            android:textColor="#FAFAFA"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            <antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
+                android:id="@+id/circular_progress1"
+                android:layout_width="101dp"
+                android:layout_height="101dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="73dp"
+                android:layout_marginEnd="246dp"
+                android:layout_marginBottom="19dp"
+                app:direction="clockwise"
+                app:drawDot="false"
+                app:enableProgressAnimation="true"
+                app:progressColor="#4CAF50"
+                app:startAngle="90"
+                app:textSize="0sp" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="65dp"
-            android:layout_height="29dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="148dp"
-            android:layout_marginBottom="51dp"
-            android:text="Mhz"
-            android:textAlignment="center"
-            android:textColor="#FAFAFA"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            <antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
+                android:id="@+id/circular_progress2"
+                android:layout_width="101dp"
+                android:layout_height="101dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="130dp"
+                android:layout_marginTop="73dp"
+                android:layout_marginEnd="130dp"
+                android:layout_marginBottom="19dp"
+                app:direction="clockwise"
+                app:drawDot="false"
+                app:enableProgressAnimation="true"
+                app:progressColor="#4CAF50"
+                app:startAngle="90"
+                app:textSize="0sp" />
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="65dp"
-            android:layout_height="29dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="33dp"
-            android:layout_marginBottom="51dp"
-            android:text="Mhz"
-            android:textAlignment="center"
-            android:textColor="#FAFAFA"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            <antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
+                android:id="@+id/circular_progress3"
+                android:layout_width="101dp"
+                android:layout_height="101dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="244dp"
+                android:layout_marginTop="73dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="19dp"
+                app:direction="clockwise"
+                app:drawDot="false"
+                app:enableProgressAnimation="true"
+                app:progressColor="#4CAF50"
+                app:startAngle="90"
+                app:textSize="0sp" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="50dp"
-            android:layout_height="25dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="154dp"
-            android:background="@drawable/text_view_rounded"
-            android:text="CPU"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="274dp"
+                android:layout_marginBottom="124dp"
+                android:fontFamily="@font/nunito_sans_black"
+                android:letterSpacing="0.04"
+                android:text="Little"
+                android:textAlignment="center"
+                android:textColor="#90A4AE"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="167dp"
+                android:layout_marginBottom="124dp"
+                android:fontFamily="@font/nunito_sans_black"
+                android:letterSpacing="0.04"
+                android:text="Big"
+                android:textAlignment="center"
+                android:textColor="#90A4AE"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout2"
-        android:layout_width="358dp"
-        android:layout_height="140dp"
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="41dp"
+                android:layout_marginBottom="124dp"
+                android:fontFamily="@font/nunito_sans_black"
+                android:letterSpacing="0.04"
+                android:text="Prime"
+                android:textAlignment="center"
+                android:textColor="#90A4AE"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="344dp"
-        android:background="@drawable/green_curved_layout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout1"
-        app:layout_constraintVertical_bias="0.0">
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="65dp"
+                android:layout_height="29dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="264dp"
+                android:layout_marginBottom="51dp"
+                android:text="Mhz"
+                android:textAlignment="center"
+                android:textColor="#FAFAFA"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="21dp"
-            android:layout_marginBottom="77dp"
-            android:fontFamily="@font/nunito_sans"
-            android:text="@string/battery_charge"
-            android:textColor="#FFFFFF"
-            android:textSize="13sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="65dp"
+                android:layout_height="29dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="148dp"
+                android:layout_marginBottom="51dp"
+                android:text="Mhz"
+                android:textAlignment="center"
+                android:textColor="#FAFAFA"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="133dp"
-            android:layout_marginBottom="78dp"
-            android:text="Lvl"
-            android:textColor="#F1EFEF"
-            android:textSize="13sp" />
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="65dp"
+                android:layout_height="29dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="33dp"
+                android:layout_marginBottom="51dp"
+                android:text="Mhz"
+                android:textAlignment="center"
+                android:textColor="#FAFAFA"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="21dp"
-            android:layout_marginBottom="58dp"
-            android:fontFamily="@font/nunito_sans"
-            android:text="@string/charging_status"
-            android:textColor="#FFFFFF"
-            android:textSize="13sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="50dp"
+                android:layout_height="25dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="154dp"
+                android:background="@drawable/text_view_rounded"
+                android:text="CPU"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textView10"
-            android:layout_width="130dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="133dp"
-            android:layout_marginBottom="58dp"
-            android:text="Not Charging"
-            android:textAlignment="viewStart"
-            android:textColor="#F1EFEF"
-            android:textSize="13sp" />
+        </RelativeLayout>
 
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="21dp"
-            android:layout_marginBottom="38dp"
-            android:fontFamily="@font/nunito_sans"
-            android:text="@string/battery_temps"
-            android:textColor="#FFFFFF"
-            android:textSize="13sp"
-            android:textStyle="bold" />
+        <RelativeLayout
+            android:id="@+id/relativeLayout2"
+            android:layout_width="358dp"
+            android:layout_height="140dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="225dp"
+            android:layout_marginBottom="344dp"
+            android:background="@drawable/green_curved_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.49"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/relativeLayout1"
+            app:layout_constraintVertical_bias="0.0">
 
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="133dp"
-            android:layout_marginBottom="38dp"
-            android:text="Lvl"
-            android:textColor="#F1EFEF"
-            android:textSize="13sp" />
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="21dp"
+                android:layout_marginBottom="77dp"
+                android:fontFamily="@font/nunito_sans"
+                android:text="@string/battery_charge"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textView13"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="21dp"
-            android:layout_marginBottom="19dp"
-            android:fontFamily="@font/nunito_sans"
-            android:text="Battery Capacity:"
-            android:textColor="#FFFFFF"
-            android:textSize="13sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="133dp"
+                android:layout_marginBottom="78dp"
+                android:text="Lvl"
+                android:textColor="#F1EFEF"
+                android:textSize="13sp" />
 
-        <TextView
-            android:id="@+id/textView14"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="133dp"
-            android:layout_marginBottom="19dp"
-            android:text="Lvl"
-            android:textColor="#F1EFEF"
-            android:textSize="13sp" />
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="21dp"
+                android:layout_marginBottom="58dp"
+                android:fontFamily="@font/nunito_sans"
+                android:text="@string/charging_status"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textView27"
-            android:layout_width="62dp"
-            android:layout_height="25dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="102dp"
-            android:background="@drawable/text_view_rounded"
-            android:text="Battery"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="133dp"
+                android:layout_marginBottom="58dp"
+                android:text="Not Charging"
+                android:textAlignment="viewStart"
+                android:textColor="#F1EFEF"
+                android:textSize="13sp" />
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout3"
-        android:layout_width="358dp"
-        android:layout_height="124dp"
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="21dp"
+                android:layout_marginBottom="38dp"
+                android:fontFamily="@font/nunito_sans"
+                android:text="@string/battery_temps"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
-        android:layout_marginTop="10dp"
-        android:background="@drawable/green_curved_layout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout2"
-        app:layout_constraintVertical_bias="0.0">
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="133dp"
+                android:layout_marginBottom="38dp"
+                android:text="Lvl"
+                android:textColor="#F1EFEF"
+                android:textSize="13sp" />
 
-        <TextView
-            android:id="@+id/textView15"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="21dp"
-            android:layout_marginBottom="59dp"
-            android:fontFamily="@font/nunito_sans"
-            android:text="Total Memory:"
-            android:textColor="#FFFFFF"
-            android:textSize="13sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="21dp"
+                android:layout_marginBottom="19dp"
+                android:fontFamily="@font/nunito_sans"
+                android:text="Battery Capacity:"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textView16"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="124dp"
-            android:layout_marginBottom="59dp"
-            android:text="Mem"
-            android:textColor="#F1EFEF"
-            android:textSize="13sp" />
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="133dp"
+                android:layout_marginBottom="19dp"
+                android:text="Lvl"
+                android:textColor="#F1EFEF"
+                android:textSize="13sp" />
 
-        <TextView
-            android:id="@+id/textView17"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="21dp"
-            android:layout_marginBottom="39dp"
-            android:fontFamily="@font/nunito_sans"
-            android:text="Free Memory:"
-            android:textColor="#FFFFFF"
-            android:textSize="13sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textView27"
+                android:layout_width="62dp"
+                android:layout_height="25dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="102dp"
+                android:background="@drawable/text_view_rounded"
+                android:text="Battery"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
 
-        <TextView
-            android:id="@+id/textView18"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="124dp"
-            android:layout_marginBottom="39dp"
-            android:text="Mem"
-            android:textAlignment="viewStart"
-            android:textColor="#F1EFEF"
-            android:textSize="13sp" />
+        <RelativeLayout
+            android:id="@+id/relativeLayout3"
+            android:layout_width="358dp"
+            android:layout_height="124dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="382dp"
+            android:background="@drawable/green_curved_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.49"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/relativeLayout2"
+            app:layout_constraintVertical_bias="0.0">
 
-        <TextView
-            android:id="@+id/textView19"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="21dp"
-            android:layout_marginBottom="19dp"
-            android:fontFamily="@font/nunito_sans"
-            android:text="Used Memory:"
-            android:textColor="#FFFFFF"
-            android:textSize="13sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="21dp"
+                android:layout_marginBottom="59dp"
+                android:fontFamily="@font/nunito_sans"
+                android:text="Total Memory:"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textView20"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="124dp"
-            android:layout_marginBottom="19dp"
-            android:text="Mem"
-            android:textColor="#F1EFEF"
-            android:textSize="13sp" />
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="124dp"
+                android:layout_marginBottom="59dp"
+                android:text="Mem"
+                android:textColor="#F1EFEF"
+                android:textSize="13sp" />
 
-        <TextView
-            android:id="@+id/textView28"
-            android:layout_width="68dp"
-            android:layout_height="25dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="85dp"
-            android:background="@drawable/text_view_rounded"
-            android:text="Memory"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="21dp"
+                android:layout_marginBottom="39dp"
+                android:fontFamily="@font/nunito_sans"
+                android:text="Free Memory:"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="124dp"
+                android:layout_marginBottom="39dp"
+                android:text="Mem"
+                android:textAlignment="viewStart"
+                android:textColor="#F1EFEF"
+                android:textSize="13sp" />
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout4"
-        android:layout_width="358dp"
-        android:layout_height="120dp"
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="21dp"
+                android:layout_marginBottom="19dp"
+                android:fontFamily="@font/nunito_sans"
+                android:text="Used Memory:"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
-        android:layout_marginTop="10dp"
-        android:background="@drawable/green_curved_layout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout3"
-        app:layout_constraintVertical_bias="0.0">
+            <TextView
+                android:id="@+id/textView20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="124dp"
+                android:layout_marginBottom="19dp"
+                android:text="Mem"
+                android:textColor="#F1EFEF"
+                android:textSize="13sp" />
 
-        <TextView
-            android:id="@+id/textView21"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="21dp"
-            android:layout_marginBottom="57dp"
-            android:fontFamily="@font/nunito_sans"
-            android:text="Up Time:"
-            android:textColor="#FFFFFF"
-            android:textSize="13sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textView28"
+                android:layout_width="68dp"
+                android:layout_height="25dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="85dp"
+                android:background="@drawable/text_view_rounded"
+                android:text="Memory"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textView22"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="124dp"
-            android:layout_marginBottom="57dp"
-            android:text="d ,h ,m, s"
-            android:textColor="#F1EFEF"
-            android:textSize="13sp" />
+        </RelativeLayout>
 
-        <TextView
-            android:id="@+id/textView23"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="21dp"
-            android:layout_marginBottom="38dp"
-            android:fontFamily="@font/nunito_sans"
-            android:text="Deep Sleep:"
-            android:textColor="#FFFFFF"
-            android:textSize="13sp"
-            android:textStyle="bold" />
+        <RelativeLayout
+            android:id="@+id/relativeLayout4"
+            android:layout_width="358dp"
+            android:layout_height="120dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="525dp"
+            android:background="@drawable/green_curved_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.49"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/relativeLayout3"
+            app:layout_constraintVertical_bias="0.0">
 
-        <TextView
-            android:id="@+id/textView24"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="124dp"
-            android:layout_marginBottom="39dp"
-            android:text="d ,h ,m, s"
-            android:textAlignment="viewStart"
-            android:textColor="#F1EFEF"
-            android:textSize="13sp" />
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="21dp"
+                android:layout_marginBottom="57dp"
+                android:fontFamily="@font/nunito_sans"
+                android:text="Up Time:"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textView25"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="21dp"
-            android:layout_marginBottom="19dp"
-            android:fontFamily="@font/nunito_sans"
-            android:text="Kernel Version:"
-            android:textColor="#FFFFFF"
-            android:textSize="13sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textView22"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="124dp"
+                android:layout_marginBottom="57dp"
+                android:text="d ,h ,m, s"
+                android:textColor="#F1EFEF"
+                android:textSize="13sp" />
 
-        <TextView
-            android:id="@+id/textView26"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="124dp"
-            android:layout_marginBottom="19dp"
-            android:text="Linux Build Ver."
-            android:textColor="#F1EFEF"
-            android:textSize="13sp" />
+            <TextView
+                android:id="@+id/textView23"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="21dp"
+                android:layout_marginBottom="38dp"
+                android:fontFamily="@font/nunito_sans"
+                android:text="Deep Sleep:"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textView29"
-            android:layout_width="66dp"
-            android:layout_height="25dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="82dp"
-            android:background="@drawable/text_view_rounded"
-            android:text="System"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/textView24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="124dp"
+                android:layout_marginBottom="39dp"
+                android:text="d ,h ,m, s"
+                android:textAlignment="viewStart"
+                android:textColor="#F1EFEF"
+                android:textSize="13sp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/textView25"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="21dp"
+                android:layout_marginBottom="19dp"
+                android:fontFamily="@font/nunito_sans"
+                android:text="Kernel Version:"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView26"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="124dp"
+                android:layout_marginBottom="19dp"
+                android:text="Linux Build Ver."
+                android:textColor="#F1EFEF"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/textView29"
+                android:layout_width="66dp"
+                android:layout_height="25dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="82dp"
+                android:background="@drawable/text_view_rounded"
+                android:text="System"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

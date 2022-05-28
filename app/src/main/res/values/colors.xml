@@ -8,5 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="materialGreen">#00E676</color>
+    <color name="materialGreen_800">#33691E</color>
+    <color name="materialGreen_Deep">#04b54d</color>
     <color name="materialGrey">#212121</color>
+    <color name="materialGrey_800">#242424</color>
 </resources>

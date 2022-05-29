@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_sheet"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/dialog_bg">
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_bg"
+    app:layout_behavior="@string/bottom_sheet_behavior" >
+
     <ImageButton
         android:id="@+id/close_menu"
         android:layout_height="40dp"
@@ -20,6 +23,7 @@
         android:textAlignment="center"
         android:text="Menu"
         android:textColor="@color/materialGrey"
+        android:layout_marginTop="40dp"
         android:layout_marginBottom="25dp"
         android:background="@drawable/bottpagetxtbox"
         android:textStyle="bold"
@@ -30,14 +34,18 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:paddingLeft="25dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp" >
 
         <ImageView
+            android:id="@+id/imageViewDash"
             android:layout_width="27dp"
             android:layout_height="27dp"
             android:src="@drawable/ic_home" />
 
         <TextView
+            android:id="@+id/textViewDash"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
@@ -54,14 +62,18 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:paddingLeft="25dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp" >
 
         <ImageView
+            android:id="@+id/imageViewDisp"
             android:layout_width="27dp"
             android:layout_height="27dp"
             android:src="@drawable/ic_display" />
 
         <TextView
+            android:id="@+id/textViewDisp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
@@ -78,7 +90,9 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:paddingLeft="25dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp" >
 
         <ImageView
             android:layout_width="27dp"

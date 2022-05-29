@@ -7,9 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="materialGreen">#00E676</color>
+    <color name="materialGreen">#00C364</color>
+    <color name="materialGreen_200">#FF00C364</color>
+    <color name="materialGreen_Deep">#FF40A544</color>
+    <color name="materialGreen_600">#FF4BB950</color>
     <color name="materialGreen_800">#33691E</color>
-    <color name="materialGreen_Deep">#04b54d</color>
     <color name="materialGrey">#212121</color>
     <color name="materialGrey_800">#242424</color>
+    <color name="materialGrey_Deep">#FF1B1A1A</color>
 </resources>

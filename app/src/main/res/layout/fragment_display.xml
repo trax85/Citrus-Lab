@@ -1,23 +1,205 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragments.DisplayFragment.DisplayFragment">
+    android:layout_height="wrap_content"
+    tools:context=".fragments.DisplayFragment.DisplayFragment"
+    android:background="@color/black">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="207dp"
-        android:layout_height="392dp"
-        android:text="Display"
-        android:textSize="34sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.548"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.524" />
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:theme="@style/myTheme.ActionBar.Text">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:contentScrim="#242424"
+            android:letterSpacing="0.13"
+            app:title="Display" >
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar1"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:layout_collapseMode="pin"/>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-light"
+                android:letterSpacing="0.13"
+                android:text="Refresh Rate"
+                android:textAllCaps="true"
+                android:textColor="#2D8031"
+                android:textSize="13dp"
+                android:textStyle="bold" />
+            <Button
+                android:id="@+id/buttonrerrate1"
+                android:layout_height="76dp"
+                android:layout_width="300dp"
+                android:layout_marginTop="38dp"
+                android:layout_marginLeft="30dp"
+                android:gravity="left"
+                android:padding="12dp"
+                android:text="120 Hz"
+                android:textAllCaps="false"
+                style="?attr/materialButtonOutlinedStyle"
+                app:strokeColor="@color/materialGreen"
+                app:strokeWidth="3dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="46dp"
+                android:layout_marginTop="83dp"
+                android:fontFamily="sans-serif"
+                android:letterSpacing="0.03"
+                android:text="Locks Refresh Rate at 120Hz"
+                android:textColor="#BDBDBD"
+                android:textSize="11sp" />
+            <Button
+                android:id="@+id/buttonrerrate2"
+                android:layout_height="76dp"
+                android:layout_width="300dp"
+                android:gravity="left"
+                android:padding="12dp"
+                android:text="60 Hz"
+                android:textAllCaps="false"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="112dp"
+                style="?attr/materialButtonOutlinedStyle"
+                app:strokeColor="@color/materialGreen"
+                app:strokeWidth="3dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="46dp"
+                android:layout_marginTop="154dp"
+                android:fontFamily="sans-serif"
+                android:letterSpacing="0.03"
+                android:text="Locks Refresh Rate at 60Hz"
+                android:textColor="#BDBDBD"
+                android:textSize="11sp" />
+            <Button
+                android:id="@+id/buttonrerrate3"
+                android:layout_height="76dp"
+                android:layout_width="300dp"
+                android:gravity="left"
+                android:padding="12dp"
+                android:text="Auto Hz"
+                android:textAllCaps="false"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="185dp"
+                style="?attr/materialButtonOutlinedStyle"
+                app:strokeColor="@color/materialGreen"
+                app:strokeWidth="3dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="46dp"
+                android:layout_marginTop="228dp"
+                android:fontFamily="sans-serif"
+                android:letterSpacing="0.03"
+                android:text="Sets Refresh Rate to Auto"
+                android:textColor="#BDBDBD"
+                android:textSize="11sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="273dp"
+                android:layout_marginLeft="30dp"
+                android:fontFamily="sans-serif-light"
+                android:letterSpacing="0.13"
+                android:text="Display Settings"
+                android:textAllCaps="true"
+                android:textColor="#2D8031"
+                android:textSize="13dp"
+                android:textStyle="bold" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="290dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/display_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:choiceMode="multipleChoice"
+                    app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:listitem="@layout/list_items" />
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginBottom="110dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/display_list">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:text="Touch Boost"
+                        android:textColor="@color/purple_200"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginTop="45dp"
+                        android:fontFamily="sans-serif"
+                        android:textSize="12sp"
+                        android:text="Increase touch sensitivity"
+                        android:textColor="#BDBDBD" />
+
+                    <Switch
+                        android:id="@+id/singleSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="300dp"
+                        android:layout_marginTop="26dp"
+                        android:theme="@style/Theme.MyApplication3.Switch" />
+
+                </RelativeLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

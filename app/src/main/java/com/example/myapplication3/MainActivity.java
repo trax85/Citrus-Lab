@@ -8,6 +8,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.topjohnwu.superuser.Shell;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -19,15 +20,22 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private ImageButton showSheet;
+    LinearLayout bottomSheetLayout;
     private LinearLayout linearLayout;
     private BottomSheetBehavior bottomSheetBehavior;
-    LinearLayout bottomSheetLayout;
+    private TextView textViewDash, textViewDisp, textViewAbout;
+    private ImageView imageViewDash, imageViewDisp, imageViewAbout;
+    private LinearLayout homeLayout, displayLayout, aboutLayout;
+    private List<TextView> textViewList;
+    private List<ImageView> imageViewList;
+
     private boolean bottomSheetState = true;
-    ViewPager2 pa;
+    private ViewPager2 pa;
     private static final String TAG = "HomeActivity";
 
     static {
@@ -44,19 +52,31 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        textViewDash = findViewById(R.id.textViewDash);
+        textViewDisp = findViewById(R.id.textViewDisp);
+        textViewAbout = findViewById(R.id.textViewAbout);
+        imageViewDash = findViewById(R.id.imageViewDash);
+        imageViewDisp = findViewById(R.id.imageViewDisp);
+        imageViewAbout = findViewById(R.id.imageViewAbout);
+        textViewList = new ArrayList<>();
+        imageViewList = new ArrayList<>();
+        initList();
+
+        homeLayout = findViewById(R.id.layoutHome);
+        displayLayout = findViewById(R.id.layoutDisplay);
+
         linearLayout = findViewById(R.id.nested_scroll);
         bottomSheetLayout = findViewById(R.id.bottom_sheet);
         pa = findViewById(R.id.viewPager);
         //Disable swipe left and right
         pa.setUserInputEnabled(false);
-        //Fragment manager setup
+
+        //Fragment manager & bottom sheet setup
         FragmentManager fm = getSupportFragmentManager();
         VPAdaptor sa = new VPAdaptor(fm, getLifecycle());
         pa.setAdapter(sa);
-        //Bottomsheet setup
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetLayout);
         bottomSheetBehavior.setPeekHeight(180);
-        //bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
@@ -74,15 +94,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        showSheet = findViewById(R.id.close_menu);
+        ImageButton showSheet = findViewById(R.id.close_menu);
         showSheet.setOnClickListener(v -> {
-            if(bottomSheetState == true) {
+            if(bottomSheetState) {
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                showDialog();
             }else{
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             }
         });
+        setBottomPageListeners();
         // if input received anywhere on the screen other than bottomsheet
         /*Shell.getShell(shell -> {
             // The main shell is now constructed and cached
@@ -93,7 +113,8 @@ public class MainActivity extends AppCompatActivity {
         });
         Shell.cmd("su");*/
     }
-    //This method collapses opened bottomsheet when touched outside the bottomsheet
+
+    //This method collapses opened bottomsheet when touched outside the bottomsheet area
     @Override
     public boolean dispatchTouchEvent(MotionEvent event){
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -110,32 +131,39 @@ public class MainActivity extends AppCompatActivity {
         return super.dispatchTouchEvent(event);
     }
 
-    private void showDialog() {
+    private void initList(){
+        Log.d(TAG,"List initialised");
+        textViewList.add(textViewDash);
+        textViewList.add(textViewDisp);
+        textViewList.add(textViewAbout);
+        imageViewList.add(imageViewDash);
+        imageViewList.add(imageViewDisp);
+        imageViewList.add(imageViewAbout);
+    }
+
+    private void setUi(int posistion){
         final String GREEN = "#00E676";
         final String WHITE = "#FFFFFFFF";
-        LinearLayout homelayout = findViewById(R.id.layoutHome);
-        LinearLayout displaylayout = findViewById(R.id.layoutDisplay);
-        TextView textViewDash = findViewById(R.id.textViewDash);
-        TextView textViewDisp = findViewById(R.id.textViewDisp);
-        ImageView imageViewDash = findViewById(R.id.imageViewDash);
-        ImageView imageViewDisp = findViewById(R.id.imageViewDisp);
+        for(int i = 0;i < textViewList.size(); i++){
+            textViewList.get(i).setTextColor(Color.parseColor(WHITE));
+            imageViewList.get(i).setColorFilter(Color.parseColor(WHITE));
+        }
+        textViewList.get(posistion).setTextColor(Color.parseColor(GREEN));
+        imageViewList.get(posistion).setColorFilter(Color.parseColor(GREEN));
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    }
 
-        homelayout.setOnClickListener(v -> {
+    private void setBottomPageListeners() {
+        homeLayout.setOnClickListener(v -> {
+            Log.d(TAG,"Home Fragment started");
             pa.setCurrentItem(0);
-            textViewDash.setTextColor(Color.parseColor(GREEN));
-            textViewDisp.setTextColor(Color.parseColor(WHITE));
-            imageViewDash.setColorFilter(Color.parseColor(GREEN));
-            imageViewDisp.setColorFilter(Color.parseColor(WHITE));
-            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            setUi(0);
         });
-        displaylayout.setOnClickListener(v -> {
+        displayLayout.setOnClickListener(v -> {
+            Log.d(TAG,"Display Fragment started");
             pa.setCurrentItem(1);
-            textViewDash.setTextColor(Color.parseColor(WHITE));
-            textViewDisp.setTextColor(Color.parseColor(GREEN));
-            imageViewDash.setColorFilter(Color.parseColor(WHITE));
-            imageViewDisp.setColorFilter(Color.parseColor(GREEN));
-            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            setUi(1);
         });
-
+        });
     }
 }

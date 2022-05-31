@@ -98,13 +98,28 @@
             android:layout_width="27dp"
             android:layout_height="27dp"
             android:src="@drawable/ic_home_pre" />
+    <LinearLayout
+        android:id="@+id/layoutAbout"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="25dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp" >
+
+        <ImageView
+            android:id="@+id/imageViewAbout"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_about" />
 
         <TextView
+            android:id="@+id/textViewAbout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:fontFamily="@font/nunito_sans_semibold"
-            android:text="Home"
+            android:text="About"
             android:letterSpacing="0.1"
             android:textColor="@color/white"
             android:textSize="18dp"

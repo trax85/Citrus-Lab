@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
         homeLayout = findViewById(R.id.layoutHome);
         displayLayout = findViewById(R.id.layoutDisplay);
+        aboutLayout = findViewById(R.id.layoutAbout);
 
         linearLayout = findViewById(R.id.nested_scroll);
         bottomSheetLayout = findViewById(R.id.bottom_sheet);
@@ -103,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         setBottomPageListeners();
+        setUi(0);
         // if input received anywhere on the screen other than bottomsheet
         /*Shell.getShell(shell -> {
             // The main shell is now constructed and cached
@@ -164,6 +166,10 @@ public class MainActivity extends AppCompatActivity {
             pa.setCurrentItem(1);
             setUi(1);
         });
+        aboutLayout.setOnClickListener(v -> {
+            Log.d(TAG,"Info Fragment started");
+            pa.setCurrentItem(3);
+            setUi(2);
         });
     }
 }

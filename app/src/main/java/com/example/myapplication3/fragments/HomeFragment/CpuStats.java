@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.topjohnwu.superuser.Shell;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -24,6 +25,7 @@ public class CpuStats implements Runnable{
     private int lenOne, lenTwo, lenThree;
     private int val1, val2, val3;
     private int mhzval1, mhzval2, mhzval3;
+    List<String[]> cpuFreqList;
     private int MHz;
 
     public void setCpuClass(HomeFragment fragment){
@@ -36,6 +38,10 @@ public class CpuStats implements Runnable{
         lenOne = storeClusterOne.length;
         lenTwo = storeClusterTwo.length;
         lenThree = storeClusterThree.length;
+        cpuFreqList = new ArrayList<>();
+        cpuFreqList.add(storeClusterOne);
+        cpuFreqList.add(storeClusterTwo);
+        cpuFreqList.add(storeClusterThree);
         //Log.d(TAG, "Inited Thread with length: "+lenOne+" "+lenTwo+" "+lenThree);
     }
 
@@ -66,8 +72,8 @@ public class CpuStats implements Runnable{
         });
     }
 
-    private String[] splitStrings(String string){
-        Shell.Result result = Shell.cmd(string).exec();
+    public static String[] splitStrings(String string){
+        Shell.Result result = Shell.cmd("cat " + string).exec();
         List<String> out = result.getOut();
         String[] arrStr = out.toArray(new String[out.size()]);
         // Some workarounds to get in form of strings

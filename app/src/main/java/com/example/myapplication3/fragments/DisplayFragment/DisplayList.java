@@ -1,17 +1,15 @@
 package com.example.myapplication3.fragments.DisplayFragment;
 
-import android.widget.Button;
-
 public class DisplayList {
-    String PrimaryContent, SecondaryContent, FilePath;
-    int ActionSet, ActionUnset;
-    public DisplayList(String PrimaryContent, String SecondaryContent, String FilePath, int ActionSet,
-                       int ActionUnset){
+    String PrimaryContent, SecondaryContent;
+    //Feed in multiple paths
+    String[] FilePath;
+    int[] ActionSet;
+    public DisplayList(String PrimaryContent, String SecondaryContent, String[] FilePath, int[] ActionSet){
         this.PrimaryContent = PrimaryContent;
         this.SecondaryContent = SecondaryContent;
         this.FilePath = FilePath;
         this.ActionSet = ActionSet;
-        this.ActionUnset = ActionUnset;
     }
 
     public String getPrimaryContent() {
@@ -22,15 +20,11 @@ public class DisplayList {
         return SecondaryContent;
     }
 
-    public String getFilePath() {
+    public String[] getFilePath() {
         return FilePath;
     }
 
-    public int getActionSet() {
+    public int[] getActionSet() {
         return ActionSet;
-    }
-
-    public int getActionUnset() {
-        return ActionUnset;
     }
 }

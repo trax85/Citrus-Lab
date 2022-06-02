@@ -1,5 +1,7 @@
 package com.example.myapplication3.fragments.DisplayFragment;
 
+import android.annotation.SuppressLint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,18 +17,19 @@ import com.topjohnwu.superuser.Shell;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
-    private List<DisplayList> list;
+    private final List<DisplayList> list;
     private TextView textView1;
     private TextView textView2;
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     private Switch aSwitch;
-
+    final static String TAG = "Recycler view";
     public RecyclerViewAdapter(List<DisplayList> list){
         this.list = list;
     }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_items,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.display_list_items,parent,false);
         return new ViewHolder(view);
     }
 
@@ -34,10 +37,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String primaryContent = list.get(position).getPrimaryContent();
         String secondaryContent = list.get(position).getSecondaryContent();
-        String filePath = list.get(position).getFilePath();
-        int actionSet = list.get(position).getActionSet();
-        int actionUnset = list.get(position).getActionUnset();
-        holder.setData(primaryContent, secondaryContent, filePath, actionSet, actionUnset);
+        String[] filePath = list.get(position).getFilePath();
+        int[] actionSet = list.get(position).getActionSet();
+        holder.setData(primaryContent, secondaryContent, filePath, actionSet);
     }
 
     @Override
@@ -54,21 +56,28 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             aSwitch = itemView.findViewById(R.id.contentSwitch);
         }
 
-        public void setData(String primaryContent, String secondaryContent, String filePath, int actionSet, int actionUnset) {
+        public void setData(String primaryContent, String secondaryContent, String[] filePath, int[] actionSet) {
             Shell.Result res;
             List<String> out;
+            //Hardcoded as disable usually is 0
+            int actionUnset = 0;
+            Log.d(TAG, "Recycler view");
             textView1.setText(primaryContent);
             textView2.setText(secondaryContent);
-            res = Shell.cmd("cat "+filePath).exec();
-            out = res.getOut();
-            if(Integer.parseInt(out.get(0)) == actionSet){
-                aSwitch.setChecked(true);
+            for (int i = 0; i < filePath.length; i++) {
+                res = Shell.cmd("cat " + filePath[i]).exec();
+                out = res.getOut();
+                if (Integer.parseInt(out.get(0)) == actionSet[i]) {
+                    aSwitch.setChecked(true);
+                }
             }
             aSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                if (isChecked == true)
-                    Shell.cmd("echo "+actionSet+"  > "+filePath).exec();
-                else
-                    Shell.cmd("echo "+actionUnset+" > "+filePath).exec();
+                if (isChecked){
+                    for (int i = 0; i < filePath.length; i++)
+                        Shell.cmd("echo " + actionSet[i] + "  > " + filePath[i]).exec();
+                } else {
+                    for (String s : filePath) Shell.cmd("echo " + actionUnset + " > " + s).exec();
+                }
             });
         }
     }

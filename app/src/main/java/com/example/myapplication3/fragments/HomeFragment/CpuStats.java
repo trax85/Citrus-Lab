@@ -30,11 +30,12 @@ public class CpuStats implements Runnable{
 
     public void setCpuClass(HomeFragment fragment){
         homeFragment = fragment;
+        initThread();
     }
     public void initThread(){
-        storeClusterOne = splitStrings("cat /sys/devices/system/cpu/cpufreq/policy0/scaling_available_frequencies");
-        storeClusterTwo = splitStrings("cat /sys/devices/system/cpu/cpufreq/policy4/scaling_available_frequencies");
-        storeClusterThree = splitStrings("cat /sys/devices/system/cpu/cpufreq/policy7/scaling_available_frequencies");
+        storeClusterOne = splitStrings("/sys/devices/system/cpu/cpufreq/policy0/scaling_available_frequencies");
+        storeClusterTwo = splitStrings("/sys/devices/system/cpu/cpufreq/policy4/scaling_available_frequencies");
+        storeClusterThree = splitStrings("/sys/devices/system/cpu/cpufreq/policy7/scaling_available_frequencies");
         lenOne = storeClusterOne.length;
         lenTwo = storeClusterTwo.length;
         lenThree = storeClusterThree.length;
@@ -50,7 +51,6 @@ public class CpuStats implements Runnable{
     public void run(){
         Handler handler = new Handler(Looper.getMainLooper());
         //Log.d(TAG, "Enter Thread");
-        initThread();
         clusterOne = Shell.cmd("cat /sys/devices/system/cpu/cpufreq/policy0/scaling_cur_freq").exec();
         val1 = getProgress(storeClusterOne, clusterOne.getOut(), lenOne);
         mhzval1 = MHz/1000;

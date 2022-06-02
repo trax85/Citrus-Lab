@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#171717"
+    android:clickable="true"
+    tools:context=".fragments.CpuFragment.CoreControl.CoreControlFragment">
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:background="#2E2E2E"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.011">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/inter"
+            android:text="Core Control"
+            android:textColor="#D200C853"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="305dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="42dp"
+        android:layout_marginTop="74dp"
+        android:fontFamily="@font/inter"
+        android:text="@string/core_control_info"
+        android:textColor="#616161"
+        android:textSize="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ic_core_ctl_info"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="74dp"
+        android:src="@drawable/ic_about"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="110dp"
+        android:background="@drawable/core_ctrl_container_bg"
+        android:foregroundGravity="center"
+        android:padding="6dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/core_1"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginEnd="3dp"
+            android:background="@drawable/cpu_core_bg"
+            android:padding="5dp"
+            android:src="@drawable/core_ctl"
+            app:layout_constraintEnd_toStartOf="@+id/core_2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_core_1"
+            android:layout_width="52dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:fontFamily="@font/nunito_sans_extrabold"
+            android:gravity="center"
+            android:letterSpacing="0.06"
+            android:text="CORE 1 ONLINE"
+            android:textColor="#00C853"
+            android:textSize="11.2dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/core_1"
+            app:layout_constraintEnd_toEndOf="@+id/core_1"
+            app:layout_constraintHorizontal_bias="0.4900"
+            app:layout_constraintStart_toStartOf="@+id/core_1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.2" />
+
+        <ImageView
+            android:id="@+id/core_2"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginLeft="3dp"
+            android:background="@drawable/cpu_core_bg"
+            android:padding="5dp"
+            android:src="@drawable/core_ctl"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/core_1"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_core_2"
+            android:layout_width="52dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:fontFamily="@font/nunito_sans_extrabold"
+            android:gravity="center"
+            android:letterSpacing="0.06"
+            android:text="CORE 2 ONLINE"
+            android:textColor="#00C853"
+            android:textSize="11.2dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/core_2"
+            app:layout_constraintEnd_toEndOf="@+id/core_2"
+            app:layout_constraintHorizontal_bias="0.4900"
+            app:layout_constraintStart_toStartOf="@+id/core_2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.2" />
+
+        <ImageView
+            android:id="@+id/core_3"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="3dp"
+            android:background="@drawable/cpu_core_bg"
+            android:padding="5dp"
+            android:src="@drawable/core_ctl"
+            app:layout_constraintEnd_toStartOf="@+id/core_2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/core_1" />
+
+        <TextView
+            android:id="@+id/text_core_3"
+            android:layout_width="52dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:fontFamily="@font/nunito_sans_extrabold"
+            android:gravity="center"
+            android:letterSpacing="0.06"
+            android:text="CORE 3 ONLINE"
+            android:textColor="#00C853"
+            android:textSize="11.2sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/core_3"
+            app:layout_constraintEnd_toEndOf="@+id/core_3"
+            app:layout_constraintHorizontal_bias="0.4900"
+            app:layout_constraintStart_toStartOf="@+id/core_3"
+            app:layout_constraintTop_toTopOf="@+id/core_3"
+            app:layout_constraintVertical_bias="0.2" />
+
+        <ImageView
+            android:id="@+id/core_4"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="3dp"
+            android:background="@drawable/cpu_core_bg"
+            android:padding="5dp"
+            android:src="@drawable/core_ctl"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/core_3"
+            app:layout_constraintTop_toBottomOf="@id/core_2" />
+
+        <TextView
+            android:id="@+id/text_core_4"
+            android:layout_width="52dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:fontFamily="@font/nunito_sans_extrabold"
+            android:gravity="center"
+            android:letterSpacing="0.06"
+            android:text="CORE 4 ONLINE"
+            android:textColor="#00C853"
+            android:textSize="11.2sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/core_4"
+            app:layout_constraintEnd_toEndOf="@+id/core_4"
+            app:layout_constraintHorizontal_bias="0.4900"
+            app:layout_constraintStart_toStartOf="@+id/core_4"
+            app:layout_constraintTop_toTopOf="@id/core_4"
+            app:layout_constraintVertical_bias="0.2" />
+
+        <ImageView
+            android:id="@+id/core_5"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="3dp"
+            android:background="@drawable/cpu_core_bg"
+            android:padding="5dp"
+            android:src="@drawable/core_ctl"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/core_3" />
+
+        <TextView
+            android:id="@+id/text_core_5"
+            android:layout_width="52dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:fontFamily="@font/nunito_sans_extrabold"
+            android:gravity="center"
+            android:letterSpacing="0.06"
+            android:text="CORE 5 ONLINE"
+            android:textColor="#00C853"
+            android:textSize="11.2sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/core_5"
+            app:layout_constraintEnd_toEndOf="@+id/core_5"
+            app:layout_constraintHorizontal_bias="0.4900"
+            app:layout_constraintStart_toStartOf="@+id/core_5"
+            app:layout_constraintTop_toTopOf="@+id/core_5"
+            app:layout_constraintVertical_bias="0.2" />
+
+        <ImageView
+            android:id="@+id/core_6"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="3dp"
+            android:background="@drawable/cpu_core_bg"
+            android:padding="5dp"
+            android:src="@drawable/core_ctl"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/core_5"
+            app:layout_constraintTop_toBottomOf="@id/core_4" />
+
+        <TextView
+            android:id="@+id/text_core_6"
+            android:layout_width="52dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:fontFamily="@font/nunito_sans_extrabold"
+            android:gravity="center"
+            android:letterSpacing="0.06"
+            android:text="CORE 6 ONLINE"
+            android:textColor="#00C853"
+            android:textSize="11.2sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/core_6"
+            app:layout_constraintEnd_toEndOf="@+id/core_6"
+            app:layout_constraintHorizontal_bias="0.4900"
+            app:layout_constraintStart_toStartOf="@+id/core_6"
+            app:layout_constraintTop_toTopOf="@id/core_6"
+            app:layout_constraintVertical_bias="0.2" />
+
+        <ImageView
+            android:id="@+id/core_7"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="3dp"
+            android:background="@drawable/cpu_core_bg"
+            android:padding="5dp"
+            android:src="@drawable/core_ctl"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/core_5" />
+
+        <TextView
+            android:id="@+id/text_core_7"
+            android:layout_width="52dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:fontFamily="@font/nunito_sans_extrabold"
+            android:gravity="center"
+            android:letterSpacing="0.06"
+            android:text="CORE 7 ONLINE"
+            android:textColor="#00C853"
+            android:textSize="11.2sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/core_7"
+            app:layout_constraintEnd_toEndOf="@+id/core_7"
+            app:layout_constraintHorizontal_bias="0.4900"
+            app:layout_constraintStart_toStartOf="@+id/core_7"
+            app:layout_constraintTop_toTopOf="@+id/core_7"
+            app:layout_constraintVertical_bias="0.2" />
+
+        <ImageView
+            android:id="@+id/core_8"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="3dp"
+            android:background="@drawable/cpu_core_bg"
+            android:padding="5dp"
+            android:src="@drawable/core_ctl"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/core_7"
+            app:layout_constraintTop_toBottomOf="@id/core_6" />
+
+        <TextView
+            android:id="@+id/text_core_8"
+            android:layout_width="52dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:fontFamily="@font/nunito_sans_extrabold"
+            android:gravity="center"
+            android:letterSpacing="0.06"
+            android:text="CORE 8 OFFLINE"
+            android:textColor="#00C853"
+            android:textSize="11.2sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/core_8"
+            app:layout_constraintEnd_toEndOf="@+id/core_8"
+            app:layout_constraintHorizontal_bias="0.4900"
+            app:layout_constraintStart_toStartOf="@+id/core_8"
+            app:layout_constraintTop_toTopOf="@id/core_8"
+            app:layout_constraintVertical_bias="0.2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/action_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <ImageView
+            android:id="@+id/ic_core_ctl_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:padding="7dp"
+            android:src="@drawable/ic_back" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

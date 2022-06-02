@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private BottomSheetBehavior bottomSheetBehavior;
     private TextView textViewDash, textViewDisp, textViewAbout;
     private ImageView imageViewDash, imageViewDisp, imageViewAbout;
-    private LinearLayout homeLayout, displayLayout, aboutLayout;
+    private LinearLayout homeLayout, displayLayout, aboutLayout ,cpuLayout;
     private List<TextView> textViewList;
     private List<ImageView> imageViewList;
 
@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
         homeLayout = findViewById(R.id.layoutHome);
         displayLayout = findViewById(R.id.layoutDisplay);
+        cpuLayout = findViewById(R.id.layoutCpu);
         aboutLayout = findViewById(R.id.layoutAbout);
 
         linearLayout = findViewById(R.id.nested_scroll);
@@ -165,6 +166,12 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG,"Display Fragment started");
             pa.setCurrentItem(1);
             setUi(1);
+        });
+        cpuLayout.setOnClickListener(v -> {
+            Log.d(TAG,"Cpu Fragment started");
+            pa.setCurrentItem(2);
+            //setUi(2);
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         });
         aboutLayout.setOnClickListener(v -> {
             Log.d(TAG,"Info Fragment started");

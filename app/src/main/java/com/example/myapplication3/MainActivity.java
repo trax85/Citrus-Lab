@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         pa = findViewById(R.id.viewPager);
         //Disable swipe left and right
         pa.setUserInputEnabled(false);
-
+        pa.setOffscreenPageLimit(4);
         //Fragment manager & bottom sheet setup
         FragmentManager fm = getSupportFragmentManager();
         VPAdaptor sa = new VPAdaptor(fm, getLifecycle());
@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
         });
         setBottomPageListeners();
         setUi(0);
+        pa.setCurrentItem(0);
         // if input received anywhere on the screen other than bottomsheet
         /*Shell.getShell(shell -> {
             // The main shell is now constructed and cached
@@ -130,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
                     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             }
         }
-
         return super.dispatchTouchEvent(event);
     }
 

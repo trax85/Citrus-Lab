@@ -13,10 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Switch;
 import android.widget.Toast;
 
-import com.example.myapplication3.MainActivity;
 import com.example.myapplication3.R;
 import com.topjohnwu.superuser.Shell;
 
@@ -26,7 +24,7 @@ import java.util.List;
 public class DisplayFragment extends Fragment {
     private static final String TAG = "HomeActivity";
     Button button1, button2, button3;
-    ArrayList<DisplayList> displayArrayLists;
+    ArrayList<DisplayDataModel> displayArrayLists;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,7 +76,7 @@ public class DisplayFragment extends Fragment {
         List<String[]> FilePath = setList();
         displayArrayLists = new ArrayList<>();
         for(int i = 0; i < PrimaryDesc.length; i++){
-            DisplayList displayList = new DisplayList(PrimaryDesc[i], SecondaryDesc[i],
+            DisplayDataModel displayList = new DisplayDataModel(PrimaryDesc[i], SecondaryDesc[i],
                     FilePath.get(i), ActionSet[i]);
             displayArrayLists.add(displayList);
         }
@@ -105,7 +103,7 @@ public class DisplayFragment extends Fragment {
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView. setOverScrollMode(View. OVER_SCROLL_NEVER);
         recyclerView.setLayoutManager(layoutManager);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(displayArrayLists);
+        RVAdapter adapter = new RVAdapter(displayArrayLists);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }

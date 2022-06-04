@@ -40,31 +40,9 @@ public class DisplayFragment extends Fragment {
         button1 = view.findViewById(R.id.buttonrerrate1);
         button2 = view.findViewById(R.id.buttonrerrate2);
         button3 = view.findViewById(R.id.buttonrerrate3);
-
-        button1.setOnClickListener(v -> {
-            Shell.cmd("settings put system peak_refresh_rate 120").exec();
-            Shell.cmd("settings put system min_refresh_rate 120").exec();
-            Toast.makeText(getActivity(),
-                    "Set 120Hz",
-                    Toast.LENGTH_SHORT).show();
-
-        });
-        button2.setOnClickListener(v -> {
-            Shell.cmd("settings put system peak_refresh_rate 60").exec();
-            Shell.cmd("settings put system min_refresh_rate 60").exec();
-            Toast.makeText(getActivity(),
-                    "Set 60Hz",
-                    Toast.LENGTH_SHORT).show();
-        });
-        button3.setOnClickListener(v -> {
-            Shell.cmd("settings put system peak_refresh_rate 120").exec();
-            Shell.cmd("settings put system min_refresh_rate 60").exec();
-            Toast.makeText(getActivity(),
-                    "Set to Auto",
-                    Toast.LENGTH_SHORT).show();
-        });
         initList();
         initRecyclerView(view);
+        initListeners();
     }
 
     private void initList(){
@@ -95,6 +73,31 @@ public class DisplayFragment extends Fragment {
         Filepath.add(D2W);
         Filepath.add(TB);
         return Filepath;
+    }
+
+    private void initListeners(){
+        button1.setOnClickListener(v -> {
+            Shell.cmd("settings put system peak_refresh_rate 120").exec();
+            Shell.cmd("settings put system min_refresh_rate 120").exec();
+            Toast.makeText(getActivity(),
+                    "Set 120Hz",
+                    Toast.LENGTH_SHORT).show();
+
+        });
+        button2.setOnClickListener(v -> {
+            Shell.cmd("settings put system peak_refresh_rate 60").exec();
+            Shell.cmd("settings put system min_refresh_rate 60").exec();
+            Toast.makeText(getActivity(),
+                    "Set 60Hz",
+                    Toast.LENGTH_SHORT).show();
+        });
+        button3.setOnClickListener(v -> {
+            Shell.cmd("settings put system peak_refresh_rate 120").exec();
+            Shell.cmd("settings put system min_refresh_rate 60").exec();
+            Toast.makeText(getActivity(),
+                    "Set to Auto",
+                    Toast.LENGTH_SHORT).show();
+        });
     }
 
     private void initRecyclerView(View view){

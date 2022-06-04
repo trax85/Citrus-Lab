@@ -16,14 +16,14 @@ import com.topjohnwu.superuser.Shell;
 
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
-    private final List<DisplayList> list;
+public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
+    private final List<DisplayDataModel> list;
     private TextView textView1;
     private TextView textView2;
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     private Switch aSwitch;
     final static String TAG = "Recycler view";
-    public RecyclerViewAdapter(List<DisplayList> list){
+    public RVAdapter(List<DisplayDataModel> list){
         this.list = list;
     }
     @NonNull

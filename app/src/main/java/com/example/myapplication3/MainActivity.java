@@ -12,15 +12,21 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.view.MotionEvent;
 
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
     LinearLayout bottomSheetLayout;
@@ -34,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout[] linearLayoutArr;
     private boolean bottomSheetState = true;
     private ViewPager2 pa;
+    ExecutorService service;
+    private Animation aniFade;
     int tabCount = 4;
     private static final String TAG = "HomeActivity";
 
@@ -67,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
 
         initList();
 
+        aniFade = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_out);
+
         linearLayout = findViewById(R.id.nested_scroll);
         bottomSheetLayout = findViewById(R.id.bottom_sheet);
         pa = findViewById(R.id.viewPager);
@@ -78,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         VPAdaptor sa = new VPAdaptor(fm, getLifecycle());
         pa.setAdapter(sa);
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetLayout);
-        bottomSheetBehavior.setPeekHeight(180);
+        bottomSheetBehavior.setPeekHeight(178);
         bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
@@ -105,6 +115,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         setBottomPageListeners();
+        service = Executors.newSingleThreadExecutor();
+
         setUi(0);
         pa.setCurrentItem(0);
         // if input received anywhere on the screen other than bottomsheet
@@ -166,6 +178,12 @@ public class MainActivity extends AppCompatActivity {
             int finalI = i;
             linearLayoutArr[i].setOnClickListener(v -> {
                 pa.setCurrentItem(finalI);
+                service.execute(() -> {
+                    Handler handler = new Handler(Looper.getMainLooper());
+                    handler.post(() -> {
+                        pa.startAnimation(aniFade);
+                    });
+                });
                 setUi(finalI);
             });
         }

@@ -56,15 +56,16 @@ public class CpuFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        
         linearLayout = view.findViewById(R.id.stune_launch);
         linearLayout2 = view.findViewById(R.id.core_ctrl_launch);
         service = Executors.newSingleThreadExecutor();
         AppendedFreqList = new ArrayList<>();
         FreqList = new ArrayList<>();
         init();
-        initList();
         initCpuFreList();
         initRecyclerView(view);
+        initListeners();
     }
 
     @Override

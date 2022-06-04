@@ -66,7 +66,7 @@ public class CpuSetRVAdapter extends RecyclerView.Adapter<CpuSetRVAdapter.ViewHo
                         MaterialAlertDialogBuilder(fragment.getActivity());
                 final EditText weightInput = new EditText(fragment.getActivity());
 
-                builder.setTitle("Edit" + list.get(position).getHeaderName());
+                builder.setTitle("Edit " + list.get(position).getHeaderName());
                 weightInput.setInputType(InputType.TYPE_CLASS_TEXT);
                 weightInput.setHint(cpuSetAttr);
                 builder.setView(weightInput);

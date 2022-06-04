@@ -22,4 +22,5 @@
     <color name="page_bg_colour">#13011E</color>
     <color name="content_desc">#B6B6B6</color>
     <color name="bottom_page">#FF494949</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>

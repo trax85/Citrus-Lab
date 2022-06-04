@@ -36,6 +36,8 @@
         android:id="@+id/scrollView_cpusets"
         android:layout_width="match_parent"
         android:layout_height="650dp"
+        android:fadingEdgeLength="24dp"
+        android:requiresFadingEdge="vertical"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

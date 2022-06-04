@@ -68,7 +68,7 @@ public class TunableRVAdapter extends RecyclerView.Adapter<TunableRVAdapter.View
                         MaterialAlertDialogBuilder(fragment.getActivity());
                 final EditText weightInput = new EditText(fragment.getActivity());
 
-                builder.setTitle("Edit Tunable");
+                builder.setTitle("Edit "+ tunableNames);
                 weightInput.setInputType(InputType.TYPE_CLASS_TEXT);
                 weightInput.setHint(tunableAttr);
                 builder.setView(weightInput);

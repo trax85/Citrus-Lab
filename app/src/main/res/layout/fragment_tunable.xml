@@ -18,7 +18,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.001">
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
             android:layout_width="wrap_content"
@@ -33,51 +33,50 @@
     </LinearLayout>
 
     <ScrollView
-        android:background="@drawable/page_bg"
         android:layout_width="match_parent"
-        android:layout_height="620dp"
+        android:layout_height="660dp"
+        android:background="@drawable/page_bg"
+        android:fadingEdgeLength="24dp"
+        android:requiresFadingEdge="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView30"
-            android:layout_width="305dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="42dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/inter"
-            android:text="@string/gov_tunable_info"
-            android:textColor="#616161"
-            android:textSize="10sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/textView30"
+                android:layout_width="305dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="42dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inter"
+                android:text="@string/gov_tunable_info"
+                android:textColor="#616161"
+                android:textSize="10sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/ic_core_ctl_info"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            android:src="@drawable/ic_about"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <ImageView
+                android:id="@+id/ic_core_ctl_info"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:src="@drawable/ic_about"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/tunable_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_marginTop="20dp"
+                android:orientation="vertical"
                 android:paddingTop="6dp"
-                android:paddingBottom="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView30"

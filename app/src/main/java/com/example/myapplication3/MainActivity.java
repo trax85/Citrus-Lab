@@ -6,9 +6,9 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.topjohnwu.superuser.Shell;
+
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -21,21 +21,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     LinearLayout bottomSheetLayout;
     private LinearLayout linearLayout;
     private BottomSheetBehavior bottomSheetBehavior;
-    private TextView textViewDash, textViewDisp, textViewAbout;
-    private ImageView imageViewDash, imageViewDisp, imageViewAbout;
+    private TextView textViewDash, textViewDisp, textViewCpu, textViewAbout;
+    private ImageView imageViewDash, imageViewDisp, imageViewCpu, imageViewAbout;
     private LinearLayout homeLayout, displayLayout, aboutLayout ,cpuLayout;
-    private List<TextView> textViewList;
-    private List<ImageView> imageViewList;
-
+    private TextView[] textViewArr;
+    private ImageView[] imageViewArr;
+    private LinearLayout[] linearLayoutArr;
     private boolean bottomSheetState = true;
     private ViewPager2 pa;
+    int tabCount = 4;
     private static final String TAG = "HomeActivity";
 
     static {
@@ -54,25 +53,26 @@ public class MainActivity extends AppCompatActivity {
 
         textViewDash = findViewById(R.id.textViewDash);
         textViewDisp = findViewById(R.id.textViewDisp);
+        textViewCpu = findViewById(R.id.textViewCpu);
         textViewAbout = findViewById(R.id.textViewAbout);
         imageViewDash = findViewById(R.id.imageViewDash);
         imageViewDisp = findViewById(R.id.imageViewDisp);
+        imageViewCpu = findViewById(R.id.imageViewCpu);
         imageViewAbout = findViewById(R.id.imageViewAbout);
-        textViewList = new ArrayList<>();
-        imageViewList = new ArrayList<>();
-        initList();
 
         homeLayout = findViewById(R.id.layoutHome);
         displayLayout = findViewById(R.id.layoutDisplay);
         cpuLayout = findViewById(R.id.layoutCpu);
         aboutLayout = findViewById(R.id.layoutAbout);
 
+        initList();
+
         linearLayout = findViewById(R.id.nested_scroll);
         bottomSheetLayout = findViewById(R.id.bottom_sheet);
         pa = findViewById(R.id.viewPager);
         //Disable swipe left and right
         pa.setUserInputEnabled(false);
-        pa.setOffscreenPageLimit(4);
+        pa.setOffscreenPageLimit(2);
         //Fragment manager & bottom sheet setup
         FragmentManager fm = getSupportFragmentManager();
         VPAdaptor sa = new VPAdaptor(fm, getLifecycle());
@@ -136,47 +136,38 @@ public class MainActivity extends AppCompatActivity {
 
     private void initList(){
         Log.d(TAG,"List initialised");
-        textViewList.add(textViewDash);
-        textViewList.add(textViewDisp);
-        textViewList.add(textViewAbout);
-        imageViewList.add(imageViewDash);
-        imageViewList.add(imageViewDisp);
-        imageViewList.add(imageViewAbout);
+        textViewArr = new TextView[]{textViewDash, textViewDisp, textViewCpu, textViewAbout};
+        imageViewArr = new ImageView[]{imageViewDash, imageViewDisp, imageViewCpu, imageViewAbout};
+        linearLayoutArr = new LinearLayout[]{homeLayout, displayLayout, cpuLayout, aboutLayout};
     }
 
-    private void setUi(int posistion){
-        final String GREEN = "#00E676";
+    private void setUi(int position){
+        final String PURPLE = "#FFA175FF";
         final String WHITE = "#FFFFFFFF";
-        for(int i = 0;i < textViewList.size(); i++){
-            textViewList.get(i).setTextColor(Color.parseColor(WHITE));
-            imageViewList.get(i).setColorFilter(Color.parseColor(WHITE));
+        final String GREY = "#494949";
+        final String PURPLE_LIGHT = "#48D28BFF";
+        Log.d(TAG, "Postiton:" + position);
+        for(int i = 0;i < tabCount; i++){
+            if(i == position){
+                textViewArr[i].setTextColor(Color.parseColor(PURPLE));
+                imageViewArr[i].setColorFilter(Color.parseColor(PURPLE));
+                linearLayoutArr[position].getBackground().setTint(Color.parseColor(PURPLE_LIGHT));
+                continue;
+            }
+            textViewArr[i].setTextColor(Color.parseColor(WHITE));
+            imageViewArr[i].setColorFilter(Color.parseColor(WHITE));
+            linearLayoutArr[i].getBackground().setTint(Color.parseColor(GREY));
         }
-        textViewList.get(posistion).setTextColor(Color.parseColor(GREEN));
-        imageViewList.get(posistion).setColorFilter(Color.parseColor(GREEN));
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 
     private void setBottomPageListeners() {
-        homeLayout.setOnClickListener(v -> {
-            Log.d(TAG,"Home Fragment started");
-            pa.setCurrentItem(0);
-            setUi(0);
-        });
-        displayLayout.setOnClickListener(v -> {
-            Log.d(TAG,"Display Fragment started");
-            pa.setCurrentItem(1);
-            setUi(1);
-        });
-        cpuLayout.setOnClickListener(v -> {
-            Log.d(TAG,"Cpu Fragment started");
-            pa.setCurrentItem(2);
-            //setUi(2);
-            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-        });
-        aboutLayout.setOnClickListener(v -> {
-            Log.d(TAG,"Info Fragment started");
-            pa.setCurrentItem(3);
-            setUi(2);
-        });
+        for(int i = 0; i < tabCount; i++){
+            int finalI = i;
+            linearLayoutArr[i].setOnClickListener(v -> {
+                pa.setCurrentItem(finalI);
+                setUi(finalI);
+            });
+        }
     }
 }

@@ -26,20 +26,16 @@ public class VPAdaptor extends FragmentStateAdapter {
         switch (position) {
             case 0:
                 Log.d(TAG,"HomeFragment created");
-                HomeFragment homeFragment = new HomeFragment();
-                return homeFragment;
+                return new HomeFragment();
             case 1:
                 Log.d(TAG,"DispFragment created");
-                DisplayFragment displayFragment = new DisplayFragment();
-                return displayFragment;
+                return new DisplayFragment();
             case 2:
                 Log.d(TAG,"CpuFragment created");
-                CpuFragment cpuFragment = new CpuFragment();
-                return cpuFragment;
+                return new CpuFragment();
             case 3:
                 Log.d(TAG,"AboutFragment created");
-                AboutFragment aboutFragment = new AboutFragment();
-                return aboutFragment;
+                return new AboutFragment();
             default:
                 return null;
         }

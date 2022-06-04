@@ -54,6 +54,21 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        initViews(view);
+        cProgressIndicator1.setMaxProgress(100);
+        cProgressIndicator2.setMaxProgress(100);
+        cProgressIndicator3.setMaxProgress(100);
+        //Register broad cast service
+        filter.addAction(Intent.ACTION_BATTERY_CHANGED);
+        getActivity().registerReceiver(batteryStats.mBroadcastReceiver, filter);
+        
+        initDeviceInfo();
+        cpuStats.setCpuClass(this);
+        batteryStats.setBattClass(this);
+        memoryStats.setMemClass(this);
+    }
+
+    private void initViews(View view){
         //Cpu stats Ui elements
         cProgressIndicator1 = view.findViewById(R.id.circular_progress1);
         cProgressIndicator2 = view.findViewById(R.id.circular_progress2);
@@ -78,20 +93,7 @@ public class HomeFragment extends Fragment {
         textView14 = view.findViewById(R.id.textView32);
         textView15 = view.findViewById(R.id.textView34);
         textView16 = view.findViewById(R.id.textView36);
-
-        cProgressIndicator1.setMaxProgress(100);
-        cProgressIndicator2.setMaxProgress(100);
-        cProgressIndicator3.setMaxProgress(100);
-        //Register broad cast service
-        filter.addAction(Intent.ACTION_BATTERY_CHANGED);
-        Log.d(TAG, "Register battery status receiver.");
-        getActivity().registerReceiver(batteryStats.mBroadcastReceiver, filter);
-        initDeviceInfo();
-        cpuStats.setCpuClass(this);
-        batteryStats.setBattClass(this);
-        memoryStats.setMemClass(this);
     }
-
     @SuppressLint("SetTextI18n")
     public void initDeviceInfo(){
         textView14.setText(Build.MODEL + " (" + Build.DEVICE + ")");

@@ -28,7 +28,7 @@
                     android:fontFamily="@font/nunito_sans_extrabold"
                     android:letterSpacing="0.05"
                     android:text="Name Header"
-                    android:textColor="#9B00EE"
+                    android:textColor="@color/item_text_colour"
                     android:textSize="18dp"
                     android:textStyle="bold" />
 
@@ -36,6 +36,7 @@
                     android:id="@+id/cpuset_layout"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
+                    android:background="@drawable/rounded_btn"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"

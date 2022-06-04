@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.myapplication3.BuildConfig;
 import com.example.myapplication3.R;
 
 import java.util.concurrent.ExecutorService;
@@ -38,7 +39,8 @@ public class HomeFragment extends Fragment {
     ScheduledThreadPoolExecutor executor;
     CircularProgressIndicator cProgressIndicator1, cProgressIndicator2, cProgressIndicator3;
     TextView textView1, textView2, textView3, textView4, textView5, textView6, textView7,
-            textView8, textView9, textView10, textView11, textView12, textView13;
+            textView8, textView9, textView10, textView11, textView12, textView13, textView14,
+    textView15, textView16;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -72,6 +74,11 @@ public class HomeFragment extends Fragment {
         textView11 = view.findViewById(R.id.textView22);
         textView12 = view.findViewById(R.id.textView24);
         textView13 = view.findViewById(R.id.textView26);
+        //Home Device/App Info
+        textView14 = view.findViewById(R.id.textView32);
+        textView15 = view.findViewById(R.id.textView34);
+        textView16 = view.findViewById(R.id.textView36);
+
         cProgressIndicator1.setMaxProgress(100);
         cProgressIndicator2.setMaxProgress(100);
         cProgressIndicator3.setMaxProgress(100);
@@ -79,9 +86,17 @@ public class HomeFragment extends Fragment {
         filter.addAction(Intent.ACTION_BATTERY_CHANGED);
         Log.d(TAG, "Register battery status receiver.");
         getActivity().registerReceiver(batteryStats.mBroadcastReceiver, filter);
+        initDeviceInfo();
         cpuStats.setCpuClass(this);
         batteryStats.setBattClass(this);
         memoryStats.setMemClass(this);
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void initDeviceInfo(){
+        textView14.setText(Build.MODEL + " (" + Build.DEVICE + ")");
+        textView15.setText(Build.BOARD);
+        textView16.setText("v" + BuildConfig.VERSION_NAME);
     }
 
     @Override

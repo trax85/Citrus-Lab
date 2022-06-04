@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         initList();
 
-        aniFade = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_out);
+        aniFade = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_in);
 
         linearLayout = findViewById(R.id.nested_scroll);
         bottomSheetLayout = findViewById(R.id.bottom_sheet);

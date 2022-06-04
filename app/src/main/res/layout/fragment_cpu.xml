@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.CpuFragment.CpuFragment"
-    android:background="#171717"
+    android:background="@color/materialGrey_800"
     android:orientation="horizontal">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -37,10 +37,10 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-         >
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:background="@drawable/page_bg"
                 android:paddingBottom="60dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -90,6 +90,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="15dp"
                     android:background="@drawable/core_ctrl_container_bg"
+                    android:foreground="@drawable/rounded_btn"
                     app:layout_constraintBottom_toTopOf="@id/stune_launch"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -104,7 +105,7 @@
                         android:fontFamily="@font/nunito_sans_extrabold"
                         android:letterSpacing="0.03"
                         android:text="Core Control"
-                        android:textColor="@color/purple_200"
+                        android:textColor="@color/secondary_colour"
                         android:textSize="15dp"
                         android:textStyle="bold" />
 
@@ -118,6 +119,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="15dp"
                     android:background="@drawable/core_ctrl_container_bg"
+                    android:foreground="@drawable/rounded_btn"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -131,7 +133,7 @@
                         android:text="Cpuset Settings"
                         android:letterSpacing="0.03"
                         android:fontFamily="@font/nunito_sans_extrabold"
-                        android:textColor="@color/purple_200"
+                        android:textColor="@color/secondary_colour"
                         android:textSize="15dp"
                         android:textStyle="bold" />
                 </LinearLayout>

@@ -5,14 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#191919"
+    android:background="@color/secondary_action_bar"
     android:clickable="true"
     tools:context=".fragments.CpuFragment.GovTunable.TunableFragment">
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="62dp"
-        android:background="#2E2E2E"
+        android:background="@color/secondary_action_bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -23,16 +23,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/inter"
             android:text="Governor Tunable"
-            android:textColor="#D200C853"
+            android:textColor="@color/secondary_colour"
             android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
 
     <ScrollView
+        android:background="@drawable/page_bg"
         android:layout_width="match_parent"
         android:layout_height="620dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,11 +52,11 @@
             android:layout_width="305dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="42dp"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/inter"
             android:text="@string/gov_tunable_info"
             android:textColor="#616161"
-            android:textSize="10dp"
+            android:textSize="10sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -64,7 +65,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="12dp"
             android:src="@drawable/ic_about"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -98,9 +99,10 @@
             android:id="@+id/ic_core_ctl_back"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="10dp"
             android:padding="7dp"
+            android:background="@drawable/rounded_btn"
             android:src="@drawable/ic_back" />
     </LinearLayout>
 

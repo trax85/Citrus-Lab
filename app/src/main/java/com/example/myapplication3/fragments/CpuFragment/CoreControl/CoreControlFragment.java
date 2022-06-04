@@ -145,9 +145,9 @@ public class CoreControlFragment extends Fragment {
     //Don't call this without calling setState unless you are still initialising
     public void setUI(int pos, int state) {
         final String GREY = "#757575";
-        final String GREEN = "#00E676";
+        final String GREEN = "#00e2b1";
         final String GREY_DEEP = "#616060";
-        final String GREEN_DEEP = "#00b35c";
+        final String GREEN_DEEP = "#00C8AA";
         String colour,colour_ext, text;
         if (state == 1) {
             colour = GREEN;

@@ -15,4 +15,11 @@
     <color name="materialGrey">#212121</color>
     <color name="materialGrey_800">#242424</color>
     <color name="materialGrey_Deep">#FF1B1A1A</color>
+    <color name="primary_colour">#B51FFF</color>
+    <color name="secondary_colour">#A175FF</color>
+    <color name="secondary_action_bar">#2E2E2E</color>
+    <color name="item_text_colour">#B984FB</color>
+    <color name="page_bg_colour">#13011E</color>
+    <color name="content_desc">#B6B6B6</color>
+    <color name="bottom_page">#FF494949</color>
 </resources>

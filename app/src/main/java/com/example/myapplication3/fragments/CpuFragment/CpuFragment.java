@@ -65,22 +65,6 @@ public class CpuFragment extends Fragment {
         initList();
         initCpuFreList();
         initRecyclerView(view);
-        linearLayout.setOnClickListener(v -> {
-            CpuSetFragment frag = new CpuSetFragment();
-            FragmentManager fragmentManager= getActivity().getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.activity_main,frag,"tag #2");
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
-        });
-        linearLayout2.setOnClickListener(v -> {
-            CoreControlFragment frag = new CoreControlFragment();
-            FragmentManager fragmentManager= getActivity().getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.activity_main,frag,"tag #3");
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
-        });
     }
 
     @Override
@@ -136,6 +120,25 @@ public class CpuFragment extends Fragment {
             }
             AppendedFreqList.add(str);  //Mhz
         }
+    }
+
+    public void initListeners(){
+        linearLayout.setOnClickListener(v -> {
+            CpuSetFragment frag = new CpuSetFragment();
+            FragmentManager fragmentManager= getActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.activity_main,frag,"tag #2");
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        });
+        linearLayout2.setOnClickListener(v -> {
+            CoreControlFragment frag = new CoreControlFragment();
+            FragmentManager fragmentManager= getActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.activity_main,frag,"tag #3");
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        });
     }
 
     /* Initialise the recyclerView and layout manager */

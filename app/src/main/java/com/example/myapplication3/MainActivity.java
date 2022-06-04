@@ -2,6 +2,7 @@ package com.example.myapplication3;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -58,28 +59,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        textViewDash = findViewById(R.id.textViewDash);
-        textViewDisp = findViewById(R.id.textViewDisp);
-        textViewCpu = findViewById(R.id.textViewCpu);
-        textViewAbout = findViewById(R.id.textViewAbout);
-        imageViewDash = findViewById(R.id.imageViewDash);
-        imageViewDisp = findViewById(R.id.imageViewDisp);
-        imageViewCpu = findViewById(R.id.imageViewCpu);
-        imageViewAbout = findViewById(R.id.imageViewAbout);
-
-        homeLayout = findViewById(R.id.layoutHome);
-        displayLayout = findViewById(R.id.layoutDisplay);
-        cpuLayout = findViewById(R.id.layoutCpu);
-        aboutLayout = findViewById(R.id.layoutAbout);
-
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        initViews();
         initList();
-
         aniFade = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_in);
 
-        linearLayout = findViewById(R.id.nested_scroll);
-        bottomSheetLayout = findViewById(R.id.bottom_sheet);
-        pa = findViewById(R.id.viewPager);
         //Disable swipe left and right
         pa.setUserInputEnabled(false);
         pa.setOffscreenPageLimit(2);
@@ -144,6 +128,26 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return super.dispatchTouchEvent(event);
+    }
+
+    private void initViews(){
+        textViewDash = findViewById(R.id.textViewDash);
+        textViewDisp = findViewById(R.id.textViewDisp);
+        textViewCpu = findViewById(R.id.textViewCpu);
+        textViewAbout = findViewById(R.id.textViewAbout);
+        imageViewDash = findViewById(R.id.imageViewDash);
+        imageViewDisp = findViewById(R.id.imageViewDisp);
+        imageViewCpu = findViewById(R.id.imageViewCpu);
+        imageViewAbout = findViewById(R.id.imageViewAbout);
+
+        homeLayout = findViewById(R.id.layoutHome);
+        displayLayout = findViewById(R.id.layoutDisplay);
+        cpuLayout = findViewById(R.id.layoutCpu);
+        aboutLayout = findViewById(R.id.layoutAbout);
+
+        linearLayout = findViewById(R.id.nested_scroll);
+        bottomSheetLayout = findViewById(R.id.bottom_sheet);
+        pa = findViewById(R.id.viewPager);
     }
 
     private void initList(){

@@ -2,7 +2,9 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/</item>
+        <item>@font/doppio_one</item>
         <item>@font/inter</item>
+        <item>@font/numans</item>
         <item>@font/nunito_sans</item>
         <item>@font/nunito_sans_black</item>
         <item>@font/nunito_sans_bold</item>

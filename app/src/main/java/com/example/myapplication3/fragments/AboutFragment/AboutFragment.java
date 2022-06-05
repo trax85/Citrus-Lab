@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,10 @@ import com.example.myapplication3.MainActivity;
 import com.example.myapplication3.R;
 
 public class AboutFragment extends Fragment {
+
+    ImageView imageViewGit, imageViewTele1, imageViewGit1, imageViewTele2, imageViewGit2;
+    private final String TAG = "AboutFragment";
+    Intent intent;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,25 +39,41 @@ public class AboutFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Intent intent = new Intent();
-        MainActivity activity = (MainActivity) getActivity();
+        intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
         intent.addCategory(Intent.CATEGORY_BROWSABLE);
-        ImageView imageViewGit = view.findViewById(R.id.github);
-        ImageView imageViewGmail = view.findViewById(R.id.gmail);
-        ImageView imageViewDown = view.findViewById(R.id.downloads);
+        initViews(view);
+        setUpListeners();
+    }
+
+    public void initViews(View view){
+        imageViewGit = view.findViewById(R.id.github);
+        imageViewGit1 = view.findViewById(R.id.akash_git);
+        imageViewTele1 = view.findViewById(R.id.akash_tele);
+        imageViewGit2 = view.findViewById(R.id.prath_git);
+        imageViewTele2 = view.findViewById(R.id.prath_tele);
+    }
+
+    public void setUpListeners(){
         imageViewGit.setOnClickListener(v -> {
-            Toast.makeText(getActivity(),
-                    "Github",
-                    Toast.LENGTH_SHORT);
-            intent.setData(Uri.parse("https://github.com/trax85"));});
-        imageViewGmail.setOnClickListener(v -> {
-            Toast.makeText(getActivity(), "Gmail",
-                    Toast.LENGTH_SHORT);
-            ClipboardManager clipboard = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
-            ClipData clip = ClipData.newPlainText("gmail id", "tejasudupa1002@gmail.com");
-            clipboard.setPrimaryClip(clip);
+            intent.setData(Uri.parse("https://github.com/trax85"));
+            startActivity(intent);
         });
-        imageViewDown.setOnClickListener(v -> intent.setData(Uri.parse("https://github.com/trax85/Citrus-Control")));
+        imageViewGit1.setOnClickListener(v -> {
+            intent.setData(Uri.parse("https://github.com/Skyking469"));
+            startActivity(intent);
+        });
+        imageViewGit1.setOnClickListener(v -> {
+            intent.setData(Uri.parse("https://github.com/prathameshmm02"));
+            startActivity(intent);
+        });
+        imageViewTele1.setOnClickListener(v -> {
+            intent.setData(Uri.parse("https://t.me/Skyking469"));
+            startActivity(intent);
+        });
+        imageViewTele2.setOnClickListener(v -> {
+            intent.setData(Uri.parse("https://t.me/QuickerSilver"));
+            startActivity(intent);
+        });
     }
 }

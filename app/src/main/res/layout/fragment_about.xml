@@ -1,155 +1,295 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/materialGrey_800"
+    android:background="@color/page_bg_colour"
+    android:clickable="true"
     tools:context=".fragments.AboutFragment.AboutFragment">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="760dp">
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:fadingEdgeLength="24dp"
+        android:requiresFadingEdge="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.0">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:paddingBottom="70dp"
             android:layout_width="match_parent"
-            android:layout_height="290dp"
-            android:background="@drawable/about_page_action_bar" />
+            android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:layout_marginLeft="96dp"
-            android:layout_marginTop="200dp">
+            <TextView
+                android:id="@+id/app_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:layout_marginLeft="88dp"
+                android:fontFamily="@font/numans"
+                android:letterSpacing="0.09"
+                android:text="Citrus Lab"
+                android:textAlignment="center"
+                android:textColor="@color/primary_colour"
+                android:textSize="23sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/my_prof"
+                app:layout_constraintRight_toLeftOf="@+id/logo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                android:src="@drawable/zyro_image"
+                app:layout_constraintBottom_toTopOf="@+id/my_prof"
+                app:layout_constraintLeft_toRightOf="@+id/app_title"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/my_prof"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_marginLeft="25dp"
+                android:layout_marginTop="35dp"
                 android:src="@drawable/kakashi"
                 app:civ_border_color="#FFE3E2E2"
-                app:civ_border_width="5dp" />
+                app:civ_border_width="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/app_title" />
 
             <TextView
+                android:id="@+id/author_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="127dp"
-                android:fontFamily="@font/nunito_sans_semibold"
-                android:letterSpacing="0.09"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inter"
+                android:letterSpacing="0.1"
                 android:text="Tejas Udupa"
-                android:textColor="@color/materialGreen"
-                android:textSize="20sp" />
+                android:textColor="@color/secondary_colour"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/my_prof" />
 
             <TextView
+                android:id="@+id/tele_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="156dp"
-                android:fontFamily="@font/nunito_sans"
-                android:letterSpacing="0.05"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/nunito_sans_bold"
+                android:letterSpacing="0.1"
                 android:text="\@trax85"
-                android:textColor="@color/materialGreen"
-                android:textIsSelectable="true"
-                android:textSize="17sp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="108dp"
-            android:layout_marginTop="390dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="18dp"
-                android:fontFamily="@font/nunito_sans"
-                android:letterSpacing="0.02"
-                android:text="About Author"
-                android:textColor="#777777"
-                android:textSize="18sp" />
-
-            <View
-                android:layout_width="150dp"
-                android:layout_height="1dp"
-                android:layout_marginTop="30dp"
-                android:background="@android:color/darker_gray" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="28dp"
-                android:layout_marginTop="36dp"
-                android:fontFamily="@font/nunito_sans"
-                android:letterSpacing="0.01"
-                android:text="Kernel Developer \n  C Programmer"
-                android:textColor="#777777"
-                android:textSize="11sp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"
-            android:layout_marginTop="480dp"
-            android:clickable="true" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="29dp"
-                android:fontFamily="@font/nunito_sans"
-                android:letterSpacing="0.01"
-                android:text="Social Media"
-                android:textColor="#777777"
-                android:textSize="18dp" />
-
-            <View
-                android:layout_width="170dp"
-                android:layout_height="1dp"
-                android:layout_marginTop="30dp"
-                android:background="@android:color/darker_gray" />
+                android:textColor="@color/secondary_colour"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/author_name" />
 
             <ImageView
                 android:id="@+id/github"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="42dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_github"
                 android:clickable="true"
-                android:src="@drawable/ic_github" />
-
-            <ImageView
-                android:id="@+id/gmail"
-                android:layout_width="43dp"
-                android:layout_height="43dp"
-                android:layout_marginLeft="110dp"
-                android:layout_marginTop="42dp"
-                android:clickable="true"
-                android:src="@drawable/ic_gmail" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tele_tag" />
 
             <TextView
+                android:id="@+id/about_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="36dp"
-                android:layout_marginTop="115dp"
-                android:clickable="true"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/inter"
+                android:letterSpacing="0.1"
+                android:text="About"
+                android:textColor="#676767"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/github" />
+
+            <View
+                android:layout_width="160dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="7dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/about_title"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/about_cont"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
                 android:fontFamily="@font/nunito_sans"
-                android:letterSpacing="0.01"
-                android:text="Latest Updates"
-                android:textColor="#777777"
-                android:textSize="14dp" />
+                android:letterSpacing="0.0"
+                android:textAlignment="center"
+                android:text="Kernel developer &amp; C Programmer"
+                android:textColor="#676767"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/about_title" />
+
+            <TextView
+                android:id="@+id/credits_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/inter"
+                android:letterSpacing="0.1"
+                android:text="Credits"
+                android:textColor="#676767"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/about_cont" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="220dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="7dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/credits_title" />
+
+            <TextView
+                android:id="@+id/credits_sub_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/nunito_sans"
+                android:letterSpacing="0.05"
+                android:text="Special Thanks To :-"
+                android:textColor="#676767"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/credits_title" />
+
+            <TextView
+                android:id="@+id/skyking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:fontFamily="@font/nunito_sans"
+                android:letterSpacing="0.05"
+                android:text="Akash Dhuri"
+                android:textColor="@color/primary_colour"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/credits_sub_title" />
+
+            <TextView
+                android:id="@+id/cred_sky"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/nunito_sans"
+                android:letterSpacing="0.0"
+                android:textAlignment="center"
+                android:text="Helped with Ui design and pallet selection for app and finding the right people :)"
+                android:textColor="#676767"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/skyking" />
 
             <ImageView
-                android:id="@+id/downloads"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_marginLeft="62dp"
-                android:layout_marginTop="143dp"
-                android:clickable="true"
-                android:src="@drawable/ic_updates" />
-        </RelativeLayout>
-    </RelativeLayout>
+                android:id="@+id/akash_tele"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_telegram"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.42"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cred_sky" />
 
-</RelativeLayout>
+            <ImageView
+                android:id="@+id/akash_git"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="14dp"
+                android:src="@drawable/ic_github"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.58"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cred_sky" />
+
+            <TextView
+                android:id="@+id/prath"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80dp"
+                android:fontFamily="@font/nunito_sans"
+                android:letterSpacing="0.05"
+                android:text="Prathamesh"
+                android:textColor="@color/primary_colour"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cred_sky" />
+
+            <TextView
+                android:id="@+id/cred_prath"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/nunito_sans"
+                android:letterSpacing="0.0"
+                android:text="Helped with android app development. Guiding and teaching me with patience"
+                android:textAlignment="center"
+                android:textColor="#676767"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/prath"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <ImageView
+                android:id="@+id/prath_tele"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_telegram"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.42"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cred_prath" />
+
+            <ImageView
+                android:id="@+id/prath_git"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="14dp"
+                android:src="@drawable/ic_github"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.58"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cred_prath" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -10,6 +10,8 @@ public class CpuDataModel {
         MinFreq = minFreq;
         ClusterName = clusterName;
         Governor = governor;
+        AppMaxFreq = (Integer.parseInt(maxFreq) / 1000) + "Mhz";
+        AppMinFreq = (Integer.parseInt(minFreq) / 1000) + "Mhz";
     }
 
     public String getMaxFreq() {
@@ -38,6 +40,14 @@ public class CpuDataModel {
 
     public void setAppMinFreq(String appMinFreq) {
         AppMinFreq = appMinFreq;
+    }
+
+    public String getAppMaxFreq() {
+        return AppMaxFreq;
+    }
+
+    public String getAppMinFreq() {
+        return AppMinFreq;
     }
 
     public void setMaxFreq(String maxFreq) {

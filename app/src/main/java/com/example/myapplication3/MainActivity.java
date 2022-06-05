@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
         final String WHITE = "#FFFFFFFF";
         final String GREY = "#494949";
         final String PURPLE_LIGHT = "#48D28BFF";
-        Log.d(TAG, "Postiton:" + position);
+        //Log.d(TAG, "Postiton:" + position);
         for(int i = 0;i < tabCount; i++){
             if(i == position){
                 textViewArr[i].setTextColor(Color.parseColor(PURPLE));
@@ -174,13 +174,13 @@ public class MainActivity extends AppCompatActivity {
             imageViewArr[i].setColorFilter(Color.parseColor(WHITE));
             linearLayoutArr[i].getBackground().setTint(Color.parseColor(GREY));
         }
-        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 
     private void setBottomPageListeners() {
         for(int i = 0; i < tabCount; i++){
             int finalI = i;
             linearLayoutArr[i].setOnClickListener(v -> {
+                setUi(finalI);
                 pa.setCurrentItem(finalI);
                 service.execute(() -> {
                     Handler handler = new Handler(Looper.getMainLooper());
@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
                         pa.startAnimation(aniFade);
                     });
                 });
-                setUi(finalI);
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             });
         }
     }

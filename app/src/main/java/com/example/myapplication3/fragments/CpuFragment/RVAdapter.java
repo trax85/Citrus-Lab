@@ -29,6 +29,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     private LinearLayout linearLayout1, linearLayout2, linearLayout3, linearLayout4;
     private CpuFragment fragment;
     final static String TAG = "RVAdapter";
+    ExecutorService service = Executors.newSingleThreadExecutor();
 
     public RVAdapter(CpuFragment fragment){
         this.fragment = fragment;
@@ -46,11 +47,10 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String maxFreq = list.get(position).getMaxFreq();
-        String minFreq = list.get(position).getMinFreq();
+        String maxFreq = list.get(position).getAppMaxFreq();
+        String minFreq = list.get(position).getAppMinFreq();
         String govName = list.get(position).getGovernor();
         String clusterName = list.get(position).getClusterName();
-        Log.d(TAG,"Max:" + maxFreq + " min:" + minFreq + "clusterName" + clusterName);
         holder.setData(maxFreq, minFreq, clusterName, govName);
     }
 
@@ -73,11 +73,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         }
 
         public void setData(String maxFreq, String minFreq, String clusterName, String govName) {
-            ExecutorService service = Executors.newSingleThreadExecutor();
             int curCluster = Arrays.asList(fragment.clusterNames).indexOf(clusterName);
-
-            maxFreq = Integer.parseInt(maxFreq) / 1000 + " Mhz";
-            minFreq = Integer.parseInt(minFreq) / 1000 + " Mhz";
 
             textView1.setText(clusterName);
             textView2.setText(maxFreq);
@@ -94,12 +90,12 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                     Bundle bundle = new Bundle();
                     String curGov = fragment.getGov(curCluster);
                     bundle.putString("path", fragment.policyArr[curCluster]);
-                    bundle.putString("gov" , curGov);
+                    bundle.putString("gov", curGov);
                     fragment2.setArguments(bundle);
 
-                    FragmentManager fragmentManager= fragment.getActivity().getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.activity_main,fragment2,"tag");
+                    FragmentManager fragmentManager = fragment.getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.activity_main, fragment2, "tag");
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
                 });

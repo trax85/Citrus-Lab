@@ -107,6 +107,7 @@ public class DisplayFragment extends Fragment {
         recyclerView. setOverScrollMode(View. OVER_SCROLL_NEVER);
         recyclerView.setLayoutManager(layoutManager);
         RVAdapter adapter = new RVAdapter(displayArrayLists);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }

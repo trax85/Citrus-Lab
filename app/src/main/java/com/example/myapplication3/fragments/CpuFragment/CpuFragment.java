@@ -56,14 +56,14 @@ public class CpuFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        
+
         linearLayout = view.findViewById(R.id.stune_launch);
         linearLayout2 = view.findViewById(R.id.core_ctrl_launch);
         service = Executors.newSingleThreadExecutor();
         AppendedFreqList = new ArrayList<>();
         FreqList = new ArrayList<>();
         init();
-        initCpuFreList();
+        initCpuFreqList();
         initRecyclerView(view);
         initListeners();
     }
@@ -101,14 +101,13 @@ public class CpuFragment extends Fragment {
             CpuDataModel cpuList = new CpuDataModel(maxFreq, minFreq, clusterNames[i], govName);
             cpuArrayList.add(cpuList);
         }
-        Log.d(TAG,"init lists length:" + cpuArrayList.size());
     }
 
     /* Initialise and permanent available frequency set with another set with appended 'Mhz'
     * to be used in the Ui representation and our data-model.
     * Note: Appended Frequency != FreqList, appended version is for displaying in Ui so it has
     * been converted to Mhz from Khz with Mhz appended to the end. */
-    private void initCpuFreList(){
+    private void initCpuFreqList(){
         GovArr = CpuStats.splitStrings(policyPath + policyArr[0] + aviGovPath);
         for(int i = 0; i < clusterCount; i++){
             String[] str = CpuStats.splitStrings(policyPath + policyArr[i] + aviFreqPath);
@@ -149,6 +148,7 @@ public class CpuFragment extends Fragment {
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView. setOverScrollMode(View. OVER_SCROLL_NEVER);
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
         adapter = new RVAdapter( this);
     }
 

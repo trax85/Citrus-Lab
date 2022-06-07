@@ -11,6 +11,7 @@
     <string name="voltage">Voltage:</string>
     <string name="core_control_info">This Controls the state of cpu cores. Helpful for quickly reducing temperature of Soc and saving some battery in exchange for loss of processing power.</string>
     <string name="gov_tunable_info">Allows you to tune CPU governor\'s parameters. This tuning \'may\' help improve performance or reduce battery usage(if done right).</string>
-    <string name="cpuset_info">This allows users to select which set of cores are used for diffrent types of tasks mentioned below. This may improve performance or battery life depending on your configuration.</string>
+    <string name="cpuset_info">This allows users to select which set of cores are used for different types of tasks mentioned below. This may improve performance or battery life depending on your configuration.</string>
     <string name="display_info">This menu consists of display pannel settings. allows users to set refresh-rates and turn on various panel features.</string>
+    <string name="cpu_info">This page contains cpu related settings and configuration. Changes made here could have drastic effect on performance and battery.</string>
 </resources>

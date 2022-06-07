@@ -43,7 +43,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:background="@drawable/page_bg"
-                android:paddingBottom="60dp"
+                android:paddingBottom="70dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -54,9 +54,9 @@
                     android:layout_marginStart="12dp"
                     android:layout_marginTop="18dp"
                     android:fontFamily="@font/inter"
-                    android:text="@string/cpuset_info"
+                    android:text="@string/cpu_info"
                     android:textColor="#616161"
-                    android:textSize="10dp"
+                    android:textSize="11sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@+id/ic_core_ctl_info"

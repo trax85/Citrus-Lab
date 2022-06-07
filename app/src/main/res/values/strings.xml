@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application3</string>
+    <string name="app_name">Citrus Lab</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="cluster_1">Cluster 1</string>

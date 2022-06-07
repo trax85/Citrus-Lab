@@ -145,13 +145,13 @@ public class CoreControlFragment extends Fragment {
     //Don't call this without calling setState unless you are still initialising
     public void setUI(int pos, int state) {
         final String GREY = "#757575";
-        final String GREEN = "#00e2b1";
+        final String PURPLE = "#FFBB86FC";
         final String GREY_DEEP = "#616060";
-        final String GREEN_DEEP = "#00C8AA";
+        final String PURPLE_DEEP = "#A175FF";
         String colour,colour_ext, text;
         if (state == 1) {
-            colour = GREEN;
-            colour_ext = GREEN_DEEP;
+            colour = PURPLE;
+            colour_ext = PURPLE_DEEP;
             text = "CORE " + (pos + 1) + " ONLINE";
         } else {
             colour = GREY;

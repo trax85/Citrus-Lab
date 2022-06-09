@@ -63,7 +63,7 @@ public class AboutFragment extends Fragment {
             intent.setData(Uri.parse("https://github.com/Skyking469"));
             startActivity(intent);
         });
-        imageViewGit1.setOnClickListener(v -> {
+        imageViewGit2.setOnClickListener(v -> {
             intent.setData(Uri.parse("https://github.com/prathameshmm02"));
             startActivity(intent);
         });

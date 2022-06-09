@@ -25,7 +25,6 @@ public class SystemInfo {
         ExecutorService service = Executors.newSingleThreadExecutor();
         Handler handler = new Handler(Looper.getMainLooper());
 
-        //Log.d(TAG, "Enter Thread");
         service.execute(() -> {
             homeFragment = fragment;
             // Get the whole uptime
@@ -36,15 +35,15 @@ public class SystemInfo {
             // Get the uptime without deep sleep
             long elapsedMillis = SystemClock.uptimeMillis();
             long deepsleepMills = uptimeMillis - elapsedMillis;
+            //Get percentage of deep sleep
             int percentDeepSleep = (int)(((float)deepsleepMills / (float)uptimeMillis) * 100);
             Uptime = FormatTime(uptimeMillis);
             DeepSleep = FormatTime(deepsleepMills);
-            //Log.d(TAG, "Uptime " + Uptime+ " Deepsleep " + DeepSleep + " "+ percentDeepSleep);
+
             handler.post(() -> {
                 homeFragment.textView11.setText(Uptime);
-                homeFragment.textView12.setText(DeepSleep);
+                homeFragment.textView12.setText(DeepSleep + " (" + percentDeepSleep + "%)");
                 homeFragment.textView13.setText(uname);
-                //Log.d(TAG, "Set");
             });
             try {
                 TimeUnit.MILLISECONDS.sleep(2500);

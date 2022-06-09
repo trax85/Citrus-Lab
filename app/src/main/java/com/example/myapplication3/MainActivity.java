@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.myapplication3.fragments.HomeFragment.AviFreqData;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.topjohnwu.superuser.Shell;
 
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.graphics.Color;
@@ -90,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        AviFreqData model = new ViewModelProvider(this).get(AviFreqData.class);
         ImageButton showSheet = findViewById(R.id.close_menu);
         showSheet.setOnClickListener(v -> {
             if(bottomSheetState) {

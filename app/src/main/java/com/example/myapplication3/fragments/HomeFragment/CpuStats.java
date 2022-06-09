@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import androidx.lifecycle.ViewModelProvider;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import com.topjohnwu.superuser.Shell;
 
@@ -17,7 +18,6 @@ public class CpuStats implements Runnable{
     String scalingAviFreqPath = "/scaling_available_frequencies";
     String curScalingFreqPath = "/scaling_cur_freq";
     public String[] policyArr;
-    String[][] listStr;
     private HomeFragment homeFragment;
     String[][] cpuFreqArr, appCpuFreqArr;
     int clusterCount;
@@ -84,14 +84,14 @@ public class CpuStats implements Runnable{
 
         Handler handler = new Handler(Looper.getMainLooper());
         for(int i = 0; i < clusterCount; i++){
-            curFreq = getFreq(policyPath + policyArr[i] + curScalingFreqPath); //convert to Mhz
             if(!cpuOnline[i]) {
                 curFreq = "Offline";
                 progress = 0;
             }
             else{
-                progress = getProgress(cpuFreqArr[i], curFreq, cpuFreqArr[i].length);
-                //Log.d(TAG, "Progress:" + progress + " cpu:" + curFreq + " cpufreq:" + cpuFreqList[i][0]);
+                curFreq = getFreq(policyPath + policyArr[i] + curScalingFreqPath); //convert to Mhz
+                progress = getProgress(cpuFreqArr[i], curFreq + "000", cpuFreqArr[i].length);
+                Log.d(TAG, "Progress:" + progress + " cpu:" + curFreq + " cpufreq:" + cpuFreqArr[i][0]);
                 curFreq = curFreq + " Mhz";
             }
             int finalI = i;
@@ -117,11 +117,11 @@ public class CpuStats implements Runnable{
     public static String getFreq(String string){
         Shell.Result result = Shell.cmd("cat " + string).exec();
         List<String> out = result.getOut();
-        return Integer.toString(Integer.parseInt(out.get(0)) / 1000);
+        return (Integer.parseInt(out.get(0)) / 1000) + "";
     }
 
     private int getProgress(String[] string, String val, int len){
-        float index = Arrays.asList(string).indexOf(val + "000");
+        float index = Arrays.asList(string).indexOf(val);
         //The values are stored in reverse order inside array
         float out = ((len - index) / len) * 100;
         return (int)out;

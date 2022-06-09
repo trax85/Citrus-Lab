@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Disable swipe left and right
         pa.setUserInputEnabled(false);
-        pa.setOffscreenPageLimit(2);
+        pa.setOffscreenPageLimit(1);
         //Fragment manager & bottom sheet setup
         FragmentManager fm = getSupportFragmentManager();
         VPAdaptor sa = new VPAdaptor(fm, getLifecycle());

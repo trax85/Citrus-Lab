@@ -22,7 +22,6 @@ public class MemoryStats implements Runnable {
     @Override
     public void run(){
         Handler handler = new Handler(Looper.getMainLooper());
-        //Log.d(TAG, "Enter Thread");
         Context context = homeFragment.getActivity().getApplicationContext();
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         ActivityManager.MemoryInfo memoryInfo = new ActivityManager.MemoryInfo();

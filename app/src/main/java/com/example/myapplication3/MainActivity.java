@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         service = Executors.newSingleThreadExecutor();
 
         setUi(0);
-        pa.setCurrentItem(0);
+        pa.setCurrentItem(0, false);
         // if input received anywhere on the screen other than bottomsheet
         /*Shell.getShell(shell -> {
             // The main shell is now constructed and cached
@@ -184,8 +184,8 @@ public class MainActivity extends AppCompatActivity {
         for(int i = 0; i < tabCount; i++){
             int finalI = i;
             linearLayoutArr[i].setOnClickListener(v -> {
+                pa.setCurrentItem(finalI, false);
                 setUi(finalI);
-                pa.setCurrentItem(finalI);
                 service.execute(() -> {
                     Handler handler = new Handler(Looper.getMainLooper());
                     handler.post(() -> {

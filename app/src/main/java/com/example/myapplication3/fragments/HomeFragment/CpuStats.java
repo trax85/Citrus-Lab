@@ -1,77 +1,111 @@
 package com.example.myapplication3.fragments.HomeFragment;
 
 import android.annotation.SuppressLint;
-import android.os.Bundle;
+
+import androidx.lifecycle.ViewModelProvider;
 import android.os.Handler;
 import android.os.Looper;
-import android.os.Message;
-import android.util.Log;
 
 import com.topjohnwu.superuser.Shell;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 public class CpuStats implements Runnable{
     private static final String TAG = "CPUstatsAct";
-    ExecutorService service;
+    public static String policyPath = "/sys/devices/system/cpu/cpufreq";
+    String scalingAviFreqPath = "/scaling_available_frequencies";
+    String curScalingFreqPath = "/scaling_cur_freq";
+    public String[] policyArr;
+    String[][] listStr;
     private HomeFragment homeFragment;
-    Shell.Result clusterOne, clusterTwo, clusterThree;
-    String[] storeClusterOne, storeClusterTwo, storeClusterThree;
-    private int lenOne, lenTwo, lenThree;
-    private int val1, val2, val3;
-    private int mhzval1, mhzval2, mhzval3;
-    List<String[]> cpuFreqList;
-    private int MHz;
+    String[][] cpuFreqArr, appCpuFreqArr;
+    int clusterCount;
+    boolean[] cpuOnline;
+    AviFreqData viewModel;
 
     public void setCpuClass(HomeFragment fragment){
         homeFragment = fragment;
-        initThread();
+        viewModel = new ViewModelProvider(homeFragment.requireActivity()).get(AviFreqData.class);
+        init();
     }
-    public void initThread(){
-        storeClusterOne = splitStrings("/sys/devices/system/cpu/cpufreq/policy0/scaling_available_frequencies");
-        storeClusterTwo = splitStrings("/sys/devices/system/cpu/cpufreq/policy4/scaling_available_frequencies");
-        storeClusterThree = splitStrings("/sys/devices/system/cpu/cpufreq/policy7/scaling_available_frequencies");
-        lenOne = storeClusterOne.length;
-        lenTwo = storeClusterTwo.length;
-        lenThree = storeClusterThree.length;
-        cpuFreqList = new ArrayList<>();
-        cpuFreqList.add(storeClusterOne);
-        cpuFreqList.add(storeClusterTwo);
-        cpuFreqList.add(storeClusterThree);
-        //Log.d(TAG, "Inited Thread with length: "+lenOne+" "+lenTwo+" "+lenThree);
+
+    /* Initialise the cluster count and policy paths for the respective clusters */
+    public void init(){
+        Shell.Result results;
+        List<String> out;
+        results = Shell.cmd(" ls " + policyPath).exec();
+        out = results.getOut();
+        policyArr = out.toArray(new String[out.size()]);//policy list
+        clusterCount = policyArr.length;
+        //Add '/' so it can be used as a path variable
+        for(int i = 0; i < policyArr.length; i++){
+            policyArr[i] = "/" + policyArr[i];
+        }
+        viewModel.setPolicyAttr(policyArr);
+    }
+
+    public void initCpuArr()
+    {
+        cpuFreqArr = new String[clusterCount][];
+        appCpuFreqArr = new String[clusterCount][];
+        cpuOnline = new boolean[clusterCount];
+        String[] str;
+
+        for(int i = 0;i < clusterCount; i++) {
+            str = splitStrings(policyPath + policyArr[i] + scalingAviFreqPath);
+            /* Check if cluster is online if not we skip to avoid crashing app while
+             * converting string to int. if we encounter any alphabet in the string then
+             * there was an error in fetching values aka offline */
+            if(!isNumber(str[0])){
+                cpuOnline[i] = false;
+                continue;
+            }
+
+            cpuFreqArr[i] = str;
+            String temp[] = new String[str.length];
+            for(int j = 0; j < str.length; j++){
+                temp[j] = Integer.parseInt(str[j]) / 1000 + " Mhz";
+            }
+            appCpuFreqArr[i] = temp;
+            cpuOnline[i] = true;
+        }
+        //Log.d(TAG, "cpufreq" + cpuFreqList[1][1] + "appcpu" + appCpuFreqList[1][1]);
+        viewModel.setCpuOnline(cpuOnline);
+        viewModel.setCpuFreqArr(cpuFreqArr);
+        viewModel.setAppCpuFreqArr(appCpuFreqArr);
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     public void run(){
-        Handler handler = new Handler(Looper.getMainLooper());
-        //Log.d(TAG, "Enter Thread");
-        clusterOne = Shell.cmd("cat /sys/devices/system/cpu/cpufreq/policy0/scaling_cur_freq").exec();
-        val1 = getProgress(storeClusterOne, clusterOne.getOut(), lenOne);
-        mhzval1 = MHz/1000;
-        clusterTwo = Shell.cmd("cat /sys/devices/system/cpu/cpufreq/policy4/scaling_cur_freq").exec();
-        val2 = getProgress(storeClusterTwo, clusterTwo.getOut(), lenTwo);
-        mhzval2 = MHz/1000;
-        clusterThree = Shell.cmd("cat /sys/devices/system/cpu/cpufreq/policy7/scaling_cur_freq").exec();
-        val3 = getProgress(storeClusterThree, clusterThree.getOut(), lenThree);
-        mhzval3 = MHz/1000;
+        int progress;
+        String curFreq;
 
-        handler.post(() -> {
-            // Update Cpustats UI elements
-            homeFragment.cProgressIndicator1.setCurrentProgress(val1);
-            homeFragment.cProgressIndicator2.setCurrentProgress(val2);
-            homeFragment.cProgressIndicator3.setCurrentProgress(val3);
-            homeFragment.textView1.setText(mhzval1 + "MHz");
-            homeFragment.textView2.setText(mhzval2 + "MHz");
-            homeFragment.textView3.setText(mhzval3 + "MHz");
-        });
+        Handler handler = new Handler(Looper.getMainLooper());
+        for(int i = 0; i < clusterCount; i++){
+            curFreq = getFreq(policyPath + policyArr[i] + curScalingFreqPath); //convert to Mhz
+            if(!cpuOnline[i]) {
+                curFreq = "Offline";
+                progress = 0;
+            }
+            else{
+                progress = getProgress(cpuFreqArr[i], curFreq, cpuFreqArr[i].length);
+                //Log.d(TAG, "Progress:" + progress + " cpu:" + curFreq + " cpufreq:" + cpuFreqList[i][0]);
+                curFreq = curFreq + " Mhz";
+            }
+            int finalI = i;
+            int finalProgress = progress;
+            String finalCurFreq = curFreq;
+
+            handler.post(() -> {
+              homeFragment.cProg[finalI].setCurrentProgress(finalProgress);
+              homeFragment.textViews[finalI].setText(finalCurFreq);
+            });
+        }
     }
 
+    // ---------Set of helper functions-----------
     public static String[] splitStrings(String string){
         Shell.Result result = Shell.cmd("cat " + string).exec();
         List<String> out = result.getOut();
@@ -79,11 +113,25 @@ public class CpuStats implements Runnable{
         // Some workarounds to get in form of strings
         return arrStr[0].split("\\s+");
     }
-    private int getProgress(String[] string, List<String> val, int len){
-        float index = Arrays.asList(string).indexOf(val.get(0));
-        MHz = Integer.parseInt(val.get(0));
+
+    public static String getFreq(String string){
+        Shell.Result result = Shell.cmd("cat " + string).exec();
+        List<String> out = result.getOut();
+        return Integer.toString(Integer.parseInt(out.get(0)) / 1000);
+    }
+
+    private int getProgress(String[] string, String val, int len){
+        float index = Arrays.asList(string).indexOf(val + "000");
         //The values are stored in reverse order inside array
         float out = ((len - index) / len) * 100;
         return (int)out;
+    }
+
+    public static boolean isNumber(String str){
+        try{
+            Integer.parseInt(str);
+            return true;
+        }catch(NumberFormatException ex){}
+        return false;
     }
 }

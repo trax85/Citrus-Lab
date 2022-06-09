@@ -30,17 +30,19 @@ import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator;
 
 
 public class HomeFragment extends Fragment {
-    CpuStats cpuStats = new CpuStats();
-    BatteryStats batteryStats = new BatteryStats();
-    MemoryStats memoryStats = new MemoryStats();
-    SystemInfo systemInfo = new SystemInfo();
     private static final String TAG = "HomeActivity";
-    IntentFilter filter = new IntentFilter();
+    public CpuStats cpuStats;
+    BatteryStats batteryStats;
+    MemoryStats memoryStats;
+    SystemInfo systemInfo;
+    IntentFilter filter;
     ScheduledThreadPoolExecutor executor;
     CircularProgressIndicator cProgressIndicator1, cProgressIndicator2, cProgressIndicator3;
     TextView textView1, textView2, textView3, textView4, textView5, textView6, textView7,
             textView8, textView9, textView10, textView11, textView12, textView13, textView14,
-    textView15, textView16;
+            textView15, textView16;
+    CircularProgressIndicator[] cProg;
+    TextView[] textViews;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -53,6 +55,12 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        cpuStats = new CpuStats();
+        batteryStats = new BatteryStats();;
+        memoryStats = new MemoryStats();
+        systemInfo = new SystemInfo();
+        filter = new IntentFilter();
 
         initViews(view);
         cProgressIndicator1.setMaxProgress(100);
@@ -76,6 +84,10 @@ public class HomeFragment extends Fragment {
         textView1 = view.findViewById(R.id.textView1);
         textView2 = view.findViewById(R.id.textView2);
         textView3 = view.findViewById(R.id.textView3);
+        cProg = new CircularProgressIndicator[]{cProgressIndicator1, cProgressIndicator2,
+                cProgressIndicator3};
+        textViews = new TextView[]{textView1, textView2, textView3};
+
         //Battery stats Ui elements
         textView4 = view.findViewById(R.id.textView8);
         textView5 = view.findViewById(R.id.textView10);
@@ -114,6 +126,7 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         //Init and Start threads
+        cpuStats.initCpuArr();
         executor = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(5);
         executor.scheduleWithFixedDelay(cpuStats,0,1000, TimeUnit.MILLISECONDS);
         executor.scheduleWithFixedDelay(batteryStats,0,1300, TimeUnit.MILLISECONDS);

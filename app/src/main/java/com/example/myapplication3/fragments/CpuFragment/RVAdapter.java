@@ -1,6 +1,5 @@
 package com.example.myapplication3.fragments.CpuFragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -86,6 +85,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                 linearLayout2.setOnClickListener(v -> showMinFreqDialog(curCluster));
                 linearLayout3.setOnClickListener(v -> showGovDialog(curCluster));
                 linearLayout4.setOnClickListener(v -> {
+                    if(!fragment.cpuOnline[curCluster])
+                        return;
                     TunableFragment fragment2 = new TunableFragment();
                     Bundle bundle = new Bundle();
                     String curGov = fragment.getGov(curCluster);
@@ -104,14 +105,16 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     }
 
     public void showMaxFreqDialog(int curCluster){
-        String[] AppFreqArr = fragment.AppendedFreqList.get(curCluster); //Mhz
-        String[] FreqList = fragment.FreqList.get(curCluster);  //Khz
+        if(!fragment.cpuOnline[curCluster])
+            return;
+        String[] AppFreqArr = fragment.AppendedFreqArr[curCluster]; //Mhz
+        String[] FreqArr = fragment.FreqArr[curCluster];  //Khz
         String Freq = fragment.getFreq(curCluster, fragment.maxFreqPath);
-        int checkedItem = Arrays.asList(FreqList).indexOf(Freq);
+        int checkedItem = Arrays.asList(FreqArr).indexOf(Freq);
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(fragment.getActivity());
         builder.setTitle("Choose Max Frequency");
         builder.setSingleChoiceItems(AppFreqArr, checkedItem, (dialog, which) -> {
-            list.get(curCluster).setMaxFreq(FreqList[which]);
+            list.get(curCluster).setMaxFreq(FreqArr[which]);
             list.get(curCluster).setAppMaxFreq(AppFreqArr[which]);
             //Reduce stress on single thread
             fragment.setMaxFreq(list.get(curCluster), curCluster);
@@ -121,14 +124,16 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     }
 
     public void showMinFreqDialog(int curCluster){
-        String[] AppFreqArr = fragment.AppendedFreqList.get(curCluster);    //Mhz
-        String[] FreqList = fragment.FreqList.get(curCluster);  //Khz
+        if(!fragment.cpuOnline[curCluster])
+            return;
+        String[] AppFreqArr = fragment.AppendedFreqArr[curCluster];    //Mhz
+        String[] FreqArr = fragment.FreqArr[curCluster];  //Khz
         String Freq = fragment.getFreq(curCluster, fragment.minFreqPath);
-        int checkedItem = Arrays.asList(FreqList).indexOf(Freq);
+        int checkedItem = Arrays.asList(FreqArr).indexOf(Freq);
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(fragment.getActivity());
         builder.setTitle("Choose Max Frequency");
         builder.setSingleChoiceItems(AppFreqArr, checkedItem, (dialog, which) -> {
-            list.get(curCluster).setMinFreq(FreqList[which]);
+            list.get(curCluster).setMinFreq(FreqArr[which]);
             list.get(curCluster).setAppMinFreq(AppFreqArr[which]);
             fragment.setMinFreq(list.get(curCluster), curCluster);
             dialog.dismiss();
@@ -137,6 +142,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     }
 
     public void showGovDialog(int curCluster){
+        if(!fragment.cpuOnline[curCluster])
+            return;
         String[] aviGov = fragment.GovArr;
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(fragment.getActivity());
         builder.setTitle("Choose Governor");

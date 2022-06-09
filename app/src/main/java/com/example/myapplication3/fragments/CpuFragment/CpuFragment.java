@@ -7,12 +7,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +22,7 @@ import com.example.myapplication3.R;
 import com.example.myapplication3.fragments.CpuFragment.CoreControl.CoreControlFragment;
 import com.example.myapplication3.fragments.CpuFragment.CpuSets.CpuSetFragment;
 import com.example.myapplication3.fragments.HomeFragment.CpuStats;
+import com.example.myapplication3.fragments.HomeFragment.AviFreqData;
 import com.topjohnwu.superuser.Shell;
 
 import java.util.ArrayList;
@@ -36,16 +37,16 @@ public class CpuFragment extends Fragment {
     String minFreqPath = "/scaling_min_freq";
     String governorPath = "/scaling_governor";
     String aviGovPath = "/scaling_available_governors";
-    String aviFreqPath = "/scaling_available_frequencies";
     String[] policyArr, GovArr;
     static final String TAG = "Cpustats";
-    List<String[]> FreqList, AppendedFreqList;
-    int clusterCount;
+    String[][] FreqArr, AppendedFreqArr;
+    boolean[] cpuOnline;
     static String[] clusterNames = {"Little Cluster", "Big Cluster", "Prime Cluster"};
     RVAdapter adapter;
     RecyclerView recyclerView;
     ExecutorService service;
     LinearLayout linearLayout, linearLayout2;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -60,10 +61,6 @@ public class CpuFragment extends Fragment {
         linearLayout = view.findViewById(R.id.stune_launch);
         linearLayout2 = view.findViewById(R.id.core_ctrl_launch);
         service = Executors.newSingleThreadExecutor();
-        AppendedFreqList = new ArrayList<>();
-        FreqList = new ArrayList<>();
-        init();
-        initCpuFreqList();
         initRecyclerView(view);
         initListeners();
     }
@@ -71,6 +68,8 @@ public class CpuFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        init();
         initList();
         adapter.setAdapter(cpuArrayList);
         recyclerView.setAdapter(adapter);
@@ -79,16 +78,12 @@ public class CpuFragment extends Fragment {
 
     /* Initialise the cluster count and policy paths for the respective clusters */
     public void init(){
-        Shell.Result results;
-        List<String> out;
-        results = Shell.cmd(" ls /sys/devices/system/cpu/cpufreq").exec();
-        out = results.getOut();
-        policyArr = out.toArray(new String[out.size()]);//policy list
-        clusterCount = policyArr.length;
-        //Add '/' so it can be used as a path variable
-        for(int i = 0; i < policyArr.length; i++){
-            policyArr[i] = "/" + policyArr[i];
-        }
+        AviFreqData viewModel = new ViewModelProvider(requireActivity()).get(AviFreqData.class);
+        FreqArr = viewModel.getCpuFreqArr();
+        AppendedFreqArr = viewModel.getAppCpuFreqArr();
+        policyArr = viewModel.getPolicyAttr();
+        cpuOnline = viewModel.getCpuOnline();
+        GovArr =  CpuStats.splitStrings(policyPath + policyArr[0] + aviGovPath);
     }
 
     /* Initialise cpuArrayList and append 'Mhz' to cpuArrayList list with variables */
@@ -100,25 +95,6 @@ public class CpuFragment extends Fragment {
             String govName = getStr(policyPath + policyArr[i] + governorPath);
             CpuDataModel cpuList = new CpuDataModel(maxFreq, minFreq, clusterNames[i], govName);
             cpuArrayList.add(cpuList);
-        }
-    }
-
-    /* Initialise and permanent available frequency set with another set with appended 'Mhz'
-    * to be used in the Ui representation and our data-model.
-    * Note: Appended Frequency != FreqList, appended version is for displaying in Ui so it has
-    * been converted to Mhz from Khz with Mhz appended to the end. */
-    private void initCpuFreqList(){
-        GovArr = CpuStats.splitStrings(policyPath + policyArr[0] + aviGovPath);
-        for(int i = 0; i < clusterCount; i++){
-            String[] str = CpuStats.splitStrings(policyPath + policyArr[i] + aviFreqPath);
-            FreqList.add(str);  //Khz
-        }
-        for(int i = 0; i < clusterCount; i++){
-            String[] str = CpuStats.splitStrings(policyPath + policyArr[i] + aviFreqPath);
-            for(int j = 0; j < str.length; j++) {
-                str[j] = Integer.parseInt(str[j]) / 1000 + " Mhz";
-            }
-            AppendedFreqList.add(str);  //Mhz
         }
     }
 

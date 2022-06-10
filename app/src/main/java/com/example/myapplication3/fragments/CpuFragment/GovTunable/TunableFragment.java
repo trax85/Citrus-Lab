@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.myapplication3.R;
 import com.example.myapplication3.fragments.CpuFragment.CpuFragment;
@@ -25,11 +26,13 @@ import java.util.List;
 
 public class TunableFragment extends Fragment {
     String policyPath, curGov, policy;
-    public String[] itemsArr, appItemArr;
+    public String[] itemsArr;
+    TextView textView;
     List<TunableDataModel> ItemList;
     TunableRVAdapter adapter;
     RecyclerView recyclerView;
     ImageView imageView;
+    boolean dataSetReceived = true;
     static final String TAG = "TunableFrag";
 
     @Override
@@ -43,6 +46,7 @@ public class TunableFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        textView = view.findViewById(R.id.no_items);
         imageView = view.findViewById(R.id.ic_core_ctl_back);
         imageView.setOnClickListener(v -> getActivity().onBackPressed());
         Bundle bundle = getArguments();
@@ -51,6 +55,9 @@ public class TunableFragment extends Fragment {
         policy = CpuFragment.policyPath;
         ItemList = new ArrayList<>();
         initItems();
+        if(!dataSetReceived)
+            return;
+        textView.setVisibility(View.INVISIBLE);
         initItemList();
         initTRVAdapter(view);
     }
@@ -58,6 +65,8 @@ public class TunableFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        if(!dataSetReceived)
+            return;
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
@@ -65,7 +74,10 @@ public class TunableFragment extends Fragment {
     public void initItems(){
         Shell.Result result = Shell.cmd("ls "+ policy + policyPath +curGov).exec();
         List<String> out = result.getOut();
-        itemsArr = out.toArray(new String[out.size()]);
+        if(checkItem(out.get(0)))
+            itemsArr = out.toArray(new String[out.size()]);
+        else
+            dataSetReceived = false;
     }
 
     public void initItemList(){
@@ -99,5 +111,15 @@ public class TunableFragment extends Fragment {
             recyclerView.setAdapter(adapter);
             adapter.notifyItemChanged(index);
         });
+    }
+
+    public boolean checkItem(String str){
+        String testFor = "No such file or directory";
+        int test = str.indexOf(testFor);
+        Log.d(TAG, "index found:" + test);
+        if(test >= 0)
+            return false;
+        else
+            return true;
     }
 }

@@ -81,6 +81,21 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView30"
                 tools:listitem="@layout/tunable_list_items" />
+
+            <TextView
+                android:id="@+id/no_items"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No tunables available"
+                android:layout_marginTop="80dp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:textColor="#616161"
+                android:textSize="17sp"
+                android:fontFamily="@font/inter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView30" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
     <LinearLayout

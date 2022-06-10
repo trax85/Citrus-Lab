@@ -42,7 +42,7 @@ public class TunableRVAdapter extends RecyclerView.Adapter<TunableRVAdapter.View
     public void onBindViewHolder(@NonNull TunableRVAdapter.ViewHolder holder, int position) {
         String tunableNames = list.get(position).getTunableName();
         String tunableAttr = list.get(position).getTunableAttr();
-        Log.d(TAG, "View Builder attr" + tunableAttr);
+        //Log.d(TAG, "View Builder attr" + tunableAttr);
         holder.setData(tunableNames, tunableAttr);
     }
 
@@ -59,10 +59,13 @@ public class TunableRVAdapter extends RecyclerView.Adapter<TunableRVAdapter.View
             layout = itemView.findViewById(R.id.layoutTunable);
         }
 
-        public void setData(String tunableNames, String tunableAttr) {
+        public void setData(String tunableNames, String tunableAttr)
+        {
             int itemNum = Arrays.asList(fragment.itemsArr).indexOf(tunableNames);
+
             textView1.setText(tunableNames);
             textView2.setText(tunableAttr);
+
             layout.setOnClickListener(v -> {
                 MaterialAlertDialogBuilder builder = new
                         MaterialAlertDialogBuilder(fragment.getActivity());

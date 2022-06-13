@@ -20,10 +20,8 @@ import android.widget.TextView;
 import com.example.myapplication3.BuildConfig;
 import com.example.myapplication3.R;
 
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator;

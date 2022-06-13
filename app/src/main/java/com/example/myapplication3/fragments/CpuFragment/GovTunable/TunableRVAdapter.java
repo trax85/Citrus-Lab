@@ -1,6 +1,5 @@
 package com.example.myapplication3.fragments.CpuFragment.GovTunable;
 
-import android.content.DialogInterface;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;

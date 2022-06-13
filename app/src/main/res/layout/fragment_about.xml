@@ -185,62 +185,10 @@
                 app:layout_constraintTop_toBottomOf="@+id/credits_title" />
 
             <TextView
-                android:id="@+id/skyking"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:fontFamily="@font/nunito_sans"
-                android:letterSpacing="0.05"
-                android:text="Akash Dhuri"
-                android:textColor="@color/primary_colour"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/credits_sub_title" />
-
-            <TextView
-                android:id="@+id/cred_sky"
-                android:layout_width="320dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/nunito_sans"
-                android:letterSpacing="0.0"
-                android:textAlignment="center"
-                android:text="Helped with Ui design and pallet selection for app and finding the right people :)"
-                android:textColor="#676767"
-                android:textSize="13sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/skyking" />
-
-            <ImageView
-                android:id="@+id/akash_tele"
-                android:layout_width="34dp"
-                android:layout_height="34dp"
-                android:layout_marginTop="16dp"
-                android:src="@drawable/ic_telegram"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.42"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cred_sky" />
-
-            <ImageView
-                android:id="@+id/akash_git"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="14dp"
-                android:src="@drawable/ic_github"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.58"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cred_sky" />
-
-            <TextView
                 android:id="@+id/prath"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="80dp"
+                android:layout_marginTop="18dp"
                 android:fontFamily="@font/nunito_sans"
                 android:letterSpacing="0.05"
                 android:text="Prathamesh"
@@ -249,7 +197,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cred_sky" />
+                app:layout_constraintTop_toBottomOf="@+id/credits_sub_title" />
 
             <TextView
                 android:id="@+id/cred_prath"
@@ -289,6 +237,58 @@
                 app:layout_constraintHorizontal_bias="0.58"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cred_prath" />
+
+            <TextView
+                android:id="@+id/skyking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="110dp"
+                android:fontFamily="@font/nunito_sans"
+                android:letterSpacing="0.05"
+                android:text="Akash Dhuri"
+                android:textColor="@color/primary_colour"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/prath" />
+
+            <TextView
+                android:id="@+id/cred_sky"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/nunito_sans"
+                android:letterSpacing="0.0"
+                android:textAlignment="center"
+                android:text="Helped with Ui design and pallet selection for app and finding the right people :)"
+                android:textColor="#676767"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/skyking" />
+
+            <ImageView
+                android:id="@+id/akash_tele"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_telegram"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.42"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cred_sky" />
+
+            <ImageView
+                android:id="@+id/akash_git"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="14dp"
+                android:src="@drawable/ic_github"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.58"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cred_sky" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

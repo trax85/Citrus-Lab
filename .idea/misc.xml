@@ -3,11 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/bottomsheetlayout.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_about.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_core_control.xml" value="0.5" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_cpuset.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_display.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_home.xml" value="0.34507042253521125" />
+        <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_tunable.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/MyApplication3/app/src/main/res/drawable/about_page_action_bar.xml" value="0.165" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/MyApplication3/app/src/main/res/drawable/action_bar.xml" value="0.2085" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/MyApplication3/app/src/main/res/drawable/bottpagetxtbox.xml" value="0.2085" />

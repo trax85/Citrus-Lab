@@ -91,7 +91,7 @@ public class CpuStats implements Runnable{
             else{
                 curFreq = getFreq(policyPath + policyArr[i] + curScalingFreqPath); //convert to Mhz
                 progress = getProgress(cpuFreqArr[i], curFreq + "000", cpuFreqArr[i].length);
-                Log.d(TAG, "Progress:" + progress + " cpu:" + curFreq + " cpufreq:" + cpuFreqArr[i][0]);
+                //Log.d(TAG, "Progress:" + progress + " cpu:" + curFreq + " cpufreq:" + cpuFreqArr[i][0]);
                 curFreq = curFreq + " Mhz";
             }
             int finalI = i;
@@ -131,7 +131,8 @@ public class CpuStats implements Runnable{
         try{
             Integer.parseInt(str);
             return true;
-        }catch(NumberFormatException ex){}
-        return false;
+        }catch(NumberFormatException ex){
+            return false;
+        }
     }
 }

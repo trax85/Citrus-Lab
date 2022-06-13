@@ -57,9 +57,8 @@ public class SystemInfo {
         long minutes = seconds / 60;
         long hours = minutes / 60;
         long days = hours / 24;
-        String time = days + "d, " + hours % 24 + "h, " + minutes % 60 + "m, " + seconds % 60 +
+        return days + "d, " + hours % 24 + "h, " + minutes % 60 + "m, " + seconds % 60 +
                 "s";
-        return time;
     }
 
 }

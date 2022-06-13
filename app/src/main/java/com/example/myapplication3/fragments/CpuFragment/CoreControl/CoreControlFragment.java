@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapplication3.R;
 import com.topjohnwu.superuser.Shell;
@@ -89,7 +90,7 @@ public class CoreControlFragment extends Fragment {
     }
 
     public void setUpListners(){
-        for(int i = 0; i < imageViews.length; i++){
+        for(int i = 1; i < imageViews.length; i++){
             int finalI = i;
             imageViews[i].setOnClickListener(v -> {
                 if(coreStateArr[finalI] == 1) //If core Online the Offline it and vice versa
@@ -98,6 +99,8 @@ public class CoreControlFragment extends Fragment {
                     setState(finalI, 1);
             });
         }
+        textView1.setOnClickListener(v -> Toast.makeText(getActivity(),
+                "Cannot turn off Core 1", Toast.LENGTH_SHORT).show());
         imageViewBack.setOnClickListener(v -> {
             getActivity().onBackPressed();
         });

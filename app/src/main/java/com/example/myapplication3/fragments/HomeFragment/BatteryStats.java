@@ -41,7 +41,7 @@ public class BatteryStats implements Runnable{
             homeFragment.textView4.setText(capacity + "%");
             homeFragment.textView5.setText(chargeRes +" " + volt+ "mV");
             homeFragment.textView6.setText(temps + " C" + "\u00B0");
-            homeFragment.textView7.setText(totalCap+ "Mah");
+            homeFragment.textView7.setText("4500"+ "Mah"); //Hard code for now
             //Log.d(TAG, "Set");
         });
     }
@@ -52,16 +52,13 @@ public class BatteryStats implements Runnable{
             String action = intent.getAction();
             if (action.equals(Intent.ACTION_BATTERY_CHANGED)) {
                 String statusString = "";
-                String acString = "";
+                String acString;
                 int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, 0);
                 int plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED,
                         0);
                 int state = 0;
                 totalCap = BatteryManager.BATTERY_PROPERTY_CAPACITY;
                 capacity = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
-                final String POWER_PROFILE_CLASS = "com.android.internal.os.PowerProfile";
-               // volt = intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE,
-                 //       0);
                 Bundle bundle = intent.getExtras();
                 currNow = bundle.getInt("current_avg");
                 temps = (float)(bundle.getInt("temperature")/10);

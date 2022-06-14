@@ -66,13 +66,16 @@
 
                 <TextView
                     android:id="@+id/textviewMaxFreq"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="100dp"
+                    android:layout_marginStart="76dp"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/inter"
                     android:letterSpacing="0.01"
                     android:text="Mhz"
+                    android:textAlignment="center"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:textColor="@color/white"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -107,13 +110,16 @@
 
                 <TextView
                     android:id="@+id/textviewMinFreq"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="104dp"
+                    android:layout_marginStart="79dp"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/inter"
                     android:letterSpacing="0.01"
                     android:text="Mhz"
+                    android:textAlignment="center"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:textColor="@color/white"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -129,8 +135,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="53dp"
                 android:layout_marginTop="112dp"
-                android:clickable="true"
                 android:background="@drawable/rounded_btn"
+                android:clickable="true"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="189dp">
 
@@ -148,13 +154,16 @@
 
                 <TextView
                     android:id="@+id/textviewGov"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="140dp"
+                    android:layout_marginStart="115dp"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/inter"
                     android:letterSpacing="0.01"
                     android:text="Name"
+                    android:textAlignment="center"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:textColor="@color/white"
                     android:textSize="13sp" />
             </LinearLayout>

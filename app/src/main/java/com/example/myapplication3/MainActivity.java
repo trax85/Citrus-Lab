@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager2 pa;
     ExecutorService service;
     private Animation aniFade;
-    int tabCount = 4;
+    VPAdaptor vpAdaptor;
     private static final String TAG = "HomeActivity";
 
     static {
@@ -72,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
         pa.setOffscreenPageLimit(1);
         //Fragment manager & bottom sheet setup
         FragmentManager fm = getSupportFragmentManager();
-        VPAdaptor sa = new VPAdaptor(fm, getLifecycle());
-        pa.setAdapter(sa);
+        vpAdaptor = new VPAdaptor(fm, getLifecycle());
+        pa.setAdapter(vpAdaptor);
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetLayout);
         bottomSheetBehavior.setPeekHeight(178);
         bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
@@ -173,8 +173,8 @@ public class MainActivity extends AppCompatActivity {
         final String WHITE = "#FFFFFFFF";
         final String GREY = "#494949";
         final String PURPLE_LIGHT = "#48D28BFF";
-        //Log.d(TAG, "Postiton:" + position);
-        for(int i = 0;i < tabCount; i++){
+        Log.d(TAG, "Postiton:" + position);
+        for(int i = 0;i < vpAdaptor.totalTabs; i++){
             if(i == position){
                 textViewArr[i].setTextColor(Color.parseColor(PURPLE));
                 imageViewArr[i].setColorFilter(Color.parseColor(PURPLE));
@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setBottomPageListeners() {
-        for(int i = 0; i < tabCount; i++){
+        for(int i = 0; i < vpAdaptor.totalTabs; i++){
             int finalI = i;
             linearLayoutArr[i].setOnClickListener(v -> {
                 pa.setCurrentItem(finalI, false);

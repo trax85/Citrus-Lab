@@ -111,6 +111,13 @@
                         android:textSize="15dp"
                         android:textStyle="bold" />
 
+                    <ImageView
+                        android:layout_width="23dp"
+                        android:layout_height="23dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="122dp"
+                        android:src="@drawable/ic_more"/>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -138,6 +145,13 @@
                         android:textColor="@color/secondary_colour"
                         android:textSize="15dp"
                         android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="23dp"
+                        android:layout_height="23dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="100dp"
+                        android:src="@drawable/ic_more"/>
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

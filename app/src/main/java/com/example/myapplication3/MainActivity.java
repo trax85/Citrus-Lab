@@ -36,9 +36,9 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout bottomSheetLayout;
     private LinearLayout linearLayout;
     private BottomSheetBehavior bottomSheetBehavior;
-    private TextView textViewDash, textViewDisp, textViewCpu, textViewAbout;
-    private ImageView imageViewDash, imageViewDisp, imageViewCpu, imageViewAbout;
-    private LinearLayout homeLayout, displayLayout, aboutLayout ,cpuLayout;
+    private TextView textViewDash, textViewDisp, textViewCpu, textViewGpu, textViewAbout;
+    private ImageView imageViewDash, imageViewDisp, imageViewCpu, imageViewGpu ,imageViewAbout;
+    private LinearLayout homeLayout, displayLayout, aboutLayout ,cpuLayout, gpuLayout;
     private TextView[] textViewArr;
     private ImageView[] imageViewArr;
     private LinearLayout[] linearLayoutArr;
@@ -138,15 +138,19 @@ public class MainActivity extends AppCompatActivity {
         textViewDash = findViewById(R.id.textViewDash);
         textViewDisp = findViewById(R.id.textViewDisp);
         textViewCpu = findViewById(R.id.textViewCpu);
+        textViewGpu = findViewById(R.id.textViewGpu);
         textViewAbout = findViewById(R.id.textViewAbout);
+
         imageViewDash = findViewById(R.id.imageViewDash);
         imageViewDisp = findViewById(R.id.imageViewDisp);
         imageViewCpu = findViewById(R.id.imageViewCpu);
+        imageViewGpu = findViewById(R.id.imageViewGpu);
         imageViewAbout = findViewById(R.id.imageViewAbout);
 
         homeLayout = findViewById(R.id.layoutHome);
         displayLayout = findViewById(R.id.layoutDisplay);
         cpuLayout = findViewById(R.id.layoutCpu);
+        gpuLayout = findViewById(R.id.layoutGpu);
         aboutLayout = findViewById(R.id.layoutAbout);
 
         linearLayout = findViewById(R.id.nested_scroll);
@@ -156,9 +160,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void initList(){
         Log.d(TAG,"List initialised");
-        textViewArr = new TextView[]{textViewDash, textViewDisp, textViewCpu, textViewAbout};
-        imageViewArr = new ImageView[]{imageViewDash, imageViewDisp, imageViewCpu, imageViewAbout};
-        linearLayoutArr = new LinearLayout[]{homeLayout, displayLayout, cpuLayout, aboutLayout};
+        textViewArr = new TextView[]{textViewDash, textViewDisp, textViewCpu, textViewGpu,
+                textViewAbout};
+        imageViewArr = new ImageView[]{imageViewDash, imageViewDisp, imageViewCpu, imageViewGpu,
+                imageViewAbout};
+        linearLayoutArr = new LinearLayout[]{homeLayout, displayLayout, cpuLayout, gpuLayout,
+                 aboutLayout};
     }
 
     private void setUi(int position){

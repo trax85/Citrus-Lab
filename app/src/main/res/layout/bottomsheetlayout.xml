@@ -127,6 +127,39 @@
 
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/layoutGpu"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_bottompage"
+        android:backgroundTint="@color/bottom_page"
+        android:layout_marginTop="4dp"
+        android:paddingStart="21dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        tools:ignore="RtlSymmetry">
+
+        <ImageView
+            android:id="@+id/imageViewGpu"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_gpu" />
+
+        <TextView
+            android:id="@+id/textViewGpu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="19dp"
+            android:fontFamily="@font/inter"
+            android:text="GPU"
+            android:letterSpacing="0.2"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+    <LinearLayout
         android:id="@+id/layoutAbout"
         android:orientation="horizontal"
         android:layout_width="match_parent"

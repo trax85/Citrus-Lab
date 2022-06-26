@@ -11,10 +11,11 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.example.myapplication3.fragments.AboutFragment.AboutFragment;
 import com.example.myapplication3.fragments.CpuFragment.CpuFragment;
 import com.example.myapplication3.fragments.DisplayFragment.DisplayFragment;
+import com.example.myapplication3.fragments.GpuFragment.GpuFragment;
 import com.example.myapplication3.fragments.HomeFragment.HomeFragment;
 
 public class VPAdaptor extends FragmentStateAdapter {
-    int totalTabs = 4;
+    int totalTabs = 5;
     final static String TAG = "VPAdapter";
     public VPAdaptor(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
         super(fragmentManager, lifecycle);
@@ -34,6 +35,9 @@ public class VPAdaptor extends FragmentStateAdapter {
                 Log.d(TAG,"CpuFragment created");
                 return new CpuFragment();
             case 3:
+                Log.d(TAG, "GpuFragment created");
+                return new GpuFragment();
+            case 4:
                 Log.d(TAG,"AboutFragment created");
                 return new AboutFragment();
             default:

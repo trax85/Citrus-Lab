@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import com.example.myapplication3.R;
 import com.example.myapplication3.fragments.CpuFragment.CoreControl.CoreControlFragment;
 import com.example.myapplication3.fragments.CpuFragment.CpuSets.CpuSetFragment;
+import com.example.myapplication3.fragments.CpuFragment.Stune.StuneFragment;
 import com.example.myapplication3.fragments.HomeFragment.CpuStats;
 import com.example.myapplication3.fragments.HomeFragment.AviFreqData;
 import com.topjohnwu.superuser.Shell;
@@ -45,7 +46,7 @@ public class CpuFragment extends Fragment {
     RVAdapter adapter;
     RecyclerView recyclerView;
     ExecutorService service;
-    LinearLayout linearLayout, linearLayout2;
+    LinearLayout linearLayout1, linearLayout2, linearLayout3;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,8 +59,9 @@ public class CpuFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        linearLayout = view.findViewById(R.id.stune_launch);
+        linearLayout1 = view.findViewById(R.id.cpusets_launch);
         linearLayout2 = view.findViewById(R.id.core_ctrl_launch);
+        linearLayout3 = view.findViewById(R.id.stune_launch);
         service = Executors.newSingleThreadExecutor();
         initRecyclerView(view);
         initListeners();
@@ -99,7 +101,7 @@ public class CpuFragment extends Fragment {
     }
 
     public void initListeners(){
-        linearLayout.setOnClickListener(v -> {
+        linearLayout1.setOnClickListener(v -> {
             CpuSetFragment frag = new CpuSetFragment();
             FragmentManager fragmentManager= getActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
@@ -109,6 +111,14 @@ public class CpuFragment extends Fragment {
         });
         linearLayout2.setOnClickListener(v -> {
             CoreControlFragment frag = new CoreControlFragment();
+            FragmentManager fragmentManager= getActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.activity_main,frag,"tag #3");
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        });
+        linearLayout3.setOnClickListener(v -> {
+            StuneFragment frag = new StuneFragment();
             FragmentManager fragmentManager= getActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.activity_main,frag,"tag #3");

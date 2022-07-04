@@ -6,16 +6,16 @@
     android:layout_height="wrap_content"
     android:id="@+id/layoutTunable" >
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="80dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="5dp"
+            android:layout_width="@dimen/_260sdp"
+            android:layout_height="@dimen/_64sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
             android:background="@drawable/core_ctrl_container_bg"
             android:foreground="@drawable/rounded_btn"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -27,26 +27,27 @@
                 android:id="@+id/nameOfTunable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="27dp"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_22sdp"
                 android:fontFamily="@font/inter"
                 android:letterSpacing="0.02"
                 android:text="Tunable Name"
                 android:textColor="@color/white"
-                android:textSize="14sp"
+                android:textSize="@dimen/_11sdp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/valOfAttr"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/_90sdp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="240dp"
-                android:layout_marginTop="27dp"
+                android:layout_marginLeft="@dimen/_160sdp"
+                android:layout_marginTop="@dimen/_22sdp"
                 android:fontFamily="@font/inter"
-                android:paddingRight="40dp"
+                android:maxLines="1"
                 android:text="Tunable Val"
+                android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="14sp" />
+                android:textSize="@dimen/_11sdp" />
         </RelativeLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

@@ -7,25 +7,24 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/dialog_bg"
-    android:paddingBottom="20dp"
+    android:paddingBottom="@dimen/_10sdp"
     app:layout_behavior="@string/bottom_sheet_behavior" >
 
     <ImageButton
         android:id="@+id/close_menu"
-        android:layout_width="45dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="10dp"
+        android:layout_width="@dimen/_35sdp"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_marginStart="@dimen/_10sdp"
         android:background="#494949"
         android:foreground="@drawable/rounded_btn"
         android:src="@drawable/ic_menu" />
 
     <View
-        android:layout_width="100dp"
+        android:layout_width="@dimen/_100sdp"
         android:layout_height="4dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="130dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_100sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
         android:background="@drawable/btm_page_pill" />
 
     <LinearLayout
@@ -35,28 +34,28 @@
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_bottompage"
         android:backgroundTint="@color/bottom_page"
-        android:paddingStart="25dp"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
+        android:paddingStart="@dimen/_20sdp"
+        android:paddingTop="@dimen/_12sdp"
+        android:paddingBottom="@dimen/_12sdp"
         tools:ignore="RtlSymmetry">
 
         <ImageView
             android:id="@+id/imageViewDash"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="@dimen/_21sdp"
+            android:layout_height="@dimen/_21sdp"
             android:src="@drawable/ic_home" />
 
         <TextView
             android:id="@+id/textViewDash"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_2sdp"
             android:fontFamily="@font/inter"
             android:text="DASHBOARD"
             android:letterSpacing="0.2"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="@dimen/_11sdp"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -67,29 +66,29 @@
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_bottompage"
         android:backgroundTint="@color/bottom_page"
-        android:layout_marginTop="4dp"
-        android:paddingStart="25dp"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:paddingStart="@dimen/_20sdp"
+        android:paddingTop="@dimen/_12sdp"
+        android:paddingBottom="@dimen/_12sdp"
         tools:ignore="RtlSymmetry">
 
         <ImageView
             android:id="@+id/imageViewDisp"
-            android:layout_width="23dp"
-            android:layout_height="23dp"
+            android:layout_width="@dimen/_22sdp"
+            android:layout_height="@dimen/_22sdp"
             android:src="@drawable/ic_display" />
 
         <TextView
             android:id="@+id/textViewDisp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginTop="@dimen/_1sdp"
+            android:layout_marginStart="@dimen/_20sdp"
             android:fontFamily="@font/inter"
             android:text="DISPLAY"
             android:letterSpacing="0.2"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="@dimen/_11sdp"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -100,29 +99,29 @@
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_bottompage"
         android:backgroundTint="@color/bottom_page"
-        android:layout_marginTop="4dp"
-        android:paddingStart="25dp"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:paddingStart="@dimen/_20sdp"
+        android:paddingTop="@dimen/_12sdp"
+        android:paddingBottom="@dimen/_12sdp"
         tools:ignore="RtlSymmetry">
 
         <ImageView
             android:id="@+id/imageViewCpu"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
             android:src="@drawable/ic_cpu" />
 
         <TextView
             android:id="@+id/textViewCpu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginStart="@dimen/_20sdp"
             android:fontFamily="@font/inter"
             android:text="CPU"
             android:letterSpacing="0.2"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="@dimen/_11sdp"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -134,28 +133,28 @@
         android:background="@drawable/rounded_bottompage"
         android:backgroundTint="@color/bottom_page"
         android:layout_marginTop="4dp"
-        android:paddingStart="21dp"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
+        android:paddingStart="@dimen/_20sdp"
+        android:paddingTop="@dimen/_12sdp"
+        android:paddingBottom="@dimen/_12sdp"
         tools:ignore="RtlSymmetry">
 
         <ImageView
             android:id="@+id/imageViewGpu"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
             android:src="@drawable/ic_gpu" />
 
         <TextView
             android:id="@+id/textViewGpu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="19dp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_19sdp"
             android:fontFamily="@font/inter"
             android:text="GPU"
             android:letterSpacing="0.2"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="@dimen/_11sdp"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -167,27 +166,27 @@
         android:background="@drawable/rounded_bottompage"
         android:backgroundTint="@color/bottom_page"
         android:layout_marginTop="4dp"
-        android:paddingStart="25dp"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp" >
+        android:paddingStart="@dimen/_20sdp"
+        android:paddingTop="@dimen/_12sdp"
+        android:paddingBottom="@dimen/_12sdp" >
 
         <ImageView
             android:id="@+id/imageViewAbout"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="@dimen/_23sdp"
+            android:layout_height="@dimen/_23sdp"
             android:src="@drawable/ic_about" />
 
         <TextView
             android:id="@+id/textViewAbout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_marginStart="@dimen/_20sdp"
             android:fontFamily="@font/inter"
             android:text="ABOUT"
             android:letterSpacing="0.3"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="@dimen/_11sdp"
             android:textStyle="bold" />
 
     </LinearLayout>

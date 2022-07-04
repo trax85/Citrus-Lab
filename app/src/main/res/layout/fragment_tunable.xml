@@ -8,10 +8,11 @@
     android:background="@color/secondary_action_bar"
     android:clickable="true"
     tools:context=".fragments.CpuFragment.GovTunable.TunableFragment">
+
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="62dp"
+        android:layout_height="@dimen/_46sdp"
         android:background="@color/secondary_action_bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,18 +24,18 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_12sdp"
             android:fontFamily="@font/inter"
             android:text="Governor Tunable"
             android:textColor="@color/secondary_colour"
-            android:textSize="20sp"
+            android:textSize="@dimen/_16sdp"
             android:textStyle="bold" />
     </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="660dp"
+        android:layout_height="0dp"
         android:background="@drawable/page_bg"
         android:fadingEdgeLength="24dp"
         android:requiresFadingEdge="vertical"
@@ -49,23 +50,23 @@
 
             <TextView
                 android:id="@+id/textView30"
-                android:layout_width="305dp"
+                android:layout_width="@dimen/_250sdp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="42dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginStart="@dimen/_40sdp"
+                android:layout_marginTop="@dimen/_16sdp"
                 android:fontFamily="@font/inter"
                 android:text="@string/gov_tunable_info"
                 android:textColor="#616161"
-                android:textSize="10sp"
+                android:textSize="@dimen/_9sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/ic_core_ctl_info"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="12dp"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_18sdp"
                 android:src="@drawable/ic_about"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -74,9 +75,9 @@
                 android:id="@+id/tunable_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:orientation="vertical"
-                android:paddingTop="6dp"
+                android:paddingTop="@dimen/_6sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView30"
@@ -87,21 +88,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="No tunables available"
-                android:layout_marginTop="80dp"
+                android:layout_marginTop="@dimen/_60sdp"
                 android:textStyle="bold"
                 android:textAlignment="center"
                 android:textColor="#616161"
-                android:textSize="17sp"
+                android:textSize="@dimen/_14sdp"
                 android:fontFamily="@font/inter"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView30" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </ScrollView>
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="@dimen/_50sdp"
         android:background="@drawable/action_bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -111,11 +113,11 @@
 
         <ImageView
             android:id="@+id/ic_core_ctl_back"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="10dp"
-            android:padding="7dp"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:padding="@dimen/_4sdp"
             android:background="@drawable/rounded_btn"
             android:src="@drawable/ic_back" />
     </LinearLayout>

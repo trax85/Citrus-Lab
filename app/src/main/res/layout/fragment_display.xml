@@ -33,27 +33,28 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="700dp"
+        android:layout_height="wrap_content"
         android:fadingEdgeLength="24dp"
+        android:paddingBottom="@dimen/_20sdp"
         android:requiresFadingEdge="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:background="@drawable/page_bg"
             android:layout_width="match_parent"
-            android:layout_height="900dp"
-            android:paddingBottom="48dp" >
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/_40sdp" >
 
             <TextView
                 android:id="@+id/textView31"
-                android:layout_width="305dp"
+                android:layout_width="@dimen/_250sdp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="18dp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_16sdp"
                 android:fontFamily="@font/inter"
                 android:text="@string/display_info"
                 android:textColor="#616161"
-                android:textSize="11sp"
+                android:textSize="@dimen/_9sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/ic_core_ctl_info"
@@ -61,10 +62,10 @@
 
             <ImageView
                 android:id="@+id/ic_core_ctl_info"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="20dp"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_18sdp"
                 android:src="@drawable/ic_about"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -73,11 +74,11 @@
                 android:id="@+id/relativeLayout1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="15dp"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
                 android:background="@drawable/core_ctrl_container_bg"
-                android:padding="10dp"
+                android:padding="@dimen/_5sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ic_core_ctl_info">
@@ -85,31 +86,32 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
                     android:fontFamily="@font/nunito_sans_semibold"
                     android:letterSpacing="0.02"
-                    android:paddingBottom="2dp"
                     android:text="Refresh Rate"
                     android:textAllCaps="false"
                     android:textColor="@color/secondary_colour"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/_13sdp"
                     android:textStyle="bold" />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="@dimen/_24sdp"
                     android:background="@drawable/inner_container_bg"
-                    android:padding="4dp" >
+                    android:padding="@dimen/_2sdp">
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/buttonrerrate1"
-                        android:layout_width="310dp"
-                        android:layout_height="76dp"
+                        android:layout_width="@dimen/_260sdp"
+                        android:layout_height="@dimen/_56sdp"
                         android:layout_alignParentTop="true"
                         android:background="@drawable/rounded_btn"
                         android:elevation="2dp"
                         android:gravity="left"
-                        android:padding="12dp"
+                        android:padding="@dimen/_10sdp"
                         android:text="120 Hz"
                         android:textAllCaps="false"
                         android:textColor="@color/item_text_colour"
@@ -118,25 +120,25 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginTop="43dp"
+                        android:layout_marginLeft="@dimen/_14sdp"
+                        android:layout_marginTop="@dimen/_34sdp"
                         android:fontFamily="@font/inter"
                         android:letterSpacing="0.03"
                         android:text="Locks Refresh Rate at 120Hz"
                         android:textColor="@color/content_desc"
-                        android:textSize="11sp" />
+                        android:textSize="@dimen/_9sdp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/buttonrerrate2"
                         style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:layout_width="310dp"
-                        android:layout_height="76dp"
+                        android:layout_width="@dimen/_260sdp"
+                        android:layout_height="@dimen/_56sdp"
                         android:layout_alignParentStart="true"
-                        android:layout_marginTop="82dp"
+                        android:layout_marginTop="@dimen/_60sdp"
                         android:background="@drawable/rounded_btn"
                         android:elevation="2dp"
                         android:gravity="left"
-                        android:padding="12dp"
+                        android:padding="@dimen/_9sdp"
                         android:text="60 Hz"
                         android:textAllCaps="false"
                         android:textColor="@color/item_text_colour"
@@ -145,25 +147,25 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="124dp"
+                        android:layout_marginStart="@dimen/_14sdp"
+                        android:layout_marginTop="@dimen/_94sdp"
                         android:fontFamily="@font/inter"
                         android:letterSpacing="0.03"
                         android:text="Locks Refresh Rate at 60Hz"
                         android:textColor="@color/content_desc"
-                        android:textSize="11sp" />
+                        android:textSize="@dimen/_9sdp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/buttonrerrate3"
                         style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:layout_width="310dp"
-                        android:layout_height="76dp"
+                        android:layout_width="@dimen/_260sdp"
+                        android:layout_height="@dimen/_56sdp"
                         android:layout_marginStart="0dp"
-                        android:layout_marginTop="164dp"
+                        android:layout_marginTop="@dimen/_120sdp"
                         android:background="@drawable/rounded_btn"
                         android:elevation="2dp"
                         android:gravity="left"
-                        android:padding="12dp"
+                        android:padding="@dimen/_9sdp"
                         android:text="Auto Hz"
                         android:textAllCaps="false"
                         android:textColor="@color/item_text_colour"
@@ -172,8 +174,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="205dp"
+                        android:layout_marginStart="@dimen/_14sdp"
+                        android:layout_marginTop="@dimen/_154sdp"
                         android:fontFamily="@font/inter"
                         android:letterSpacing="0.03"
                         android:text="Sets Refresh Rate to Auto"
@@ -185,9 +187,9 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="15dp"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
                 android:background="@drawable/core_ctrl_container_bg"
                 android:padding="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -196,23 +198,22 @@
                 app:layout_constraintTop_toBottomOf="@+id/relativeLayout1">
 
                 <TextView
-                    android:id="@+id/textView32"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_sans_semibold"
                     android:letterSpacing="0.02"
+                    android:paddingBottom="@dimen/_2sdp"
                     android:text="Display Settings"
                     android:textAllCaps="false"
                     android:textColor="@color/secondary_colour"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/_13sdp"
                     android:textStyle="bold"
-                    android:paddingBottom="2dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/display_list"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/_260sdp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
                     android:background="@drawable/inner_container_bg"

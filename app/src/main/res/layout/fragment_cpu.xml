@@ -43,20 +43,20 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:background="@drawable/page_bg"
-                android:paddingBottom="70dp"
+                android:paddingBottom="@dimen/_80sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/textView31"
-                    android:layout_width="305dp"
+                    android:layout_width="@dimen/_250sdp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="18dp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
                     android:fontFamily="@font/inter"
                     android:text="@string/cpu_info"
                     android:textColor="#616161"
-                    android:textSize="11sp"
+                    android:textSize="@dimen/_9sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@+id/ic_core_ctl_info"
@@ -64,34 +64,37 @@
 
                 <ImageView
                     android:id="@+id/ic_core_ctl_info"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_18sdp"
                     android:src="@drawable/ic_about"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/cpu_list"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:choiceMode="multipleChoice"
-                    app:layout_constraintBottom_toTopOf="@+id/core_ctrl_launch"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView31"
-                    tools:listitem="@layout/cpu_list_items" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/cpu_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:choiceMode="multipleChoice"
+                app:layout_constraintBottom_toTopOf="@+id/core_ctrl_launch"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.338"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView31"
+                tools:listitem="@layout/cpu_list_items" />
 
-                <LinearLayout
+            <LinearLayout
                     android:id="@+id/core_ctrl_launch"
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="15dp"
-                    android:background="@drawable/core_ctrl_container_bg"
+                    android:layout_width="@dimen/_270sdp"
+                    android:layout_height="@dimen/_60sdp"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:background="@drawable/inner_container_bg"
                     android:foreground="@drawable/rounded_btn"
                     app:layout_constraintBottom_toTopOf="@id/stune_launch"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -102,34 +105,33 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginTop="20dp"
-                        android:fontFamily="@font/nunito_sans_extrabold"
-                        android:letterSpacing="0.03"
+                        android:layout_marginLeft="@dimen/_30sdp"
+                        android:layout_marginTop="@dimen/_18sdp"
+                        android:fontFamily="@font/nunito_sans_semibold"
                         android:text="Core Control"
                         android:textColor="@color/secondary_colour"
-                        android:textSize="15dp"
+                        android:textSize="@dimen/_13sdp"
                         android:textStyle="bold" />
 
                     <ImageView
-                        android:layout_width="23dp"
-                        android:layout_height="23dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginStart="122dp"
+                        android:layout_width="@dimen/_21sdp"
+                        android:layout_height="@dimen/_21sdp"
+                        android:layout_marginTop="@dimen/_18sdp"
+                        android:layout_marginStart="@dimen/_118sdp"
                         android:src="@drawable/ic_more"/>
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/stune_launch"
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="15dp"
-                    android:background="@drawable/core_ctrl_container_bg"
+                    android:layout_width="@dimen/_270sdp"
+                    android:layout_height="@dimen/_60sdp"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:background="@drawable/inner_container_bg"
                     android:foreground="@drawable/rounded_btn"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/stune_launch"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/core_ctrl_launch" >
@@ -137,22 +139,55 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginTop="20dp"
-                        android:text="Cpuset Settings"
-                        android:letterSpacing="0.03"
-                        android:fontFamily="@font/nunito_sans_extrabold"
+                        android:layout_marginLeft="@dimen/_30sdp"
+                        android:layout_marginTop="@dimen/_18sdp"
+                        android:text="Stune Settings"
+                        android:fontFamily="@font/nunito_sans_semibold"
                         android:textColor="@color/secondary_colour"
-                        android:textSize="15dp"
+                        android:textSize="@dimen/_13sdp"
                         android:textStyle="bold" />
 
                     <ImageView
-                        android:layout_width="23dp"
-                        android:layout_height="23dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginStart="100dp"
+                        android:layout_width="@dimen/_21sdp"
+                        android:layout_height="@dimen/_21sdp"
+                        android:layout_marginTop="@dimen/_19sdp"
+                        android:layout_marginStart="@dimen/_106sdp"
                         android:src="@drawable/ic_more"/>
                 </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/cpusets_launch"
+                    android:layout_width="@dimen/_270sdp"
+                    android:layout_height="@dimen/_60sdp"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:background="@drawable/inner_container_bg"
+                    android:foreground="@drawable/rounded_btn"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/stune_launch" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_30sdp"
+                        android:layout_marginTop="@dimen/_18sdp"
+                        android:text="Cpuset Settings"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:textColor="@color/secondary_colour"
+                        android:textSize="@dimen/_13sdp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="@dimen/_21sdp"
+                        android:layout_height="@dimen/_21sdp"
+                        android:layout_marginTop="@dimen/_14sdp"
+                        android:layout_marginStart="@dimen/_98sdp"
+                        android:src="@drawable/ic_more"/>
+                </LinearLayout>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

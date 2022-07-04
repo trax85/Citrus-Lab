@@ -6,12 +6,12 @@
     android:layout_height="wrap_content">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="80dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="2dp"
+            android:layout_width="@dimen/_240sdp"
+            android:layout_height="@dimen/_64sdp"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_2sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -21,29 +21,29 @@
                     android:id="@+id/primaryDesc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="@dimen/_16sdp"
                     android:fontFamily="@font/nunito_sans_semibold"
                     android:text="Display Primary"
                     android:textColor="@color/item_text_colour"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/_13sdp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/contentDesc"
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="45dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_33sdp"
                     android:fontFamily="sans-serif"
                     android:text="Content description here"
                     android:textColor="@color/content_desc"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/_10sdp" />
 
                 <Switch
                     android:id="@+id/contentSwitch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="220dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginLeft="@dimen/_200sdp"
+                    android:layout_marginTop="@dimen/_22sdp"
                     android:theme="@style/Theme.MyApplication3.Switch" />
 
         </RelativeLayout>

@@ -8,14 +8,14 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
         android:background="@drawable/core_ctrl_container_bg"
-        android:paddingLeft="6dp"
-        android:paddingRight="6dp"
-        android:paddingBottom="6dp"
+        android:paddingLeft="@dimen/_6sdp"
+        android:paddingRight="@dimen/_6sdp"
+        android:paddingBottom="@dimen/_6sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.609"
@@ -26,71 +26,67 @@
             android:id="@+id/clusterName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="11dp"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_8sdp"
             android:fontFamily="@font/nunito_sans_semibold"
             android:letterSpacing="0.02"
             android:text="Cluster Name"
             android:textColor="@color/secondary_colour"
-            android:textSize="17sp"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="16dp" />
+            android:textSize="@dimen/_15sdp" />
 
         <!-- Edit this to get the desired width of view item -->
         <RelativeLayout
-            android:layout_width="320dp"
+            android:layout_width="@dimen/_260sdp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="42dp"
+            android:layout_marginTop="@dimen/_34sdp"
             android:background="@drawable/inner_container_bg">
 
             <LinearLayout
                 android:id="@+id/layoutMaxFreq"
                 android:layout_width="match_parent"
-                android:layout_height="53dp"
+                android:layout_height="@dimen/_40sdp"
                 android:background="@drawable/rounded_btn"
-                android:clickable="true"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="58dp">
+                android:clickable="true">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="@dimen/_22sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
                     android:fontFamily="@font/inter"
                     android:letterSpacing="0.01"
                     android:text="Max Frequency"
                     android:textColor="@color/white"
-                    android:textSize="13sp"
+                    android:textSize="@dimen/_10sdp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textviewMaxFreq"
-                    android:layout_width="100dp"
+                    android:layout_width="@dimen/_90sdp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="76dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="@dimen/_60sdp"
+                    android:layout_marginTop="@dimen/_13sdp"
+                    android:ellipsize="end"
                     android:fontFamily="@font/inter"
                     android:letterSpacing="0.01"
+                    android:maxLines="1"
                     android:text="Mhz"
                     android:textAlignment="center"
-                    android:maxLines="1"
-                    android:ellipsize="end"
                     android:textColor="@color/white"
-                    android:textSize="13sp" />
+                    android:textSize="@dimen/_10sdp" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="54dp"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_40sdp"
                 android:background="@android:color/darker_gray" />
 
             <LinearLayout
                 android:id="@+id/layoutMinFreq"
                 android:layout_width="match_parent"
-                android:layout_height="53dp"
-                android:layout_marginTop="56dp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginTop="@dimen/_41sdp"
                 android:background="@drawable/rounded_btn"
                 android:clickable="true"
                 tools:layout_editor_absoluteX="0dp"
@@ -99,102 +95,98 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="@dimen/_22sdp"
+                    android:layout_marginTop="@dimen/_14sdp"
                     android:fontFamily="@font/inter"
                     android:letterSpacing="0.01"
                     android:text="Min Frequency"
                     android:textColor="@color/white"
-                    android:textSize="13sp"
+                    android:textSize="@dimen/_10sdp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textviewMinFreq"
-                    android:layout_width="100dp"
+                    android:layout_width="@dimen/_90sdp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="79dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="@dimen/_62sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:ellipsize="end"
                     android:fontFamily="@font/inter"
                     android:letterSpacing="0.01"
+                    android:maxLines="1"
                     android:text="Mhz"
                     android:textAlignment="center"
-                    android:maxLines="1"
-                    android:ellipsize="end"
                     android:textColor="@color/white"
-                    android:textSize="13sp" />
+                    android:textSize="@dimen/_10sdp" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="110dp"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_82sdp"
                 android:background="@android:color/darker_gray" />
 
             <LinearLayout
                 android:id="@+id/layoutGov"
                 android:layout_width="match_parent"
-                android:layout_height="53dp"
-                android:layout_marginTop="112dp"
+                android:layout_height="@dimen/_42sdp"
+                android:layout_marginTop="@dimen/_83sdp"
                 android:background="@drawable/rounded_btn"
-                android:clickable="true"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="189dp">
+                android:clickable="true">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="@dimen/_22sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
                     android:fontFamily="@font/inter"
                     android:letterSpacing="0.01"
                     android:text="Governor"
                     android:textColor="@color/white"
-                    android:textSize="13sp"
+                    android:textSize="@dimen/_10sdp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textviewGov"
-                    android:layout_width="100dp"
+                    android:layout_width="@dimen/_98sdp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="115dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="@dimen/_86sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:ellipsize="end"
                     android:fontFamily="@font/inter"
                     android:letterSpacing="0.01"
+                    android:maxLines="1"
                     android:text="Name"
                     android:textAlignment="center"
-                    android:maxLines="1"
-                    android:ellipsize="end"
                     android:textColor="@color/white"
-                    android:textSize="13sp" />
+                    android:textSize="@dimen/_10sdp" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="167dp"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_123sdp"
                 android:background="@android:color/darker_gray" />
 
             <LinearLayout
                 android:id="@+id/layoutTune"
                 android:layout_width="match_parent"
-                android:layout_height="53dp"
-                android:layout_marginTop="168dp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginTop="@dimen/_124sdp"
                 android:background="@drawable/rounded_btn"
-                android:clickable="true"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="267dp">
+                android:clickable="true">
 
                 <TextView
                     android:id="@+id/textviewTune"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="17dp"
+                    android:layout_marginStart="@dimen/_22sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
                     android:fontFamily="@font/inter"
                     android:letterSpacing="0.01"
                     android:text="Governor Tunables"
                     android:textColor="@color/white"
-                    android:textSize="13sp"
+                    android:textSize="@dimen/_10sdp"
                     android:textStyle="bold" />
             </LinearLayout>
         </RelativeLayout>

@@ -249,7 +249,7 @@
             <RelativeLayout
                 android:id="@+id/relativeLayoutDvfs"
                 android:layout_width="@dimen/_270sdp"
-                android:layout_height="@dimen/_56sdp"
+                android:layout_height="@dimen/_58sdp"
                 android:layout_marginStart="@dimen/_14sdp"
                 android:layout_marginTop="@dimen/_6sdp"
                 android:layout_marginEnd="@dimen/_14sdp"
@@ -278,7 +278,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_14sdp"
                     android:layout_marginStart="@dimen/_12sdp"
-                    android:layout_marginTop="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_31sdp"
                     android:fontFamily="sans-serif"
                     android:text="Enables Dynamic Voltage Frequency Control"
                     android:textColor="@color/content_desc"
@@ -288,8 +288,8 @@
                     android:id="@+id/switch_dvfs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="260dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="@dimen/_200sdp"
+                    android:layout_marginTop="@dimen/_18sdp"
                     android:theme="@style/Theme.MyApplication3.Switch"
                     tools:ignore="UseSwitchCompatOrMaterialXml" />
 
@@ -315,7 +315,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_12sdp"
-                    android:layout_marginTop="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_17sdp"
                     android:fontFamily="@font/nunito_sans_semibold"
                     android:text="Set Fixed GPU Frequency"
                     android:textColor="@color/item_text_colour"

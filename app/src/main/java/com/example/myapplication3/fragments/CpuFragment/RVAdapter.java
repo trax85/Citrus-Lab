@@ -27,7 +27,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     private TextView textView1, textView2, textView3, textView4;
     private LinearLayout linearLayout1, linearLayout2, linearLayout3, linearLayout4;
     private CpuFragment fragment;
-    final static String TAG = "RVAdapter";
+    final static String TAG = "StuneRVAdapter";
     ExecutorService service = Executors.newSingleThreadExecutor();
 
     public RVAdapter(CpuFragment fragment){

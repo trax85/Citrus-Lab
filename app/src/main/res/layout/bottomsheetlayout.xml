@@ -14,7 +14,7 @@
         android:id="@+id/close_menu"
         android:layout_width="@dimen/_35sdp"
         android:layout_height="@dimen/_35sdp"
-        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_250sdp"
         android:background="#494949"
         android:foreground="@drawable/rounded_btn"
         android:src="@drawable/ic_menu" />

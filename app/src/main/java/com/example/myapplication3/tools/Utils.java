@@ -19,4 +19,9 @@ public class Utils {
         result = Shell.cmd(cmd).exec();
         return result.getOut().get(index);
     }
+
+    public String[] getResultInStringArray(String... cmd) {
+        result = Shell.cmd(cmd).exec();
+        return (String[])result.getOut().toArray();
+    }
 }

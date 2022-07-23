@@ -36,9 +36,11 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout bottomSheetLayout;
     private LinearLayout linearLayout;
     private BottomSheetBehavior bottomSheetBehavior;
-    private TextView textViewDash, textViewDisp, textViewCpu, textViewGpu, textViewAbout;
-    private ImageView imageViewDash, imageViewDisp, imageViewCpu, imageViewGpu ,imageViewAbout;
-    private LinearLayout homeLayout, displayLayout, aboutLayout ,cpuLayout, gpuLayout;
+    private TextView textViewDash, textViewDisp, textViewCpu, textViewGpu, textViewMem,
+            textViewAbout;
+    private ImageView imageViewDash, imageViewDisp, imageViewCpu, imageViewGpu ,imageViewMem,
+            imageViewAbout;
+    private LinearLayout homeLayout, displayLayout, aboutLayout ,cpuLayout, memLayout, gpuLayout;
     private TextView[] textViewArr;
     private ImageView[] imageViewArr;
     private LinearLayout[] linearLayoutArr;
@@ -107,15 +109,6 @@ public class MainActivity extends AppCompatActivity {
 
         setUi(0);
         pa.setCurrentItem(0, false);
-        // if input received anywhere on the screen other than bottomsheet
-        /*Shell.getShell(shell -> {
-            // The main shell is now constructed and cached
-            // Exit splash screen and enter main activity
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        });
-        Shell.cmd("su");*/
     }
 
     //This method collapses opened bottomsheet when touched outside the bottomsheet area
@@ -139,18 +132,21 @@ public class MainActivity extends AppCompatActivity {
         textViewDisp = findViewById(R.id.textViewDisp);
         textViewCpu = findViewById(R.id.textViewCpu);
         textViewGpu = findViewById(R.id.textViewGpu);
+        textViewMem = findViewById(R.id.textViewMem);
         textViewAbout = findViewById(R.id.textViewAbout);
 
         imageViewDash = findViewById(R.id.imageViewDash);
         imageViewDisp = findViewById(R.id.imageViewDisp);
         imageViewCpu = findViewById(R.id.imageViewCpu);
         imageViewGpu = findViewById(R.id.imageViewGpu);
+        imageViewMem = findViewById(R.id.imageViewMem);
         imageViewAbout = findViewById(R.id.imageViewAbout);
 
         homeLayout = findViewById(R.id.layoutHome);
         displayLayout = findViewById(R.id.layoutDisplay);
         cpuLayout = findViewById(R.id.layoutCpu);
         gpuLayout = findViewById(R.id.layoutGpu);
+        memLayout = findViewById(R.id.layoutMem);
         aboutLayout = findViewById(R.id.layoutAbout);
 
         linearLayout = findViewById(R.id.nested_scroll);
@@ -161,11 +157,11 @@ public class MainActivity extends AppCompatActivity {
     private void initList(){
         Log.d(TAG,"List initialised");
         textViewArr = new TextView[]{textViewDash, textViewDisp, textViewCpu, textViewGpu,
-                textViewAbout};
+                textViewMem, textViewAbout};
         imageViewArr = new ImageView[]{imageViewDash, imageViewDisp, imageViewCpu, imageViewGpu,
-                imageViewAbout};
+                imageViewMem, imageViewAbout};
         linearLayoutArr = new LinearLayout[]{homeLayout, displayLayout, cpuLayout, gpuLayout,
-                 aboutLayout};
+                 memLayout, aboutLayout};
     }
 
     private void setUi(int position){

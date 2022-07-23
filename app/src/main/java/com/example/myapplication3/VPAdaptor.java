@@ -13,9 +13,10 @@ import com.example.myapplication3.fragments.CpuFragment.CpuFragment;
 import com.example.myapplication3.fragments.DisplayFragment.DisplayFragment;
 import com.example.myapplication3.fragments.GpuFragment.GpuFragment;
 import com.example.myapplication3.fragments.HomeFragment.HomeFragment;
+import com.example.myapplication3.fragments.MemoryFragment.MemoryFragment;
 
 public class VPAdaptor extends FragmentStateAdapter {
-    int totalTabs = 5;
+    int totalTabs = 6;
     final static String TAG = "VPAdapter";
     public VPAdaptor(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
         super(fragmentManager, lifecycle);
@@ -38,6 +39,9 @@ public class VPAdaptor extends FragmentStateAdapter {
                 Log.d(TAG, "GpuFragment created");
                 return new GpuFragment();
             case 4:
+                Log.d(TAG, "MemFragment created");
+                return new MemoryFragment();
+            case 5:
                 Log.d(TAG,"AboutFragment created");
                 return new AboutFragment();
             default:

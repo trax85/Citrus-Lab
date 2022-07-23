@@ -7,7 +7,6 @@ import java.util.List;
 /**
  * added by sharan
  */
-
 public class Utils {
     Shell.Result result;
 
@@ -16,8 +15,8 @@ public class Utils {
         return result.getOut();
     }
 
-//    public Object[] getResultInArray(String... cmd) {
-//        result = Shell.cmd(cmd).exec();
-//        return result.getOut().toArray();
-//    }
+    public String getResultInString(int index, String... cmd) {
+        result = Shell.cmd(cmd).exec();
+        return result.getOut().get(index);
+    }
 }

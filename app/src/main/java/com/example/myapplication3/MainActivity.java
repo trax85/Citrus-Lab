@@ -37,10 +37,11 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout linearLayout;
     private BottomSheetBehavior bottomSheetBehavior;
     private TextView textViewDash, textViewDisp, textViewCpu, textViewGpu, textViewMem,
-            textViewAbout;
+            textViewProfile,textViewAbout;
     private ImageView imageViewDash, imageViewDisp, imageViewCpu, imageViewGpu ,imageViewMem,
-            imageViewAbout;
-    private LinearLayout homeLayout, displayLayout, aboutLayout ,cpuLayout, memLayout, gpuLayout;
+            imageViewProfile, imageViewAbout;
+    private LinearLayout homeLayout, displayLayout, aboutLayout ,cpuLayout, memLayout, gpuLayout,
+            profileLayout;
     private TextView[] textViewArr;
     private ImageView[] imageViewArr;
     private LinearLayout[] linearLayoutArr;
@@ -133,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
         textViewCpu = findViewById(R.id.textViewCpu);
         textViewGpu = findViewById(R.id.textViewGpu);
         textViewMem = findViewById(R.id.textViewMem);
+        textViewProfile = findViewById(R.id.textViewProfile);
         textViewAbout = findViewById(R.id.textViewAbout);
 
         imageViewDash = findViewById(R.id.imageViewDash);
@@ -140,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
         imageViewCpu = findViewById(R.id.imageViewCpu);
         imageViewGpu = findViewById(R.id.imageViewGpu);
         imageViewMem = findViewById(R.id.imageViewMem);
+        imageViewProfile = findViewById(R.id.imageViewProfile);
         imageViewAbout = findViewById(R.id.imageViewAbout);
 
         homeLayout = findViewById(R.id.layoutHome);
@@ -147,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
         cpuLayout = findViewById(R.id.layoutCpu);
         gpuLayout = findViewById(R.id.layoutGpu);
         memLayout = findViewById(R.id.layoutMem);
+        profileLayout = findViewById(R.id.layoutProfile);
         aboutLayout = findViewById(R.id.layoutAbout);
 
         linearLayout = findViewById(R.id.nested_scroll);
@@ -157,11 +161,11 @@ public class MainActivity extends AppCompatActivity {
     private void initList(){
         Log.d(TAG,"List initialised");
         textViewArr = new TextView[]{textViewDash, textViewDisp, textViewCpu, textViewGpu,
-                textViewMem, textViewAbout};
+                textViewMem, textViewProfile, textViewAbout};
         imageViewArr = new ImageView[]{imageViewDash, imageViewDisp, imageViewCpu, imageViewGpu,
-                imageViewMem, imageViewAbout};
+                imageViewMem, imageViewProfile, imageViewAbout};
         linearLayoutArr = new LinearLayout[]{homeLayout, displayLayout, cpuLayout, gpuLayout,
-                 memLayout, aboutLayout};
+                 memLayout, profileLayout, aboutLayout};
     }
 
     private void setUi(int position){

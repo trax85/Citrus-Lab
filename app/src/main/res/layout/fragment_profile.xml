@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.ProfileFragment.ProfileFragment"
+    android:background="@color/materialGrey_800">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/materialGrey_800"
+        android:theme="@style/myTheme.ActionBar.Text">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:contentScrim="#242424"
+            android:letterSpacing="0.13"
+            app:title="Profiles" >
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar1"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:layout_collapseMode="pin"/>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fadingEdgeLength="24dp"
+        android:requiresFadingEdge="vertical"
+        android:background="@drawable/page_bg"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:paddingBottom="@dimen/_40sdp" >
+
+        <TextView
+            android:id="@+id/textView31"
+            android:layout_width="@dimen/_250sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:fontFamily="@font/inter"
+            android:text="This page presents you with a set of premade profiles which can be applied on the go."
+            android:textColor="#616161"
+            android:textSize="@dimen/_9sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/ic_core_ctl_info"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ic_core_ctl_info"
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:src="@drawable/ic_about"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_50sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:background="@drawable/core_ctrl_container_bg"
+            android:padding="@dimen/_5sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ic_core_ctl_info">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:background="@drawable/inner_container_bg"
+                android:padding="@dimen/_2sdp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_power"
+                    android:layout_width="@dimen/_260sdp"
+                    android:layout_height="@dimen/_60sdp"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    android:background="@drawable/rounded_btn"
+                    android:elevation="2dp"
+                    android:gravity="left"
+                    android:padding="@dimen/_15sdp"
+                    android:text="Power"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    app:backgroundTint="#700A5712" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_17sdp"
+                    android:layout_marginTop="@dimen/_41sdp"
+                    android:fontFamily="@font/inter"
+                    android:letterSpacing="0.03"
+                    android:text="This mode can save some battery life "
+                    android:textColor="@color/content_desc"
+                    android:textSize="@dimen/_9sdp" />
+
+                <ImageView
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginStart="@dimen/_220sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:src="@drawable/ic_power"
+                    android:tintMode="src_in"
+                    app:tint="#46FFFFFF" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_balance"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="@dimen/_260sdp"
+                    android:layout_height="@dimen/_60sdp"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_68sdp"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    android:background="@drawable/rounded_btn"
+                    android:elevation="2dp"
+                    android:gravity="left"
+                    android:padding="@dimen/_15sdp"
+                    android:text="Balance"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    app:backgroundTint="#720A3C57" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_17sdp"
+                    android:layout_marginTop="@dimen/_106sdp"
+                    android:fontFamily="@font/inter"
+                    android:letterSpacing="0.03"
+                    android:text="This mode is for normal usage"
+                    android:textColor="@color/content_desc"
+                    android:textSize="@dimen/_9sdp" />
+
+                <ImageView
+                    android:layout_width="@dimen/_28sdp"
+                    android:layout_height="@dimen/_28sdp"
+                    android:layout_marginStart="@dimen/_220sdp"
+                    android:layout_marginTop="@dimen/_86sdp"
+                    android:src="@drawable/ic_balance"
+                    android:tintMode="src_in"
+                    app:tint="#46FFFFFF" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_performance"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="@dimen/_260sdp"
+                    android:layout_height="@dimen/_60sdp"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_134sdp"
+                    android:layout_marginBottom="@dimen/_3sdp"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    android:background="@drawable/rounded_btn"
+                    android:elevation="2dp"
+                    android:gravity="left"
+                    android:padding="@dimen/_15sdp"
+                    android:text="Performance"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    app:backgroundTint="#4A970000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_17sdp"
+                    android:layout_marginTop="@dimen/_172sdp"
+                    android:fontFamily="@font/inter"
+                    android:letterSpacing="0.03"
+                    android:text="This mode is for gaming"
+                    android:textColor="@color/content_desc"
+                    android:textSize="11sp" />
+
+                <ImageView
+                    android:layout_width="@dimen/_29sdp"
+                    android:layout_height="@dimen/_29sdp"
+                    android:layout_marginStart="@dimen/_220sdp"
+                    android:layout_marginTop="@dimen/_152sdp"
+                    android:src="@drawable/ic_perf"
+                    android:tintMode="src_in"
+                    app:tint="#46FFFFFF" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

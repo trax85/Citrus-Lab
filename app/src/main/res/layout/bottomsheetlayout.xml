@@ -23,7 +23,7 @@
         android:layout_width="@dimen/_100sdp"
         android:layout_height="4dp"
         android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginStart="@dimen/_100sdp"
+        android:layout_marginStart="@dimen/_98sdp"
         android:layout_marginBottom="@dimen/_20sdp"
         android:background="@drawable/btm_page_pill" />
 
@@ -184,6 +184,38 @@
             android:layout_marginStart="@dimen/_20sdp"
             android:fontFamily="@font/inter"
             android:text="MEMORY    "
+            android:letterSpacing="0.3"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_11sdp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/layoutProfile"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_bottompage"
+        android:backgroundTint="@color/bottom_page"
+        android:layout_marginTop="4dp"
+        android:paddingStart="@dimen/_20sdp"
+        android:paddingTop="@dimen/_12sdp"
+        android:paddingBottom="@dimen/_12sdp" >
+
+        <ImageView
+            android:id="@+id/imageViewProfile"
+            android:layout_width="@dimen/_23sdp"
+            android:layout_height="@dimen/_23sdp"
+            android:src="@drawable/ic_profile" />
+
+        <TextView
+            android:id="@+id/textViewProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:fontFamily="@font/inter"
+            android:text="PROFILE"
             android:letterSpacing="0.3"
             android:textColor="@color/white"
             android:textSize="@dimen/_11sdp"

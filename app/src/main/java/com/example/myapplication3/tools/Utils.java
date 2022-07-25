@@ -10,17 +10,17 @@ import java.util.List;
 public class Utils {
     Shell.Result result;
 
-    public List<String> readGetList(String... cmd) {
+    public List<String> readGetList(String... cmd) throws UtilException{
         result = Shell.cmd(cmd).exec();
         return result.getOut();
     }
 
-    public String read(int index, String... cmd) {
+    public String read(int index, String... cmd) throws UtilException{
         result = Shell.cmd(cmd).exec();
         return result.getOut().get(index);
     }
 
-    public String[] readGetArr(String... cmd) {
+    public String[] readGetArr(String... cmd) throws UtilException{
         result = Shell.cmd(cmd).exec();
         return (String[])result.getOut().toArray();
     }

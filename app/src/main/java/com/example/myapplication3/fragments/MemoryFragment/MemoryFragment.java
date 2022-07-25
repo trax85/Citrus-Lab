@@ -16,24 +16,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.myapplication3.R;
+import com.example.myapplication3.tools.UtilException;
+import com.example.myapplication3.tools.Utils;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.topjohnwu.superuser.Shell;
-
-import java.util.List;
 
 public class MemoryFragment extends Fragment {
     TextView textView1, textView2, textView3, textView4;
     RelativeLayout zramLayout1, zramLayout2, zramLayout3, zramLayout4;
     TextView textView5, textView6, textView7, textView8, textView9, textView10;
     RelativeLayout vmLayout1, vmLayout2, vmLayout3, vmLayout4, vmLayout5, vmLayout6;
-    RelativeLayout relativeLayoutArr[];
-    TextView textViewArr[];
+    RelativeLayout[] relativeLayoutArr;
+    TextView[] textViewArr;
     ZRamInit ramInit;
     String PATH = "/proc/sys/vm/";
     String[] VMPaths = {"min_free_kbytes", "extra_free_kbytes", "dirty_ratio",
             "dirty_background_ratio", "overcommit_ratio", "vfs_cache_pressure"};
-    Shell.Result result;
-    List<String> out;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,7 +89,12 @@ public class MemoryFragment extends Fragment {
 
     void setOnClickListners(){
         for(int i = 0; i < relativeLayoutArr.length; i++){
-            String out = read("cat " + PATH + VMPaths[i]);
+            String out;
+            try {
+                out = Utils.read(0,PATH + VMPaths[i]);
+            } catch (UtilException e) {
+                out = "read error";
+            }
             textViewArr[i].setText(out);
             int finalI = i;
             relativeLayoutArr[i].setOnClickListener(v -> createDialouge(finalI));
@@ -101,7 +103,7 @@ public class MemoryFragment extends Fragment {
 
     public void createDialouge(int i){
         MaterialAlertDialogBuilder builder = new
-                MaterialAlertDialogBuilder(getActivity());
+                MaterialAlertDialogBuilder(requireActivity());
         final EditText weightInput = new EditText(getActivity());
 
         builder.setTitle("Set VM parameter");
@@ -111,27 +113,9 @@ public class MemoryFragment extends Fragment {
 
         builder.setPositiveButton("OK", (dialog, which) -> {
             String out = weightInput.getText().toString();
-            write("echo " + out + " > " + PATH + VMPaths[i]);
+            Utils.write(out, PATH + VMPaths[i]);
             textViewArr[i].setText(out);
         });builder.setNegativeButton("Cancle", (dialog, which) -> dialog.cancel());
         builder.show();
-    }
-
-    public String read(String cmd){
-        result = Shell.cmd(cmd).exec();
-        out = result.getOut();
-        return out.get(0);
-    }
-
-    public void write(String cmd){
-        Shell.cmd(cmd).exec();
-    }
-
-    public String[] readArr(String cmd){
-        result = Shell.cmd(cmd).exec();
-        out = result.getOut();
-        String str = out.get(0);
-        // Some workarounds to get in form of strings
-        return str.split("\\s+");
     }
 }

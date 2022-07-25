@@ -6,9 +6,9 @@ import android.os.Looper;
 import android.os.SystemClock;
 import android.util.Log;
 
-import com.topjohnwu.superuser.Shell;
+import com.example.myapplication3.tools.UtilException;
+import com.example.myapplication3.tools.Utils;
 
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -17,8 +17,7 @@ public class SystemInfo {
     HomeFragment homeFragment;
     private static final String TAG = "SystemStatsAct";
     String Uptime, DeepSleep, uname;
-    Shell.Result res;
-    List<String> out;
+
     @SuppressLint("SetTextI18n")
     public void StartSysStats(HomeFragment fragment) {
         ExecutorService service = Executors.newSingleThreadExecutor();
@@ -27,9 +26,12 @@ public class SystemInfo {
         service.execute(() -> {
             homeFragment = fragment;
             // Get the whole uptime
-            res = Shell.cmd("uname -o -r").exec();
-            out = res.getOut();
-            uname = out.get(0);
+            try {
+                uname = Utils.execCmdRead(0, "uname -o -r");
+            } catch (UtilException e) {
+                Log.d(TAG,"Version info not available");
+                uname = "Unavailable";
+            }
             long uptimeMillis = SystemClock.elapsedRealtime();
             // Get the uptime without deep sleep
             long elapsedMillis = SystemClock.uptimeMillis();

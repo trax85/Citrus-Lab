@@ -1,5 +1,6 @@
 package com.example.myapplication3.fragments.CpuFragment.CpuSets;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,22 +18,23 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.myapplication3.R;
-import com.topjohnwu.superuser.Shell;
+import com.example.myapplication3.tools.UtilException;
+import com.example.myapplication3.tools.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class CpuSetFragment extends Fragment {
-
-    String[] cpusetArr;
+    final static String TAG = "CpusetsFragment";
     String cpusetPath = "/dev/cpuset";
 
+    String[] cpusetArr;
     List<CpuSetDataModel> cpuSetDataModel;
     RecyclerView recyclerView;
     CpuSetRVAdapter adapter;
     ImageView imageView;
-    final static String TAG = "Cpusets Fragment";
+    boolean isCpusetsInited = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,10 +51,13 @@ public class CpuSetFragment extends Fragment {
         imageView.setOnClickListener(v -> getActivity().onBackPressed());
         cpuSetDataModel = new ArrayList<>();
         initCpusetPath();
+        if(!isCpusetsInited)
+            return;
         initList();
         initRecyclerView(view);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onResume() {
         super.onResume();
@@ -61,15 +66,20 @@ public class CpuSetFragment extends Fragment {
     }
 
     public void initCpusetPath(){
-        Shell.Result result = Shell.cmd("ls -d " + cpusetPath + "/*/ | cut -d'/' -f 4").exec();
-        List<String> out = result.getOut();
-        cpusetArr = out.toArray(new String[out.size()]);
-        Log.d(TAG, "Init cpusets dir array");
+        try {
+            cpusetArr = Utils.readGetArr("ls -d " + cpusetPath + "/*/ | cut -d'/' -f 4");
+            isCpusetsInited = true;
+        } catch (UtilException e) {}
     }
 
     public void initList(){
         for(int i = 0; i < cpusetArr.length; i++){
-            String FileAttr = getStr(cpusetPath + "/" +cpusetArr[i] + "/cpus");
+            String FileAttr;
+            try {
+                FileAttr = Utils.read(0, cpusetPath + "/" +cpusetArr[i] + "/cpus");
+            } catch (UtilException e) {
+                return;
+            }
             CpuSetDataModel parentDataModel = new CpuSetDataModel(cpusetArr[i], FileAttr);
             cpuSetDataModel.add(parentDataModel);
         }
@@ -87,14 +97,9 @@ public class CpuSetFragment extends Fragment {
     }
 
     // ---------Set of helper functions-----------
-    private String getStr(String path){
-        Shell.Result result = Shell.cmd("cat "+path).exec();
-        List<String> out = result.getOut();
-        return out.get(0);
-    }
     public void setCpuSetAttr(CpuSetDataModel list, int position){
-        Shell.cmd("echo " + list.cpuSetAttr + " > " +
-                cpusetPath + "/" +cpusetArr[position] + "/cpus").exec();
+        Utils.write(list.cpuSetAttr,
+                cpusetPath + "/" +cpusetArr[position] + "/cpus");
         updateData(position);
     }
     public void updateData(int position){

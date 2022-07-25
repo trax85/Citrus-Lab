@@ -1,5 +1,6 @@
 package com.example.myapplication3.fragments.CpuFragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,27 +24,27 @@ import com.example.myapplication3.R;
 import com.example.myapplication3.fragments.CpuFragment.CoreControl.CoreControlFragment;
 import com.example.myapplication3.fragments.CpuFragment.CpuSets.CpuSetFragment;
 import com.example.myapplication3.fragments.CpuFragment.Stune.StuneFragment;
-import com.example.myapplication3.fragments.HomeFragment.CpuStats;
 import com.example.myapplication3.fragments.HomeFragment.AviFreqData;
-import com.topjohnwu.superuser.Shell;
+import com.example.myapplication3.tools.UtilException;
+import com.example.myapplication3.tools.Utils;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class CpuFragment extends Fragment {
+    static final String TAG = "Cpustats";
     ArrayList<CpuDataModel> cpuArrayList;
     public static String policyPath = "/sys/devices/system/cpu/cpufreq";
     String maxFreqPath = "/scaling_max_freq";
     String minFreqPath = "/scaling_min_freq";
     String governorPath = "/scaling_governor";
     String aviGovPath = "/scaling_available_governors";
+    static String[] clusterNames = {"Little Cluster", "Big Cluster", "Prime Cluster"};
+
     String[] policyArr, GovArr;
-    static final String TAG = "Cpustats";
     String[][] FreqArr, AppendedFreqArr;
     boolean[] cpuOnline;
-    static String[] clusterNames = {"Little Cluster", "Big Cluster", "Prime Cluster"};
     RVAdapter adapter;
     RecyclerView recyclerView;
     ExecutorService service;
@@ -58,7 +60,6 @@ public class CpuFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         linearLayout1 = view.findViewById(R.id.cpusets_launch);
         linearLayout2 = view.findViewById(R.id.core_ctrl_launch);
         linearLayout3 = view.findViewById(R.id.stune_launch);
@@ -67,10 +68,10 @@ public class CpuFragment extends Fragment {
         initListeners();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onResume() {
         super.onResume();
-
         init();
         initList();
         adapter.setAdapter(cpuArrayList);
@@ -85,18 +86,22 @@ public class CpuFragment extends Fragment {
         AppendedFreqArr = viewModel.getAppCpuFreqArr();
         policyArr = viewModel.getPolicyAttr();
         cpuOnline = viewModel.getCpuOnline();
-        GovArr =  CpuStats.splitStrings(policyPath + policyArr[0] + aviGovPath);
+        GovArr =  Utils.splitStrings(policyPath + policyArr[0] + aviGovPath, "\\s+");
     }
 
     /* Initialise cpuArrayList and append 'Mhz' to cpuArrayList list with variables */
     private void initList(){
         cpuArrayList = new ArrayList<>();
         for(int i = 0; i < policyArr.length; i++){
-            String maxFreq = getStr(policyPath + policyArr[i] + maxFreqPath);
-            String minFreq = getStr(policyPath + policyArr[i] + minFreqPath);
-            String govName = getStr(policyPath + policyArr[i] + governorPath);
-            CpuDataModel cpuList = new CpuDataModel(maxFreq, minFreq, clusterNames[i], govName);
-            cpuArrayList.add(cpuList);
+            try {
+                String maxFreq = Utils.read(0, policyPath + policyArr[i] + maxFreqPath);
+                String minFreq = Utils.read(0, policyPath + policyArr[i] + minFreqPath);
+                String govName = Utils.read(0, policyPath + policyArr[i] + governorPath);
+                CpuDataModel cpuList = new CpuDataModel(maxFreq, minFreq, clusterNames[i], govName);
+                cpuArrayList.add(cpuList);
+            }catch (UtilException e){
+                Log.e(TAG, "Failed to get min/max cpufreq");
+            }
         }
     }
 
@@ -139,25 +144,28 @@ public class CpuFragment extends Fragment {
     }
 
     // ---------Set of helper functions-----------
-    private String getStr(String path){
-        Shell.Result result = Shell.cmd("cat "+path).exec();
-        List<String> out = result.getOut();
-        return out.get(0);
-    }
 
     public String getFreq(int cluster, String Path){
-        return getStr(policyPath + policyArr[cluster] + Path);
+        try {
+            return Utils.read(0,policyPath + policyArr[cluster] + Path);
+        } catch (UtilException e) {
+            return "0";
+        }
     }
 
     public String getGov(int cluster){
-        return getStr(policyPath + policyArr[cluster] + governorPath);
+        try {
+            return Utils.read(0,policyPath + policyArr[cluster] + governorPath);
+        } catch (UtilException e) {
+            return "Null";
+        }
     }
 
     public void setMaxFreq(CpuDataModel list, int curCluster){
         service.execute(() -> {
             int Freq = Integer.parseInt(list.MaxFreq);
-            Shell.cmd("echo " + Freq + " > " + policyPath + policyArr[curCluster]
-                    + maxFreqPath).exec();
+            Utils.write(String.valueOf(Freq), policyPath + policyArr[curCluster]
+                    + maxFreqPath);
             updateData(curCluster);
         });
     }
@@ -165,16 +173,16 @@ public class CpuFragment extends Fragment {
     public void setMinFreq(CpuDataModel list, int curCluster){
         service.execute(() -> {
             int Freq = Integer.parseInt(list.MinFreq);
-            Shell.cmd("echo " + Freq + " > " + policyPath + policyArr[curCluster]
-                    + minFreqPath).exec();
+            Utils.write(String.valueOf(Freq), policyPath + policyArr[curCluster]
+                    + minFreqPath);
             updateData(curCluster);
         });
     }
 
     public void setGov(CpuDataModel list, int curCluster){
         service.execute(() -> {
-            Shell.cmd("echo " + list.Governor + " > " +
-                    policyPath + policyArr[curCluster] + governorPath).exec();
+            Utils.write(list.Governor,
+                    policyPath + policyArr[curCluster] + governorPath);
             updateData(curCluster);
         });
     }

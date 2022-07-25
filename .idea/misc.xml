@@ -9,11 +9,13 @@
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/display_list_items.xml" value="0.2" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_about.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_core_control.xml" value="0.5" />
-        <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_cpu.xml" value="0.75" />
+        <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_cpu.xml" value="0.18841698841698842" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_cpuset.xml" value="0.25" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_display.xml" value="0.33" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_gpu.xml" value="0.25" />
-        <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_home.xml" value="0.5" />
+        <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_memory.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_profile.xml" value="0.5" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_stune.xml" value="0.25" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_tunable.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/stune_list.xml" value="0.25416666666666665" />

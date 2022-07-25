@@ -19,11 +19,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TunableRVAdapter extends RecyclerView.Adapter<TunableRVAdapter.ViewHolder>{
-    private List<TunableDataModel> list;
+    final static String TAG = "TRVAdapter";
+    private final List<TunableDataModel> list;
     TextView textView1, textView2;
     LinearLayout layout;
     TunableFragment fragment;
-    final static String TAG = "TRVAdapter";
+
     public TunableRVAdapter(List<TunableDataModel> list, TunableFragment activity) {
             this.list = list;
             this.fragment =activity;
@@ -67,7 +68,7 @@ public class TunableRVAdapter extends RecyclerView.Adapter<TunableRVAdapter.View
 
             layout.setOnClickListener(v -> {
                 MaterialAlertDialogBuilder builder = new
-                        MaterialAlertDialogBuilder(fragment.getActivity());
+                        MaterialAlertDialogBuilder(fragment.requireActivity());
                 final EditText weightInput = new EditText(fragment.getActivity());
 
                 builder.setTitle("Edit "+ tunableNames);

@@ -10,19 +10,16 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
-import com.topjohnwu.superuser.Shell;
-
-import java.util.List;
+import com.example.myapplication3.tools.UtilException;
+import com.example.myapplication3.tools.Utils;
 
 public class BatteryStats implements Runnable{
     private static final String TAG = "BattstatsAct";
     HomeFragment homeFragment;
-    Shell.Result BattRes;
-    List<String> out;
 
-    String chargeRes;
+    String chargeRes, volt;
     float temps;
-    int currNow, volt, capacity, totalCap;
+    int currNow, capacity, totalCap;
 
     public void setBattClass(HomeFragment fragment){
         homeFragment = fragment;
@@ -32,17 +29,18 @@ public class BatteryStats implements Runnable{
     @Override
     public void run(){
         Handler handler = new Handler(Looper.getMainLooper());
-        //Log.d(TAG, "Enter Thread");
         handler.post(() -> {
-            BattRes = Shell.cmd("cat /sys/class/power_supply/battery/voltage_now").exec();
-            out = BattRes.getOut();
-            volt = Integer.parseInt(out.get(0));
-            // Update Cpustats UI elements
+            try {
+                volt = Utils.read(0, "/sys/class/power_supply/battery/voltage_now");
+            } catch (UtilException e) {
+                Log.d(TAG, "Voltage data read error");
+                volt = "0";
+            }
+            // Update BatteryStats UI elements
             homeFragment.textView4.setText(capacity + "%");
-            homeFragment.textView5.setText(chargeRes +" " + volt+ "mV");
+            homeFragment.textView5.setText(chargeRes + " "+ volt + "mV");
             homeFragment.textView6.setText(temps + " C" + "\u00B0");
             homeFragment.textView7.setText("4500"+ "Mah"); //Hard code for now
-            //Log.d(TAG, "Set");
         });
     }
 
@@ -64,20 +62,20 @@ public class BatteryStats implements Runnable{
                 temps = (float)(bundle.getInt("temperature")/10);
                 switch (status) {
                     case BatteryManager.BATTERY_STATUS_CHARGING:
-                        statusString = "charging";
+                        statusString = "Charging";
                         state = 0;
                         break;
                     case BatteryManager.BATTERY_STATUS_DISCHARGING:
-                        statusString = "discharging";
+                        statusString = "Discharging";
                         state = 1;
+                        break;
+                    case BatteryManager.BATTERY_STATUS_FULL:
+                        statusString = "Full";
+                        state = 3;
                         break;
                     case BatteryManager.BATTERY_STATUS_NOT_CHARGING:
                         statusString = "Not charging";
                         state = 2;
-                        break;
-                    case BatteryManager.BATTERY_STATUS_FULL:
-                        statusString = "full";
-                        state = 3;
                         break;
                 }
                 chargeRes = statusString;

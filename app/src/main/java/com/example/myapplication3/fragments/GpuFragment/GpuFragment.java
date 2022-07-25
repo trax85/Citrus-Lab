@@ -1,5 +1,6 @@
 package com.example.myapplication3.fragments.GpuFragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,23 +9,23 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.myapplication3.R;
+import com.example.myapplication3.tools.UtilException;
+import com.example.myapplication3.tools.Utils;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.topjohnwu.superuser.Shell;
-
-import org.w3c.dom.Text;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -32,23 +33,22 @@ import java.util.concurrent.TimeUnit;
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator;
 
 public class GpuFragment extends Fragment {
-
-    private String GpuOppPath = "/proc/gpufreq/gpufreq_opp_dump";
-    private String GpuCurFreqPath = "/sys/kernel/ged/hal/current_freqency";
-    private String GpuLoadPath = "/sys/module/ged/parameters/gpu_loading";
-    private String GpuInfoPath = "/sys/devices/platform/13000000.mali/gpuinfo";
-    private String DvfsPath = "/proc/mali/dvfs_enable";
-    private String GpuFreqOppPath = "/proc/gpufreq/gpufreq_opp_freq";
-    private String[] GpuBoostPath = {"/sys/module/ged/parameters/boost_gpu_enable",
+    private final String GpuCurFreqPath = "/sys/kernel/ged/hal/current_freqency";
+    private final String DvfsPath = "/proc/mali/dvfs_enable";
+    private final String GpuFreqOppPath = "/proc/gpufreq/gpufreq_opp_freq";
+    private final String[] GpuBoostPath = {"/sys/module/ged/parameters/boost_gpu_enable",
             "/sys/module/ged/parameters/enable_gpu_boost"};
-    private String[] GpuBoostBoundPath = {"/sys/module/ged/parameters/gpu_bottom_freq",
+    private final String[] GpuBoostBoundPath = {"/sys/module/ged/parameters/gpu_bottom_freq",
             "/sys/module/ged/parameters/gpu_cust_upbound_freq",
             "/sys/module/ged/parameters/gpu_cust_boost_freq" };
+    final static String TAG = "GpuFragment";
+
     private TextView[] textViews;
     LinearLayout[] linearLayouts;
     CircularProgressIndicator cProgress;
     RelativeLayout relativeLayout;
     private TextView textViewMhz, textViewLoad, textViewInfo, textViewVoltage;
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     private Switch switchDVFS, switchBoost;
     String[] gpuFreqData, gpuFreqDataApp, gpuVoltData;
     ScheduledThreadPoolExecutor executor;
@@ -65,7 +65,6 @@ public class GpuFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         statsLoop = new StatsLoop();
-
         initView(view);
         initData();
     }
@@ -105,16 +104,17 @@ public class GpuFragment extends Fragment {
         textViews[2] = v.findViewById(R.id.gpu_boostFreqDat);
     }
 
+    @SuppressLint("SetTextI18n")
     public void initData(){
-        List<String> out;
-        Shell.Result result;
-
-        result = Shell.cmd("cut -d' ' -f4 " + GpuOppPath).exec();
-        out = result.getOut();
-        gpuFreqData = out.toArray(new String[out.size()]);
-        result = Shell.cmd("cut -d' ' -f7 " + GpuOppPath).exec();
-        out = result.getOut();
-        gpuVoltData = out.toArray(new String[out.size()]);
+        String out;
+        try {
+            String gpuOppPath = "/proc/gpufreq/gpufreq_opp_dump";
+            gpuFreqData = Utils.readGetArr("cut -d' ' -f4 " + gpuOppPath);
+            gpuVoltData = Utils.readGetArr("cut -d' ' -f7 " + gpuOppPath);
+        } catch (UtilException e) {
+            //To-do
+            return;
+        }
         gpuFreqDataApp = new String[gpuFreqData.length];
         for(int i = 0; i < gpuFreqData.length; i++){
             gpuFreqData[i] = gpuFreqData[i].replaceFirst(",","");
@@ -127,53 +127,63 @@ public class GpuFragment extends Fragment {
         System.arraycopy(gpuFreqDataApp, 0, str, 1, gpuFreqDataApp.length);
         gpuFreqDataApp = str;
 
-        result = Shell.cmd("cat " + GpuInfoPath).exec();
-        out = result.getOut();
-        textViewInfo.setText(out.get(0));
-        cProgress.setMaxProgress(gpuFreqData.length);
+        try {
+            String gpuInfoPath = "/sys/devices/platform/13000000.mali/gpuinfo";
+            out = Utils.read(0, "cat " + gpuInfoPath);
+            textViewInfo.setText(out);
+        } catch (UtilException e) {
+            textViewInfo.setText("Unavailable");
+        }
 
-        result = Shell.cmd("cut -d':' -f2 " + DvfsPath).exec();
-        out = result.getOut();
-        if(out.get(0).contains("1"))
-            switchDVFS.setChecked(true);
-        result = Shell.cmd("cat " + GpuBoostPath[0]).exec();
-        out = result.getOut();
-        if(out.get(0).contains("1"))
-            switchBoost.setChecked(true);
+        cProgress.setMaxProgress(gpuFreqData.length);
+        try {
+            out = Utils.execCmdRead(0, "cut -d':' -f2 " + DvfsPath);
+            if(out.contains("1"))
+                switchDVFS.setChecked(true);
+        } catch (UtilException ignored) {}
+
+        try {
+            out = Utils.read(0,GpuBoostPath[0]);
+            if(out.contains("1"))
+                switchBoost.setChecked(true);
+        } catch (UtilException ignored) {}
     }
 
+    @SuppressLint("SetTextI18n")
     public void initLinearLayouts(){
-        Shell.Result result;
-        List<String> out;
+        String out;
         for(int i = 0; i < linearLayouts.length; i++){
-            result = Shell.cmd("cat " + GpuBoostBoundPath[i]).exec();
-            out = result.getOut();
-            if(out.get(0) == "0")
-                textViews[i].setText("Not set");
-            else
-                textViews[i].setText(out.get(0) + "Mhz");
-            int finalI = i;
-            linearLayouts[i].setOnClickListener(v -> showBoostSetDialogue(finalI));
+            try {
+                out = Utils.read(0,GpuBoostBoundPath[i]);
+                if(Objects.equals(out, "0"))
+                    textViews[i].setText("Not set");
+                else
+                    textViews[i].setText(out + "Mhz");
+                int finalI = i;
+                linearLayouts[i].setOnClickListener(v -> showBoostSetDialogue(finalI));
+            } catch (UtilException e) {
+                textViews[i].setText("Read errort");
+                return;
+            }
         }
     }
 
     public void initSwitch(){
         switchDVFS.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked){
-                Shell.cmd("echo 1 > " + DvfsPath).exec();
+                Utils.write("1", DvfsPath);
             } else {
-                Shell.cmd("echo 0 > " + DvfsPath).exec();
+                Utils.write("0", DvfsPath);
             }
         });
         switchBoost.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if(isChecked) {
-                Shell.cmd("echo 1 > " + GpuBoostPath[0]).exec();
-                Shell.cmd("echo 1 > " + GpuBoostPath[1]).exec();
+                Utils.write("1", GpuBoostPath[0]);
             }
             else{
-                Shell.cmd("echo 0 > " + GpuBoostPath[0]).exec();
-                Shell.cmd("echo 1 > " + GpuBoostPath[1]).exec();
+                Utils.write("0", GpuBoostPath[0]);
             }
+            Utils.write("1", GpuBoostPath[1]);
         });
     }
 
@@ -187,18 +197,22 @@ public class GpuFragment extends Fragment {
         }
 
         public void getStats(){
-            Shell.Result result = Shell.cmd("cut -d' ' -f2 " + GpuCurFreqPath).exec();
-            List<String> out = result.getOut();
-            curFreq = out.get(0);
-            result = Shell.cmd("cat " + GpuLoadPath).exec();
-            out = result.getOut();
-            curLoad = out.get(0);
-            idx = Arrays.asList(gpuFreqData).indexOf(curFreq);
-            curVoltage = gpuVoltData[idx];
-            idx = gpuFreqData.length - idx;
-            curFreq = Integer.parseInt(curFreq) / 1000 + " Mhz";
+            try {
+                curFreq = Utils.execCmdRead(0,"cut -d' ' -f2 " + GpuCurFreqPath);
+                String gpuLoadPath = "/sys/module/ged/parameters/gpu_loading";
+                curLoad = Utils.read(0, gpuLoadPath);
+                idx = Arrays.asList(gpuFreqData).indexOf(curFreq);
+                curVoltage = gpuVoltData[idx];
+                idx = gpuFreqData.length - idx;
+                curFreq = Integer.parseInt(curFreq) / 1000 + " Mhz";
+            } catch (UtilException e) {
+                curFreq = "0 Mhz";
+                curLoad = "0";
+                curVoltage = "0";
+            }
         }
 
+        @SuppressLint("SetTextI18n")
         public void setUI(){
             Handler handler = new Handler(Looper.getMainLooper());
             handler.post(() -> {
@@ -215,40 +229,50 @@ public class GpuFragment extends Fragment {
     }
 
     public void showDialogue(){
-        Shell.Result result = Shell.cmd("cut -d' ' -f2 " + GpuCurFreqPath).exec();
-        List<String> out = result.getOut();
+        List<String> out;
+        try {
+            out = Utils.readGetList("cut -d' ' -f2 " + GpuCurFreqPath);
+        } catch (UtilException e) {
+            Log.d(TAG, "Read list error");
+            return;
+        }
         int checkedItem;
-        if(out.get(0) == "0")
+        if(Objects.equals(out.get(0), "0"))
             checkedItem = 0;
         else
          checkedItem = Arrays.asList(gpuFreqData).indexOf(out.get(0)) + 1;
-        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireActivity());
         builder.setTitle("Choose Fixed GPU OPP");
         builder.setSingleChoiceItems(gpuFreqDataApp, checkedItem, (dialog, which) -> {
             if(which == 0)
-                Shell.cmd("echo 0 "  + "> " + GpuFreqOppPath).exec();
+                Utils.write("0", GpuFreqOppPath);
             else
-                Shell.cmd("echo " + gpuFreqData[which - 1] + " > " + GpuFreqOppPath).exec();
+                Utils.write(gpuFreqData[which - 1], GpuFreqOppPath);
             dialog.dismiss();
         });
         builder.show();
     }
 
     private void showBoostSetDialogue(int pos) {
-        Shell.Result result = Shell.cmd("cat " + GpuBoostBoundPath[pos]).exec();
-        List<String> out = result.getOut();
+        List<String> out;
+        try {
+            out = Utils.readGetList("cat " + GpuBoostBoundPath[pos]);
+        } catch (UtilException e) {
+            e.printStackTrace();
+            return;
+        }
         int checkedItem;
-        if(out.get(0) == "0")
+        if(out.get(0).equals("0"))
             checkedItem = -1;
         else
             checkedItem = Arrays.asList(gpuFreqData).indexOf(out.get(0)) + 1;
-        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireActivity());
         builder.setTitle("Choose Frequency");
         builder.setSingleChoiceItems(gpuFreqDataApp, checkedItem, (dialog, which) -> {
             if(which == 0)
-                Shell.cmd("echo  0 > " + GpuBoostBoundPath[pos]).exec();
+                Utils.write("0", GpuBoostBoundPath[pos]);
             else
-                Shell.cmd("echo " + gpuFreqData[which - 1] + " > " + GpuBoostBoundPath[pos]).exec();
+                Utils.write(gpuFreqData[which - 1], GpuBoostBoundPath[pos]);
             textViews[pos].setText(gpuFreqDataApp[which]);
             dialog.dismiss();
         });

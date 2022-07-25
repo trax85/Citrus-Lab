@@ -16,9 +16,8 @@ import android.widget.ImageView;
 import com.example.myapplication3.R;
 
 public class AboutFragment extends Fragment {
-
-    ImageView imageViewGit, imageViewTele1, imageViewGit1, imageViewTele2, imageViewGit2;
     private final String TAG = "AboutFragment";
+    ImageView imageViewGit, imageViewTele1, imageViewGit1, imageViewTele2, imageViewGit2;
     Intent intent;
 
     @Override

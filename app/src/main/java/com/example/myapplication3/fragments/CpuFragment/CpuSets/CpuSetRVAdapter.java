@@ -18,12 +18,12 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import java.util.List;
 
 public class CpuSetRVAdapter extends RecyclerView.Adapter<CpuSetRVAdapter.ViewHolder> {
-
-    private List<CpuSetDataModel> list;
+    final static String TAG = "CpusetRVA";
+    private final List<CpuSetDataModel> list;
     CpuSetFragment fragment;
     TextView textView1, textView2;
     LinearLayout layout;
-    final static String TAG = "CpusetRVA";
+
     public CpuSetRVAdapter(List<CpuSetDataModel> list, CpuSetFragment fragment) {
         this.list = list;
         this.fragment = fragment;
@@ -63,7 +63,7 @@ public class CpuSetRVAdapter extends RecyclerView.Adapter<CpuSetRVAdapter.ViewHo
             textView2.setText(cpuSetAttr);
             layout.setOnClickListener(v -> {
                 MaterialAlertDialogBuilder builder = new
-                        MaterialAlertDialogBuilder(fragment.getActivity());
+                        MaterialAlertDialogBuilder(fragment.requireActivity());
                 final EditText weightInput = new EditText(fragment.getActivity());
 
                 builder.setTitle("Edit " + list.get(position).getHeaderName());

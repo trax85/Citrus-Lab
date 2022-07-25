@@ -1,5 +1,6 @@
 package com.example.myapplication3.fragments.CpuFragment.GovTunable;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,12 +20,14 @@ import android.widget.TextView;
 
 import com.example.myapplication3.R;
 import com.example.myapplication3.fragments.CpuFragment.CpuFragment;
-import com.topjohnwu.superuser.Shell;
+import com.example.myapplication3.tools.UtilException;
+import com.example.myapplication3.tools.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TunableFragment extends Fragment {
+    final static String TAG = "TunableFrag";
     String policyPath, curGov, policy;
     public String[] itemsArr;
     TextView textView;
@@ -33,7 +36,6 @@ public class TunableFragment extends Fragment {
     RecyclerView recyclerView;
     ImageView imageView;
     boolean dataSetReceived = true;
-    static final String TAG = "TunableFrag";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,8 +52,10 @@ public class TunableFragment extends Fragment {
         imageView = view.findViewById(R.id.ic_core_ctl_back);
         imageView.setOnClickListener(v -> getActivity().onBackPressed());
         Bundle bundle = getArguments();
-        policyPath = bundle.getString("path");
-        curGov = "/" + bundle.getString("gov");
+        if (bundle != null) {
+            policyPath = bundle.getString("path");
+            curGov = "/" + bundle.getString("gov");
+        }
         policy = CpuFragment.policyPath;
         ItemList = new ArrayList<>();
         initItems();
@@ -59,9 +63,10 @@ public class TunableFragment extends Fragment {
             return;
         textView.setVisibility(View.INVISIBLE);
         initItemList();
-        initTRVAdapter(view);
+        initTunableRVAdapter(view);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onResume() {
         super.onResume();
@@ -72,23 +77,27 @@ public class TunableFragment extends Fragment {
     }
 
     public void initItems(){
-        Shell.Result result = Shell.cmd("ls "+ policy + policyPath +curGov).exec();
-        List<String> out = result.getOut();
-        if(checkItem(out.get(0)))
-            itemsArr = out.toArray(new String[out.size()]);
-        else
+        try {
+            itemsArr = Utils.readGetArr("ls "+ policy + policyPath +curGov);
+        } catch (UtilException e) {
             dataSetReceived = false;
+        }
     }
 
     public void initItemList(){
         for (String s : itemsArr) {
-            String ItemVal = getStr(policy + policyPath + curGov + "/" + s);
+            String ItemVal;
+            try {
+                ItemVal = Utils.read(0,policy + policyPath + curGov + "/" + s);
+            } catch (UtilException e) {
+                ItemVal = "0";
+            }
             TunableDataModel tunablesList = new TunableDataModel(s, ItemVal);
             ItemList.add(tunablesList);
         }
     }
 
-    public void initTRVAdapter(View view){
+    public void initTunableRVAdapter(View view){
         recyclerView = view.findViewById(R.id.tunable_list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -97,29 +106,14 @@ public class TunableFragment extends Fragment {
         adapter = new TunableRVAdapter(ItemList, this);
     }
 
-    private String getStr(String path){
-        Shell.Result result = Shell.cmd("cat "+path).exec();
-        List<String> out = result.getOut();
-        return out.get(0);
-    }
     public void setItemVal(TunableDataModel list, int index){
         Log.d(TAG, "Set gov value");
-        Shell.cmd("echo " + list.tunableAttr + " > " + policy +policyPath + curGov
-                + "/" + list.tunableName).exec();
+        Utils.write(list.tunableAttr,policy +policyPath + curGov
+                + "/" + list.tunableName);
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(() -> {
             recyclerView.setAdapter(adapter);
             adapter.notifyItemChanged(index);
         });
-    }
-
-    public boolean checkItem(String str){
-        String testFor = "No such file or directory";
-        int test = str.indexOf(testFor);
-        Log.d(TAG, "index found:" + test);
-        if(test >= 0)
-            return false;
-        else
-            return true;
     }
 }

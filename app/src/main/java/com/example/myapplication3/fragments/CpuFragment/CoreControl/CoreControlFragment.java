@@ -18,14 +18,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication3.R;
-import com.topjohnwu.superuser.Shell;
+import com.example.myapplication3.tools.UtilException;
+import com.example.myapplication3.tools.Utils;
 
 import java.util.Arrays;
-import java.util.List;
 
 
 public class CoreControlFragment extends Fragment {
+    final static String TAG = "CoreControlFrag";
     String coreControlPath = "/sys/devices/system/cpu/";
+    final String GREY = "#757575";
+    final String PURPLE = "#FFBB86FC";
+    final String GREY_DEEP = "#616060";
+    final String PURPLE_DEEP = "#A175FF";
+
     String[] coresArr;
     int[] coreStateArr;
     ImageView imageView1,imageView2,imageView3,imageView4,imageView5
@@ -34,7 +40,8 @@ public class CoreControlFragment extends Fragment {
             ,textView7, textView8;
     ImageView[] imageViews;
     TextView[] textViews;
-    final static String TAG = "CoreControlFrag";
+    boolean isCpusetinited = false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -47,6 +54,8 @@ public class CoreControlFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         coreStateArr = new int[8];
         init();
+        if(!isCpusetinited)
+            return;
         initButtons(view);
         setUpListners();
     }
@@ -58,10 +67,13 @@ public class CoreControlFragment extends Fragment {
     }
 
     public void init(){
-        Shell.Result result = Shell.cmd("find " +
-                coreControlPath + " -name 'cpu*[0-9]' | cut -d'/' -f 6").exec();
-        List<String> out = result.getOut();
-        coresArr = out.toArray(new String[out.size()]);
+        try {
+            coresArr = Utils.readGetArr("find " +
+                    coreControlPath + " -name 'cpu*[0-9]' | cut -d'/' -f 6");
+            isCpusetinited = true;
+        } catch (UtilException e) {
+            return;
+        }
         Arrays.sort(coresArr);
     }
 
@@ -122,10 +134,14 @@ public class CoreControlFragment extends Fragment {
     }
 
     public int getState(int pos){
-        Shell.Result result = Shell.cmd("cat " + coreControlPath
-                +coresArr[pos] + "/online").exec();
-        List<String>out = result.getOut();
-        return Integer.parseInt(out.get(0));
+        String out;
+        try {
+            out = Utils.read(0,coreControlPath
+                    +coresArr[pos] + "/online");
+        } catch (UtilException e) {
+            out = "0";
+        }
+        return Integer.parseInt(out);
     }
 
     public void disableCore(int pos){
@@ -137,20 +153,15 @@ public class CoreControlFragment extends Fragment {
     }
 
     public void setState(int pos, int state){
-        String s = "/online";
-        Shell.cmd("chmod 644 " + coreControlPath + coresArr[pos]+ s).exec();
-        Shell.cmd("echo " + state +" > " + coreControlPath
-                + coresArr[pos] + s).exec();
-        Shell.cmd("chmod 444 " + coreControlPath + coresArr[pos]+ s).exec();
+        Utils.execCmdWrite("chmod 644 " + coreControlPath + coresArr[pos]+ "/online");
+        Utils.write(String.valueOf(state), coreControlPath
+                + coresArr[pos] + "/online");
+        Utils.execCmdWrite("chmod 444 " + coreControlPath + coresArr[pos]+ "/online");
         coreStateArr[pos] = state;
         setUI(pos, state);
     }
     //Don't call this without calling setState unless you are still initialising
     public void setUI(int pos, int state) {
-        final String GREY = "#757575";
-        final String PURPLE = "#FFBB86FC";
-        final String GREY_DEEP = "#616060";
-        final String PURPLE_DEEP = "#A175FF";
         String colour,colour_ext, text;
         if (state == 1) {
             colour = PURPLE;

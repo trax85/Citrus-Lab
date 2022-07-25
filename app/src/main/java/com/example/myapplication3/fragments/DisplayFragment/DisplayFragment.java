@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +17,24 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.myapplication3.R;
-import com.topjohnwu.superuser.Shell;
+import com.example.myapplication3.tools.UtilException;
+import com.example.myapplication3.tools.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DisplayFragment extends Fragment {
     private static final String TAG = "HomeActivity";
+    String[] DCDPath = {"/sys/kernel/oppo_display/dimlayer_bl_en"};
+    String[] HBMPath = {"/sys/kernel/oppo_display/hbm"};
+    String[] D2W = {"/proc/sys/kernel/slide_boost_enabled",
+            "/proc/touchpanel/double_tap_enable"};
+    String[] TB = {"/proc/touchpanel/sensitive_level",
+            "/proc/touchpanel/smooth_level"};
+    String[] PrimaryDesc = {"DC Dimming","High Brightness Mode","Double-Tap to Wake", "Touch Boost"};
+    String[] SecondaryDesc = {"Stops screen flicker", "Pushes Display to max brightness level",
+            "Double tap on screen wakes up device", "Increases Touch sensitivity"};
+
     Button button1, button2, button3;
     ArrayList<DisplayDataModel> displayArrayLists;
 
@@ -40,16 +52,18 @@ public class DisplayFragment extends Fragment {
         button1 = view.findViewById(R.id.buttonrerrate1);
         button2 = view.findViewById(R.id.buttonrerrate2);
         button3 = view.findViewById(R.id.buttonrerrate3);
-        initList();
-        initRecyclerView(view);
+        try {
+            Utils.execCmdRead(0,"ls /sys/kernel/oppo_display");
+            initList();
+            initRecyclerView(view);
+        } catch (UtilException e) {
+            Log.d(TAG, "Oppo feature set not present");
+        }
         initListeners();
     }
 
     private void initList(){
         //Everything must be added in correct order/sequence
-        String[] PrimaryDesc = {"DC Dimming","High Brightness Mode","Double-Tap to Wake", "Touch Boost"};
-        String[] SecondaryDesc = {"Stops screen flicker", "Pushes Display to max brightness level",
-                "Double tap on screen wakes up device", "Increases Touch sensitivity"};
         int[][] ActionSet = {{1},{1}, {1,1}, {5,1}};
         List<String[]> FilePath = setList();
         displayArrayLists = new ArrayList<>();
@@ -61,12 +75,7 @@ public class DisplayFragment extends Fragment {
     }
 
     private List<String[]> setList(){
-        String[] DCDPath = {"/sys/kernel/oppo_display/dimlayer_bl_en"};
-        String[] HBMPath = {"/sys/kernel/oppo_display/hbm"};
-        String[] D2W = {"/proc/sys/kernel/slide_boost_enabled",
-                "/proc/touchpanel/double_tap_enable"};
-        String[] TB = {"/proc/touchpanel/sensitive_level",
-                "/proc/touchpanel/smooth_level"};
+
         List<String[]> Filepath = new ArrayList<>();
         Filepath.add(DCDPath);
         Filepath.add(HBMPath);
@@ -77,23 +86,23 @@ public class DisplayFragment extends Fragment {
 
     private void initListeners(){
         button1.setOnClickListener(v -> {
-            Shell.cmd("settings put system peak_refresh_rate 120").exec();
-            Shell.cmd("settings put system min_refresh_rate 120").exec();
+            Utils.execCmdWrite("settings put system peak_refresh_rate 120");
+            Utils.execCmdWrite("settings put system min_refresh_rate 120");
             Toast.makeText(getActivity(),
                     "Set 120Hz",
                     Toast.LENGTH_SHORT).show();
 
         });
         button2.setOnClickListener(v -> {
-            Shell.cmd("settings put system peak_refresh_rate 60").exec();
-            Shell.cmd("settings put system min_refresh_rate 60").exec();
+            Utils.execCmdWrite("settings put system peak_refresh_rate 60");
+            Utils.execCmdWrite("settings put system min_refresh_rate 60");
             Toast.makeText(getActivity(),
                     "Set 60Hz",
                     Toast.LENGTH_SHORT).show();
         });
         button3.setOnClickListener(v -> {
-            Shell.cmd("settings put system peak_refresh_rate 120").exec();
-            Shell.cmd("settings put system min_refresh_rate 60").exec();
+            Utils.execCmdWrite("settings put system peak_refresh_rate 120");
+            Utils.execCmdWrite("settings put system min_refresh_rate 60");
             Toast.makeText(getActivity(),
                     "Set to Auto",
                     Toast.LENGTH_SHORT).show();

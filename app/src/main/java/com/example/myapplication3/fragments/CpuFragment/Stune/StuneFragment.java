@@ -1,5 +1,6 @@
 package com.example.myapplication3.fragments.CpuFragment.Stune;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,8 @@ import android.widget.ImageView;
 
 import com.example.myapplication3.R;
 import com.example.myapplication3.fragments.DisplayFragment.RVAdapter;
+import com.example.myapplication3.tools.UtilException;
+import com.example.myapplication3.tools.Utils;
 import com.topjohnwu.superuser.Shell;
 
 import java.util.List;
@@ -25,6 +28,7 @@ public class StuneFragment extends Fragment {
     ImageView imageView;
     StuneRVAdapter adapter;
     RecyclerView recyclerView;
+    boolean stuneInited = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,21 +46,23 @@ public class StuneFragment extends Fragment {
         initRecyclerView(view);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onResume() {
         super.onResume();
+        if(!stuneInited)
+            return;
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
 
     public void initData(){
-        Shell.Result result;
-        List<String> out;
-
-        result = Shell.cmd("ls -d " + stunePath +
-                "/*/ | cut -d'/' -f4").exec();
-        out = result.getOut();
-        stuneItems = out.toArray(new String[0]);
+        try {
+            stuneItems = Utils.readGetArr("ls -d " + stunePath +
+                    "/*/ | cut -d'/' -f4");
+        } catch (UtilException e) {
+            stuneInited = false;
+        }
     }
 
     private void initRecyclerView(View view){

@@ -23,11 +23,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
+    final static String TAG = "StuneRVAdapter";
     private List<CpuDataModel> list;
     private TextView textView1, textView2, textView3, textView4;
     private LinearLayout linearLayout1, linearLayout2, linearLayout3, linearLayout4;
-    private CpuFragment fragment;
-    final static String TAG = "StuneRVAdapter";
+    private final CpuFragment fragment;
     ExecutorService service = Executors.newSingleThreadExecutor();
 
     public RVAdapter(CpuFragment fragment){
@@ -40,7 +40,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cpu_list_items,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cpu_list_items,
+                parent,false);
         return new ViewHolder(view);
     }
 
@@ -72,7 +73,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         }
 
         public void setData(String maxFreq, String minFreq, String clusterName, String govName) {
-            int curCluster = Arrays.asList(fragment.clusterNames).indexOf(clusterName);
+            int curCluster = Arrays.asList(CpuFragment.clusterNames).indexOf(clusterName);
 
             textView1.setText(clusterName);
             textView2.setText(maxFreq);
@@ -94,7 +95,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                     bundle.putString("gov", curGov);
                     fragment2.setArguments(bundle);
 
-                    FragmentManager fragmentManager = fragment.getActivity().getSupportFragmentManager();
+                    FragmentManager fragmentManager =
+                            fragment.getActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.activity_main, fragment2, "tag");
                     fragmentTransaction.addToBackStack(null);
@@ -111,7 +113,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         String[] FreqArr = fragment.FreqArr[curCluster];  //Khz
         String Freq = fragment.getFreq(curCluster, fragment.maxFreqPath);
         int checkedItem = Arrays.asList(FreqArr).indexOf(Freq);
-        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(fragment.getActivity());
+        MaterialAlertDialogBuilder builder =
+                new MaterialAlertDialogBuilder(fragment.requireActivity());
         builder.setTitle("Choose Max Frequency");
         builder.setSingleChoiceItems(AppFreqArr, checkedItem, (dialog, which) -> {
             list.get(curCluster).setMaxFreq(FreqArr[which]);
@@ -130,7 +133,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         String[] FreqArr = fragment.FreqArr[curCluster];  //Khz
         String Freq = fragment.getFreq(curCluster, fragment.minFreqPath);
         int checkedItem = Arrays.asList(FreqArr).indexOf(Freq);
-        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(fragment.getActivity());
+        MaterialAlertDialogBuilder builder =
+                new MaterialAlertDialogBuilder(fragment.requireActivity());
         builder.setTitle("Choose Max Frequency");
         builder.setSingleChoiceItems(AppFreqArr, checkedItem, (dialog, which) -> {
             list.get(curCluster).setMinFreq(FreqArr[which]);
@@ -145,7 +149,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         if(!fragment.cpuOnline[curCluster])
             return;
         String[] aviGov = fragment.GovArr;
-        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(fragment.getActivity());
+        MaterialAlertDialogBuilder builder =
+                new MaterialAlertDialogBuilder(fragment.requireActivity());
         builder.setTitle("Choose Governor");
         String curGov = fragment.getGov(curCluster);
         int checkedItem = Arrays.asList(aviGov).indexOf(curGov);

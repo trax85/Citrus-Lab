@@ -116,6 +116,7 @@ public class HomeFragment extends Fragment {
         super.onPause();
         //Kill all threads
         executor.shutdown();
+        cpuStats.stopThread();
         Log.d(TAG,"Paused fragment");
         getActivity().unregisterReceiver(batteryStats.mBroadcastReceiver);
     }
@@ -125,8 +126,9 @@ public class HomeFragment extends Fragment {
         super.onResume();
         //Init and Start threads
         cpuStats.initCpuArr();
+        cpuStats.startThread();
         executor = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(5);
-        executor.scheduleWithFixedDelay(cpuStats,0,1000, TimeUnit.MILLISECONDS);
+        //executor.scheduleWithFixedDelay(cpuStats,0,1000, TimeUnit.MILLISECONDS);
         executor.scheduleWithFixedDelay(batteryStats,0,1300, TimeUnit.MILLISECONDS);
         executor.scheduleWithFixedDelay(memoryStats,0,1700, TimeUnit.MILLISECONDS);
         systemInfo.StartSysStats(this);

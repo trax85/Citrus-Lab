@@ -12,24 +12,28 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication3.R;
-import com.topjohnwu.superuser.Shell;
+import com.example.myapplication3.tools.UtilException;
+import com.example.myapplication3.tools.Utils;
 
 import java.util.List;
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
+    final static String TAG = "Recycler view";
     private final List<DisplayDataModel> list;
     private TextView textView1;
     private TextView textView2;
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     private Switch aSwitch;
-    final static String TAG = "Recycler view";
+
     public RVAdapter(List<DisplayDataModel> list){
         this.list = list;
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.display_list_items,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.display_list_items,
+                parent,false);
         return new ViewHolder(view);
     }
 
@@ -56,27 +60,29 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
             aSwitch = itemView.findViewById(R.id.contentSwitch);
         }
 
-        public void setData(String primaryContent, String secondaryContent, String[] filePath, int[] actionSet) {
-            Shell.Result res;
-            List<String> out;
+        public void setData(String primaryContent, String secondaryContent, String[] filePath,
+                            int[] actionSet) {
             //Hardcoded as disable usually is 0
             int actionUnset = 0;
-            Log.d(TAG, "Recycler view");
             textView1.setText(primaryContent);
             textView2.setText(secondaryContent);
-            for (int i = 0; i < filePath.length; i++) {
-                res = Shell.cmd("cat " + filePath[i]).exec();
-                out = res.getOut();
-                if (Integer.parseInt(out.get(0)) == actionSet[i]) {
-                    aSwitch.setChecked(true);
+            for (String value : filePath) {
+                try {
+                    String out = Utils.read(0, value);
+                    if(!out.equals("0"))
+                        aSwitch.setChecked(true);
+                } catch (UtilException e) {
+                    Log.d(TAG, "Error encountered");
+                    return;
                 }
             }
+
             aSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if (isChecked){
                     for (int i = 0; i < filePath.length; i++)
-                        Shell.cmd("echo " + actionSet[i] + "  > " + filePath[i]).exec();
+                        Utils.write(String.valueOf(actionSet[i]), filePath[i]);
                 } else {
-                    for (String s : filePath) Shell.cmd("echo " + actionUnset + " > " + s).exec();
+                    for (String path : filePath) Utils.write(String.valueOf(actionUnset), path);
                 }
             });
         }

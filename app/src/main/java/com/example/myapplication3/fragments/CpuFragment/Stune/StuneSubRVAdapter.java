@@ -13,19 +13,18 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication3.R;
+import com.example.myapplication3.tools.UtilException;
+import com.example.myapplication3.tools.Utils;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.topjohnwu.superuser.Shell;
-
-import java.util.List;
 
 public class StuneSubRVAdapter extends RecyclerView.Adapter<StuneSubRVAdapter.ViewHolder>{
+    final static String TAG = "RV Child";
     StuneFragment fragment;
     String headerName;
     String[] subItemNames, subItemValue;
     ConstraintLayout constraintLayout;
     StuneRVAdapter stuneRVAdapter;
     private TextView textView1, textView2;
-    final static String TAG = "RV Child";
 
     public StuneSubRVAdapter(String[] string, StuneFragment fragment, String headerName,
                              StuneRVAdapter adapter){
@@ -37,17 +36,14 @@ public class StuneSubRVAdapter extends RecyclerView.Adapter<StuneSubRVAdapter.Vi
     }
 
     public void initData(){
-        Shell.Result result;
-        List<String> out;
         subItemValue = new String[subItemNames.length];
         for(int i = 0; i < subItemNames.length; i++){
-            result = Shell.cmd("cat " + fragment.stunePath + "/" +
-                    headerName + "/" + subItemNames[i]).exec();
-            out = result.getOut();
-            if(isError(out.get(0)))
+            try {
+                subItemValue[i] = Utils.read(0, fragment.stunePath + "/" +
+                        headerName + "/" + subItemNames[i]);
+            } catch (UtilException e) {
                 subItemValue[i] = "read error";
-            else
-                subItemValue[i] = out.get(0);
+            }
         }
     }
 
@@ -83,7 +79,7 @@ public class StuneSubRVAdapter extends RecyclerView.Adapter<StuneSubRVAdapter.Vi
             textView2.setText(itemVal);
             constraintLayout.setOnClickListener(v -> {
                 MaterialAlertDialogBuilder builder = new
-                        MaterialAlertDialogBuilder(fragment.getActivity());
+                        MaterialAlertDialogBuilder(fragment.requireActivity());
                 final EditText weightInput = new EditText(fragment.getActivity());
 
                 builder.setTitle("Edit " + itemName);
@@ -99,12 +95,5 @@ public class StuneSubRVAdapter extends RecyclerView.Adapter<StuneSubRVAdapter.Vi
                 builder.show();
             });
         }
-    }
-
-    public boolean isError(String string){
-        String errString = "Invalid";
-        if(string.contains(errString))
-            return true;
-        return false;
     }
 }

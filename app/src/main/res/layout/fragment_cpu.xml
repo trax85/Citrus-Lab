@@ -43,7 +43,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:background="@drawable/page_bg"
-                android:paddingBottom="@dimen/_80sdp"
+                android:paddingBottom="@dimen/_60sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -92,7 +92,7 @@
                     android:layout_width="@dimen/_270sdp"
                     android:layout_height="@dimen/_60sdp"
                     android:layout_marginStart="@dimen/_15sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
                     android:layout_marginEnd="@dimen/_15sdp"
                     android:background="@drawable/inner_container_bg"
                     android:foreground="@drawable/rounded_btn"

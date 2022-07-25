@@ -1,5 +1,6 @@
 package com.example.myapplication3.fragments.CpuFragment.Stune;
 
+import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -13,6 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication3.R;
+import com.example.myapplication3.tools.UtilException;
+import com.example.myapplication3.tools.Utils;
 import com.topjohnwu.superuser.Shell;
 
 import java.util.Arrays;
@@ -42,22 +45,23 @@ public class StuneRVAdapter extends RecyclerView.Adapter<StuneRVAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.d(TAG, "Create Main Layout");
+        Log.d(TAG, "Create Parent Layout");
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.stune_list_items,parent,false);
         return new ViewHolder(view);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.d(TAG,"OnBIndVH");
         String itemName = stuneItems[position];
         executor.execute(() -> {
-            Shell.Result result;
-            List<String> out;
-            result = Shell.cmd("ls " + StuneFragment.stunePath + "/" + itemName +
-                    "/sched* | cut -d'/' -f5").exec();
-            out = result.getOut();
-            subItems = out.toArray(new String[0]);
+            try {
+                subItems = Utils.readGetArr("ls " + StuneFragment.stunePath + "/" + itemName +
+                        "/sched* | cut -d'/' -f5");
+            } catch (UtilException e) {
+                return;
+            }
             adapter = new StuneSubRVAdapter(subItems, fragment, itemName, this);
             handler.post(() -> {
                 holder.recyclerView.setLayoutManager(new LinearLayoutManager(fragment.getContext(), LinearLayoutManager.VERTICAL, false));
@@ -88,10 +92,11 @@ public class StuneRVAdapter extends RecyclerView.Adapter<StuneRVAdapter.ViewHold
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setItem(StuneSubRVAdapter adapter, String itemName, String value){
         int pos = Arrays.asList(stuneItems).indexOf(adapter.headerName);
-        Shell.cmd(" echo " + value + " > " + StuneFragment.stunePath
-                + "/" + adapter.headerName + "/" + itemName).exec();
+        Utils.write(value, StuneFragment.stunePath
+                + "/" + adapter.headerName + "/" + itemName);
         recyclerViewArr[pos].setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }

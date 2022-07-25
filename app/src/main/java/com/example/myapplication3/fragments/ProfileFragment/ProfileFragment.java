@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.myapplication3.R;
+import com.example.myapplication3.tools.Utils;
 import com.google.android.material.button.MaterialButton;
 import com.topjohnwu.superuser.Shell;
 
@@ -53,19 +54,19 @@ public class ProfileFragment extends Fragment {
 
     void setListeners(){
         power_button.setOnClickListener(v -> {
-                String out = readTextFile(getContext(), R.raw.power);
-                Toast.makeText(getContext(), "Applying Power Profile...",Toast.LENGTH_SHORT).show();
-                Shell.cmd(out).exec();
+            String out = readTextFile(getContext(), R.raw.power);
+            Toast.makeText(getContext(), "Applying Power Profile...",Toast.LENGTH_SHORT).show();
+            Utils.execCmdWrite(out);
         });
         balance_button.setOnClickListener(v -> {
             String out = readTextFile(getContext(), R.raw.balance);
             Toast.makeText(getContext(), "Applying Balance Profile...",Toast.LENGTH_SHORT).show();
-            Shell.cmd(out).exec();
+            Utils.execCmdWrite(out);
         });
         perf_button.setOnClickListener(v -> {
             String out = readTextFile(getContext(), R.raw.performance);
             Toast.makeText(getContext(), "Applying Performance Profile...",Toast.LENGTH_SHORT).show();
-            Shell.cmd(out).exec();
+            Utils.execCmdWrite(out);
         });
     }
 

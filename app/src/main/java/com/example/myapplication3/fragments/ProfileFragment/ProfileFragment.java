@@ -146,7 +146,6 @@ public class ProfileFragment extends Fragment {
     public void setAddButton(int idx){
         custProfArr[idx].setOnClickListener(v -> {
             getFile(idx);
-            Log.d(TAG, "Set add button");
         });
     }
 
@@ -185,7 +184,6 @@ public class ProfileFragment extends Fragment {
                 cprofile.nameArr[curIdx] = getFileName(file.getName());
                 cprofile.setItem(curIdx);
                 cprofile.hideAddView(curIdx);
-                Log.d(TAG, "idx:" + curIdx + " content:" + content);
             });
 
     public boolean isValidFile(String file){

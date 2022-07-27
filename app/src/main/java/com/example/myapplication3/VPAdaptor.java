@@ -1,8 +1,10 @@
 package com.example.myapplication3;
 
+import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
@@ -14,15 +16,17 @@ import com.example.myapplication3.fragments.DisplayFragment.DisplayFragment;
 import com.example.myapplication3.fragments.GpuFragment.GpuFragment;
 import com.example.myapplication3.fragments.HomeFragment.HomeFragment;
 import com.example.myapplication3.fragments.MemoryFragment.MemoryFragment;
+import com.example.myapplication3.fragments.MiscFragment.MiscFragment;
 import com.example.myapplication3.fragments.ProfileFragment.ProfileFragment;
 
 public class VPAdaptor extends FragmentStateAdapter {
-    int totalTabs = 7;
+    int totalTabs = 8;
     final static String TAG = "VPAdapter";
     public VPAdaptor(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
         super(fragmentManager, lifecycle);
     }
     // this is for fragment tabs
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @NonNull
     @Override
     public Fragment createFragment(int position) {
@@ -46,6 +50,9 @@ public class VPAdaptor extends FragmentStateAdapter {
                 Log.d(TAG,"ProfileFragment created");
                 return new ProfileFragment();
             case 6:
+                Log.d(TAG,"MiscFragment created");
+                return new MiscFragment();
+            case 7:
                 Log.d(TAG,"AboutFragment created");
                 return new AboutFragment();
             default:

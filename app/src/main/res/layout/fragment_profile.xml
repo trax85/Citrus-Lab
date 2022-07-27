@@ -34,8 +34,6 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fadingEdgeLength="24dp"
-        android:requiresFadingEdge="vertical"
         android:background="@drawable/page_bg"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -44,168 +42,513 @@
             android:layout_height="0dp"
             android:paddingBottom="@dimen/_40sdp" >
 
-        <TextView
-            android:id="@+id/textView31"
-            android:layout_width="@dimen/_250sdp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:fontFamily="@font/inter"
-            android:text="This page presents you with a set of premade profiles which can be applied on the go."
-            android:textColor="#616161"
-            android:textSize="@dimen/_9sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/ic_core_ctl_info"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/textView31"
+                android:layout_width="@dimen/_250sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:fontFamily="@font/inter"
+                android:text="This page presents you with a set of pre-made profiles for mtk D1200 which can be applied on the go. The custom profiles can be set by the users"
+                android:textColor="#616161"
+                android:textSize="@dimen/_9sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/ic_core_ctl_info"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/ic_core_ctl_info"
-            android:layout_width="@dimen/_18sdp"
-            android:layout_height="@dimen/_18sdp"
-            android:layout_marginStart="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_18sdp"
-            android:src="@drawable/ic_about"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <RelativeLayout
-            android:id="@+id/relativeLayout1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:layout_marginTop="@dimen/_50sdp"
-            android:layout_marginEnd="@dimen/_8sdp"
-            android:background="@drawable/core_ctrl_container_bg"
-            android:padding="@dimen/_5sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ic_core_ctl_info">
+            <ImageView
+                android:id="@+id/ic_core_ctl_info"
+                android:layout_width="@dimen/_18sdp"
+                android:layout_height="@dimen/_18sdp"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:src="@drawable/ic_about"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <RelativeLayout
+                android:id="@+id/relativeLayout1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_2sdp"
-                android:background="@drawable/inner_container_bg"
-                android:padding="@dimen/_2sdp">
+                android:layout_marginStart="@dimen/_2sdp"
+                android:layout_marginTop="@dimen/_50sdp"
+                android:layout_marginEnd="@dimen/_2sdp"
+                android:background="@drawable/core_ctrl_container_bg"
+                android:padding="@dimen/_5sdp"
+                app:layout_constraintBottom_toTopOf="@+id/relativeLayout2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ic_core_ctl_info">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/button_power"
-                    android:layout_width="@dimen/_260sdp"
-                    android:layout_height="@dimen/_60sdp"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginStart="@dimen/_3sdp"
-                    android:layout_marginTop="@dimen/_3sdp"
-                    android:layout_marginEnd="@dimen/_3sdp"
-                    android:background="@drawable/rounded_btn"
-                    android:elevation="2dp"
-                    android:gravity="left"
-                    android:padding="@dimen/_15sdp"
-                    android:text="Power"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    app:backgroundTint="#700A5712" />
-
-                <TextView
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_17sdp"
-                    android:layout_marginTop="@dimen/_41sdp"
-                    android:fontFamily="@font/inter"
-                    android:letterSpacing="0.03"
-                    android:text="This mode can save some battery life "
-                    android:textColor="@color/content_desc"
-                    android:textSize="@dimen/_9sdp" />
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:background="@drawable/inner_container_bg"
+                    android:padding="@dimen/_2sdp">
 
-                <ImageView
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_marginStart="@dimen/_220sdp"
-                    android:layout_marginTop="@dimen/_20sdp"
-                    android:src="@drawable/ic_power"
-                    android:tintMode="src_in"
-                    app:tint="#46FFFFFF" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_power"
+                        android:layout_width="@dimen/_260sdp"
+                        android:layout_height="@dimen/_60sdp"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="@dimen/_3sdp"
+                        android:layout_marginTop="@dimen/_3sdp"
+                        android:layout_marginEnd="@dimen/_3sdp"
+                        android:background="@drawable/rounded_btn"
+                        android:elevation="2dp"
+                        android:gravity="left"
+                        android:padding="@dimen/_15sdp"
+                        android:text="Power"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        app:backgroundTint="#700A5712" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/button_balance"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:layout_width="@dimen/_260sdp"
-                    android:layout_height="@dimen/_60sdp"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="@dimen/_3sdp"
-                    android:layout_marginTop="@dimen/_68sdp"
-                    android:layout_marginEnd="@dimen/_3sdp"
-                    android:background="@drawable/rounded_btn"
-                    android:elevation="2dp"
-                    android:gravity="left"
-                    android:padding="@dimen/_15sdp"
-                    android:text="Balance"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    app:backgroundTint="#720A3C57" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_17sdp"
+                        android:layout_marginTop="@dimen/_41sdp"
+                        android:fontFamily="@font/inter"
+                        android:letterSpacing="0.03"
+                        android:text="This mode can save some battery life "
+                        android:textColor="@color/content_desc"
+                        android:textSize="@dimen/_9sdp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_17sdp"
-                    android:layout_marginTop="@dimen/_106sdp"
-                    android:fontFamily="@font/inter"
-                    android:letterSpacing="0.03"
-                    android:text="This mode is for normal usage"
-                    android:textColor="@color/content_desc"
-                    android:textSize="@dimen/_9sdp" />
+                    <ImageView
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginStart="@dimen/_220sdp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:src="@drawable/ic_power"
+                        android:tintMode="src_in"
+                        app:tint="#46FFFFFF" />
 
-                <ImageView
-                    android:layout_width="@dimen/_28sdp"
-                    android:layout_height="@dimen/_28sdp"
-                    android:layout_marginStart="@dimen/_220sdp"
-                    android:layout_marginTop="@dimen/_86sdp"
-                    android:src="@drawable/ic_balance"
-                    android:tintMode="src_in"
-                    app:tint="#46FFFFFF" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_balance"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="@dimen/_260sdp"
+                        android:layout_height="@dimen/_60sdp"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="@dimen/_3sdp"
+                        android:layout_marginTop="@dimen/_68sdp"
+                        android:layout_marginEnd="@dimen/_3sdp"
+                        android:background="@drawable/rounded_btn"
+                        android:elevation="2dp"
+                        android:gravity="left"
+                        android:padding="@dimen/_15sdp"
+                        android:text="Balance"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        app:backgroundTint="#720A3C57" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/button_performance"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:layout_width="@dimen/_260sdp"
-                    android:layout_height="@dimen/_60sdp"
-                    android:layout_marginStart="@dimen/_3sdp"
-                    android:layout_marginTop="@dimen/_134sdp"
-                    android:layout_marginBottom="@dimen/_3sdp"
-                    android:layout_marginEnd="@dimen/_3sdp"
-                    android:background="@drawable/rounded_btn"
-                    android:elevation="2dp"
-                    android:gravity="left"
-                    android:padding="@dimen/_15sdp"
-                    android:text="Performance"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    app:backgroundTint="#4A970000" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_17sdp"
+                        android:layout_marginTop="@dimen/_106sdp"
+                        android:fontFamily="@font/inter"
+                        android:letterSpacing="0.03"
+                        android:text="This mode is for normal usage"
+                        android:textColor="@color/content_desc"
+                        android:textSize="@dimen/_9sdp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_17sdp"
-                    android:layout_marginTop="@dimen/_172sdp"
-                    android:fontFamily="@font/inter"
-                    android:letterSpacing="0.03"
-                    android:text="This mode is for gaming"
-                    android:textColor="@color/content_desc"
-                    android:textSize="11sp" />
+                    <ImageView
+                        android:layout_width="@dimen/_28sdp"
+                        android:layout_height="@dimen/_28sdp"
+                        android:layout_marginStart="@dimen/_220sdp"
+                        android:layout_marginTop="@dimen/_86sdp"
+                        android:src="@drawable/ic_balance"
+                        android:tintMode="src_in"
+                        app:tint="#46FFFFFF" />
 
-                <ImageView
-                    android:layout_width="@dimen/_29sdp"
-                    android:layout_height="@dimen/_29sdp"
-                    android:layout_marginStart="@dimen/_220sdp"
-                    android:layout_marginTop="@dimen/_152sdp"
-                    android:src="@drawable/ic_perf"
-                    android:tintMode="src_in"
-                    app:tint="#46FFFFFF" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_performance"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="@dimen/_260sdp"
+                        android:layout_height="@dimen/_60sdp"
+                        android:layout_marginStart="@dimen/_3sdp"
+                        android:layout_marginTop="@dimen/_134sdp"
+                        android:layout_marginEnd="@dimen/_3sdp"
+                        android:layout_marginBottom="@dimen/_3sdp"
+                        android:background="@drawable/rounded_btn"
+                        android:elevation="2dp"
+                        android:gravity="left"
+                        android:padding="@dimen/_15sdp"
+                        android:text="Performance"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        app:backgroundTint="#4A970000" />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_17sdp"
+                        android:layout_marginTop="@dimen/_172sdp"
+                        android:fontFamily="@font/inter"
+                        android:letterSpacing="0.03"
+                        android:text="This mode is for gaming"
+                        android:textColor="@color/content_desc"
+                        android:textSize="11sp" />
+
+                    <ImageView
+                        android:layout_width="@dimen/_29sdp"
+                        android:layout_height="@dimen/_29sdp"
+                        android:layout_marginStart="@dimen/_220sdp"
+                        android:layout_marginTop="@dimen/_152sdp"
+                        android:src="@drawable/ic_perf"
+                        android:tintMode="src_in"
+                        app:tint="#46FFFFFF" />
+
+                </RelativeLayout>
             </RelativeLayout>
-        </RelativeLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <RelativeLayout
+                android:id="@+id/relativeLayout2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_2sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:background="@drawable/core_ctrl_container_bg"
+                android:padding="@dimen/_5sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/relativeLayout1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:fontFamily="@font/nunito_sans_semibold"
+                    android:letterSpacing="0.02"
+                    android:text="Custom Profiles"
+                    android:textAllCaps="false"
+                    android:textColor="@color/secondary_colour"
+                    android:textSize="@dimen/_13sdp"
+                    android:textStyle="bold" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_25sdp"
+                    android:background="@drawable/inner_container_bg"
+                    android:padding="@dimen/_2sdp">
+
+                    <RelativeLayout
+                        android:id="@+id/button_add1"
+                        android:layout_width="@dimen/_260sdp"
+                        android:layout_height="@dimen/_60sdp"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="@dimen/_3sdp"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:layout_marginEnd="@dimen/_3sdp"
+                        android:background="@drawable/profile_button"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toTopOf="@+id/button_add2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/imageViewAdd1"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginStart="@dimen/_120sdp"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:src="@drawable/ic_add"
+                        app:layout_constraintBottom_toBottomOf="@+id/button_add1"
+                        app:layout_constraintStart_toStartOf="@+id/button_add1"
+                        app:layout_constraintTop_toTopOf="@+id/button_add1" />
+
+                    <TextView
+                        android:id="@+id/textprof1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_14sdp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:fontFamily="@font/nunito_sans_bold"
+                        android:letterSpacing="0.03"
+                        android:text="Profile 1"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@+id/button_add1"
+                        app:layout_constraintTop_toTopOf="@+id/button_add1" />
+
+                    <TextView
+                        android:id="@+id/proftext1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_14sdp"
+                        android:layout_marginTop="@dimen/_1sdp"
+                        android:fontFamily="@font/inter"
+                        android:letterSpacing="0.03"
+                        android:text="Not set"
+                        android:textColor="@color/content_desc"
+                        android:textSize="@dimen/_10sdp"
+                        app:layout_constraintStart_toStartOf="@+id/button_add1"
+                        app:layout_constraintTop_toBottomOf="@+id/textprof1" />
+
+                    <ImageView
+                        android:id="@+id/editName1"
+                        android:layout_width="@dimen/_17sdp"
+                        android:layout_height="@dimen/_17sdp"
+                        android:layout_marginStart="@dimen/_4sdp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:padding="@dimen/_3sdp"
+                        android:src="@drawable/ic_edit"
+                        app:layout_constraintLeft_toRightOf="@+id/proftext1"
+                        app:layout_constraintTop_toTopOf="@id/textprof1" />
+
+                    <TextView
+                        android:id="@+id/unsetbutton1"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_200sdp"
+                        android:layout_marginTop="@dimen/_35sdp"
+                        android:background="@drawable/textview_solid_rounded"
+                        android:fontFamily="@font/inter"
+                        android:letterSpacing="0.05"
+                        android:text="Clear"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_9sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="@+id/button_add1"
+                        app:layout_constraintStart_toStartOf="@+id/button_add1"
+                        app:layout_constraintTop_toTopOf="@+id/button_add1" />
+
+                    <TextView
+                        android:id="@+id/editbutton1"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_200sdp"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:background="@drawable/textview_solid_rounded"
+                        android:fontFamily="@font/inter"
+                        android:letterSpacing="0.05"
+                        android:text="Edit"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_9sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="@+id/button_add1"
+                        app:layout_constraintStart_toStartOf="@+id/button_add1"
+                        app:layout_constraintTop_toTopOf="@+id/button_add1" />
+
+                    <RelativeLayout
+                        android:id="@+id/button_add2"
+                        android:layout_width="@dimen/_260sdp"
+                        android:layout_height="@dimen/_60sdp"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="@dimen/_3sdp"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:layout_marginEnd="@dimen/_3sdp"
+                        android:background="@drawable/profile_button"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toTopOf="@+id/button_add3"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/button_add1" />
+
+                    <TextView
+                        android:id="@+id/textprof2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:fontFamily="@font/nunito_sans_bold"
+                        android:letterSpacing="0.03"
+                        android:text="Profile 2"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@+id/button_add2"
+                        app:layout_constraintTop_toTopOf="@+id/button_add2" />
+
+                    <TextView
+                        android:id="@+id/proftext2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_14sdp"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:fontFamily="@font/inter"
+                        android:letterSpacing="0.03"
+                        android:text="Not set"
+                        android:textColor="@color/content_desc"
+                        android:textSize="@dimen/_10sdp"
+                        app:layout_constraintStart_toStartOf="@+id/button_add2"
+                        app:layout_constraintTop_toBottomOf="@+id/textprof2" />
+
+                    <ImageView
+                        android:id="@+id/editName2"
+                        android:layout_width="@dimen/_17sdp"
+                        android:layout_height="@dimen/_17sdp"
+                        android:layout_marginStart="@dimen/_4sdp"
+                        android:layout_marginTop="@dimen/_17sdp"
+                        android:padding="@dimen/_3sdp"
+                        android:src="@drawable/ic_edit"
+                        app:layout_constraintLeft_toRightOf="@+id/proftext2"
+                        app:layout_constraintTop_toTopOf="@id/textprof2" />
+
+                    <ImageView
+                        android:id="@+id/imageViewAdd2"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginStart="@dimen/_120sdp"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:src="@drawable/ic_add"
+                        app:layout_constraintStart_toStartOf="@+id/button_add2"
+                        app:layout_constraintTop_toTopOf="@+id/button_add2" />
+
+                    <TextView
+                        android:id="@+id/unsetbutton2"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_200sdp"
+                        android:layout_marginTop="@dimen/_35sdp"
+                        android:background="@drawable/textview_solid_rounded"
+                        android:fontFamily="@font/inter"
+                        android:letterSpacing="0.05"
+                        android:text="Clear"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_9sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="@+id/button_add2"
+                        app:layout_constraintStart_toStartOf="@+id/button_add2"
+                        app:layout_constraintTop_toTopOf="@+id/button_add2" />
+
+                    <TextView
+                        android:id="@+id/editbutton2"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_200sdp"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:background="@drawable/textview_solid_rounded"
+                        android:fontFamily="@font/inter"
+                        android:letterSpacing="0.05"
+                        android:text="Edit"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_9sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="@+id/button_add2"
+                        app:layout_constraintStart_toStartOf="@+id/button_add2"
+                        app:layout_constraintTop_toTopOf="@+id/button_add2" />
+
+                    <RelativeLayout
+                        android:id="@+id/button_add3"
+                        android:layout_width="@dimen/_260sdp"
+                        android:layout_height="@dimen/_60sdp"
+                        android:layout_marginStart="@dimen/_3sdp"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:layout_marginEnd="@dimen/_3sdp"
+                        android:layout_marginBottom="@dimen/_3sdp"
+                        android:background="@drawable/profile_button"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/button_add2"
+                        app:layout_goneMarginBottom="@dimen/_6sdp" />
+
+                    <TextView
+                        android:id="@+id/textprof3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:fontFamily="@font/nunito_sans_bold"
+                        android:letterSpacing="0.03"
+                        android:text="Profile 3"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@+id/button_add3"
+                        app:layout_constraintTop_toTopOf="@+id/button_add3" />
+
+                    <TextView
+                        android:id="@+id/proftext3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_14sdp"
+                        android:layout_marginTop="@dimen/_1sdp"
+                        android:fontFamily="@font/inter"
+                        android:letterSpacing="0.03"
+                        android:text="Not set"
+                        android:textColor="@color/content_desc"
+                        android:textSize="@dimen/_10sdp"
+                        app:layout_constraintStart_toStartOf="@+id/button_add3"
+                        app:layout_constraintTop_toBottomOf="@+id/textprof3" />
+
+                    <ImageView
+                        android:id="@+id/editName3"
+                        android:layout_width="@dimen/_17sdp"
+                        android:layout_height="@dimen/_17sdp"
+                        android:layout_marginStart="@dimen/_4sdp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:padding="@dimen/_3sdp"
+                        android:src="@drawable/ic_edit"
+                        app:layout_constraintLeft_toRightOf="@+id/proftext3"
+                        app:layout_constraintTop_toTopOf="@id/textprof3" />
+
+                    <ImageView
+                        android:id="@+id/imageViewAdd3"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginStart="@dimen/_120sdp"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:src="@drawable/ic_add"
+                        app:layout_constraintStart_toStartOf="@+id/button_add3"
+                        app:layout_constraintTop_toTopOf="@+id/button_add3" />
+
+                    <TextView
+                        android:id="@+id/unsetbutton3"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_200sdp"
+                        android:layout_marginTop="@dimen/_35sdp"
+                        android:background="@drawable/textview_solid_rounded"
+                        android:fontFamily="@font/inter"
+                        android:letterSpacing="0.05"
+                        android:text="Clear"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_9sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="@+id/button_add3"
+                        app:layout_constraintStart_toStartOf="@+id/button_add3"
+                        app:layout_constraintTop_toTopOf="@+id/button_add3" />
+
+                    <TextView
+                        android:id="@+id/editbutton3"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_200sdp"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:background="@drawable/textview_solid_rounded"
+                        android:fontFamily="@font/inter"
+                        android:letterSpacing="0.05"
+                        android:text="Edit"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_9sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="@+id/button_add3"
+                        app:layout_constraintStart_toStartOf="@+id/button_add3"
+                        app:layout_constraintTop_toTopOf="@+id/button_add3" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

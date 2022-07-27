@@ -27,7 +27,7 @@ public class SystemInfo {
             homeFragment = fragment;
             // Get the whole uptime
             try {
-                uname = Utils.execCmdRead(0, "uname -o -r");
+                uname = Utils.execCmdRead(0, "uname -a");
             } catch (UtilException e) {
                 Log.d(TAG,"Version info not available");
                 uname = "Unavailable";

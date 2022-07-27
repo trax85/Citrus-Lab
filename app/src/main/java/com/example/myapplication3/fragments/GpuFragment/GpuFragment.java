@@ -129,7 +129,7 @@ public class GpuFragment extends Fragment {
 
         try {
             String gpuInfoPath = "/sys/devices/platform/13000000.mali/gpuinfo";
-            out = Utils.read(0, "cat " + gpuInfoPath);
+            out = Utils.read(0, gpuInfoPath);
             textViewInfo.setText(out);
         } catch (UtilException e) {
             textViewInfo.setText("Unavailable");
@@ -162,7 +162,7 @@ public class GpuFragment extends Fragment {
                 int finalI = i;
                 linearLayouts[i].setOnClickListener(v -> showBoostSetDialogue(finalI));
             } catch (UtilException e) {
-                textViews[i].setText("Read errort");
+                textViews[i].setText("Read error");
                 return;
             }
         }

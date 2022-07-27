@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/secondary_action_bar"
+    android:background="@color/page_bg_colour"
     android:clickable="true"
     tools:context=".fragments.CpuFragment.GovTunable.TunableFragment">
 
@@ -37,8 +37,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@drawable/page_bg"
-        android:fadingEdgeLength="24dp"
-        android:requiresFadingEdge="vertical"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

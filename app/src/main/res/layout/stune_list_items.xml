@@ -5,7 +5,7 @@
     android:background="@drawable/core_ctrl_container_bg"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="@dimen/_10sdp"
-    android:paddingBottom="@dimen/_10sdp"
+    android:paddingBottom="@dimen/_8sdp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
 
@@ -13,9 +13,9 @@
             android:id="@+id/stune_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_18sdp"
-            android:layout_marginTop="@dimen/_6sdp"
-            android:fontFamily="@font/nunito_sans_extrabold"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:fontFamily="@font/nunito_sans_semibold"
             android:letterSpacing="0.05"
             android:text="Name Header"
             android:textColor="@color/item_text_colour"
@@ -26,12 +26,13 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/stune_subitems"
-            android:layout_width="@dimen/_250sdp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/inner_container_bg"
-            android:layout_marginTop="@dimen/_36sdp"
+            android:layout_marginTop="@dimen/_28sdp"
             android:layout_marginStart="@dimen/_6sdp"
             android:layout_marginEnd="@dimen/_6sdp"
+            android:layout_marginBottom="@dimen/_6sdp"
             android:choiceMode="multipleChoice"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -34,16 +34,13 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fadingEdgeLength="24dp"
-        android:paddingBottom="@dimen/_20sdp"
-        android:requiresFadingEdge="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:background="@drawable/page_bg"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/_40sdp" >
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/_55sdp" >
 
             <TextView
                 android:id="@+id/textView31"
@@ -105,7 +102,7 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/buttonrerrate1"
-                        android:layout_width="@dimen/_260sdp"
+                        android:layout_width="@dimen/_270sdp"
                         android:layout_height="@dimen/_56sdp"
                         android:layout_alignParentTop="true"
                         android:background="@drawable/rounded_btn"
@@ -131,7 +128,7 @@
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/buttonrerrate2"
                         style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:layout_width="@dimen/_260sdp"
+                        android:layout_width="@dimen/_270sdp"
                         android:layout_height="@dimen/_56sdp"
                         android:layout_alignParentStart="true"
                         android:layout_marginTop="@dimen/_60sdp"
@@ -158,7 +155,7 @@
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/buttonrerrate3"
                         style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:layout_width="@dimen/_260sdp"
+                        android:layout_width="@dimen/_270sdp"
                         android:layout_height="@dimen/_56sdp"
                         android:layout_marginStart="0dp"
                         android:layout_marginTop="@dimen/_120sdp"
@@ -191,7 +188,7 @@
                 android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
                 android:background="@drawable/core_ctrl_container_bg"
-                android:padding="10dp"
+                android:padding="@dimen/_5sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -200,10 +197,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
                     android:fontFamily="@font/nunito_sans_semibold"
                     android:letterSpacing="0.02"
                     android:paddingBottom="@dimen/_2sdp"
-                    android:text="Display Settings"
+                    android:text="Panel Settings"
                     android:textAllCaps="false"
                     android:textColor="@color/secondary_colour"
                     android:textSize="@dimen/_13sdp"
@@ -213,7 +212,7 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/display_list"
-                    android:layout_width="@dimen/_260sdp"
+                    android:layout_width="@dimen/_270sdp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
                     android:background="@drawable/inner_container_bg"

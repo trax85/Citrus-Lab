@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2E2E2E"
+    android:background="@color/page_bg_colour"
     android:clickable="true"
     tools:context=".fragments.CpuFragment.CpuSets.CpuSetFragment">
 
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_44sdp"
+        android:layout_height="@dimen/_46sdp"
         android:background="@color/secondary_action_bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.001">
+        app:layout_constraintVertical_bias="0.000">
 
         <TextView
             android:layout_width="wrap_content"
@@ -36,8 +37,6 @@
         android:id="@+id/scrollView_cpusets"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:fadingEdgeLength="14dp"
-        android:requiresFadingEdge="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

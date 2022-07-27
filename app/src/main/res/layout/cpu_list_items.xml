@@ -6,11 +6,11 @@
     android:layout_height="wrap_content" >
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_1sdp"
         android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_1sdp"
         android:layout_marginBottom="@dimen/_10sdp"
         android:background="@drawable/core_ctrl_container_bg"
         android:paddingLeft="@dimen/_6sdp"
@@ -36,7 +36,7 @@
 
         <!-- Edit this to get the desired width of view item -->
         <RelativeLayout
-            android:layout_width="@dimen/_260sdp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_34sdp"
             android:background="@drawable/inner_container_bg">
@@ -64,7 +64,7 @@
                     android:id="@+id/textviewMaxFreq"
                     android:layout_width="@dimen/_90sdp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_60sdp"
+                    android:layout_marginStart="@dimen/_80sdp"
                     android:layout_marginTop="@dimen/_13sdp"
                     android:ellipsize="end"
                     android:fontFamily="@font/inter"
@@ -108,7 +108,7 @@
                     android:id="@+id/textviewMinFreq"
                     android:layout_width="@dimen/_90sdp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_62sdp"
+                    android:layout_marginStart="@dimen/_80sdp"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:ellipsize="end"
                     android:fontFamily="@font/inter"
@@ -150,7 +150,7 @@
                     android:id="@+id/textviewGov"
                     android:layout_width="@dimen/_98sdp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_86sdp"
+                    android:layout_marginStart="@dimen/_105sdp"
                     android:layout_marginTop="@dimen/_12sdp"
                     android:ellipsize="end"
                     android:fontFamily="@font/inter"

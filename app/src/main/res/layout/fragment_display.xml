@@ -84,7 +84,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_2sdp"
-                    android:layout_marginTop="@dimen/_2sdp"
                     android:fontFamily="@font/nunito_sans_semibold"
                     android:letterSpacing="0.02"
                     android:text="Refresh Rate"
@@ -96,7 +95,7 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_24sdp"
+                    android:layout_marginTop="@dimen/_22sdp"
                     android:background="@drawable/inner_container_bg"
                     android:padding="@dimen/_2sdp">
 
@@ -198,7 +197,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_2sdp"
-                    android:layout_marginTop="@dimen/_2sdp"
                     android:fontFamily="@font/nunito_sans_semibold"
                     android:letterSpacing="0.02"
                     android:paddingBottom="@dimen/_2sdp"
@@ -214,7 +212,7 @@
                     android:id="@+id/display_list"
                     android:layout_width="@dimen/_270sdp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="@dimen/_22sdp"
                     android:background="@drawable/inner_container_bg"
                     android:choiceMode="multipleChoice"
                     tools:listitem="@layout/display_list_items" />

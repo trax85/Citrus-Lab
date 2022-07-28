@@ -3,8 +3,8 @@
     <solid
         android:color="@color/page_bg_colour" />
     <corners
-        android:topLeftRadius="25dp"
-        android:topRightRadius="25dp" />
+        android:topLeftRadius="@dimen/_12sdp"
+        android:topRightRadius="@dimen/_12sdp" />
     <padding
         android:left="5dp"
         android:right="5dp" />

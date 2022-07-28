@@ -60,6 +60,8 @@ public class Utils {
     }
 
     public static boolean isValaidIO(String out){
-        return !out.contains("cat");
+        if(out.contains("cat"))
+            return false;
+        else return !out.contains("Permission");
     }
 }

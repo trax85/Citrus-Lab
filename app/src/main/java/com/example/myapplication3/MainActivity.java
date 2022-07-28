@@ -37,10 +37,10 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout linearLayout;
     private BottomSheetBehavior bottomSheetBehavior;
     private TextView textViewDash, textViewDisp, textViewCpu, textViewGpu, textViewMem,
-            textViewProfile,textViewMisc, textViewAbout;
+            textViewProfile,textViewMisc;
     private ImageView imageViewDash, imageViewDisp, imageViewCpu, imageViewGpu ,imageViewMem,
             imageViewProfile, imageViewMisc, imageViewAbout;
-    private LinearLayout homeLayout, displayLayout, aboutLayout ,cpuLayout, memLayout, gpuLayout,
+    private LinearLayout homeLayout, displayLayout ,cpuLayout, memLayout, gpuLayout,
             profileLayout, miscLayout;
     private TextView[] textViewArr;
     private ImageView[] imageViewArr;
@@ -100,8 +100,13 @@ public class MainActivity extends AppCompatActivity {
         ImageButton showSheet = findViewById(R.id.close_menu);
         showSheet.setOnClickListener(v -> {
             if(bottomSheetState) {
+                imageViewAbout.setVisibility(View.VISIBLE);
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                imageViewAbout.setOnClickListener(v1 -> {
+                    aboutButtonAction();
+                });
             }else{
+                imageViewAbout.setVisibility(View.INVISIBLE);
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             }
         });
@@ -117,10 +122,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean dispatchTouchEvent(MotionEvent event){
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             if (bottomSheetBehavior.getState()==BottomSheetBehavior.STATE_EXPANDED) {
-
                 Rect outRect = new Rect();
                 bottomSheetLayout.getGlobalVisibleRect(outRect);
-
                 if(!outRect.contains((int)event.getRawX(), (int)event.getRawY()))
                     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             }
@@ -136,7 +139,6 @@ public class MainActivity extends AppCompatActivity {
         textViewMem = findViewById(R.id.textViewMem);
         textViewProfile = findViewById(R.id.textViewProfile);
         textViewMisc = findViewById(R.id.textViewMisc);
-        textViewAbout = findViewById(R.id.textViewAbout);
 
         imageViewDash = findViewById(R.id.imageViewDash);
         imageViewDisp = findViewById(R.id.imageViewDisp);
@@ -145,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         imageViewMem = findViewById(R.id.imageViewMem);
         imageViewProfile = findViewById(R.id.imageViewProfile);
         imageViewMisc = findViewById(R.id.imageViewMisc);
-        imageViewAbout = findViewById(R.id.imageViewAbout);
+        imageViewAbout = findViewById(R.id.about);
 
         homeLayout = findViewById(R.id.layoutHome);
         displayLayout = findViewById(R.id.layoutDisplay);
@@ -154,21 +156,21 @@ public class MainActivity extends AppCompatActivity {
         memLayout = findViewById(R.id.layoutMem);
         profileLayout = findViewById(R.id.layoutProfile);
         miscLayout = findViewById(R.id.layoutMisc);
-        aboutLayout = findViewById(R.id.layoutAbout);
 
         linearLayout = findViewById(R.id.nested_scroll);
         bottomSheetLayout = findViewById(R.id.bottom_sheet);
         pa = findViewById(R.id.viewPager);
+        imageViewAbout.setVisibility(View.INVISIBLE);
     }
 
     private void initList(){
         Log.d(TAG,"List initialised");
         textViewArr = new TextView[]{textViewDash, textViewDisp, textViewCpu, textViewGpu,
-                textViewMem, textViewProfile, textViewMisc, textViewAbout};
+                textViewMem, textViewProfile, textViewMisc};
         imageViewArr = new ImageView[]{imageViewDash, imageViewDisp, imageViewCpu, imageViewGpu,
-                imageViewMem, imageViewProfile, imageViewMisc, imageViewAbout};
+                imageViewMem, imageViewProfile, imageViewMisc};
         linearLayoutArr = new LinearLayout[]{homeLayout, displayLayout, cpuLayout, gpuLayout,
-                 memLayout, profileLayout, miscLayout, aboutLayout};
+                 memLayout, profileLayout, miscLayout};
     }
 
     private void setUi(int position){
@@ -176,14 +178,16 @@ public class MainActivity extends AppCompatActivity {
         final String WHITE = "#FFFFFFFF";
         final String GREY = "#494949";
         final String PURPLE_LIGHT = "#48D28BFF";
-        Log.d(TAG, "Postiton:" + position);
-        for(int i = 0;i < vpAdaptor.totalTabs; i++){
+
+        for(int i = 0;i < vpAdaptor.totalTabs - 1; i++){
             if(i == position){
                 textViewArr[i].setTextColor(Color.parseColor(PURPLE));
                 imageViewArr[i].setColorFilter(Color.parseColor(PURPLE));
                 linearLayoutArr[position].getBackground().setTint(Color.parseColor(PURPLE_LIGHT));
+                imageViewAbout.setVisibility(View.INVISIBLE);
                 continue;
             }
+
             textViewArr[i].setTextColor(Color.parseColor(WHITE));
             imageViewArr[i].setColorFilter(Color.parseColor(WHITE));
             linearLayoutArr[i].getBackground().setTint(Color.parseColor(GREY));
@@ -191,19 +195,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setBottomPageListeners() {
-        for(int i = 0; i < vpAdaptor.totalTabs; i++){
+        for(int i = 0; i < vpAdaptor.totalTabs - 1; i++){
             int finalI = i;
             linearLayoutArr[i].setOnClickListener(v -> {
                 pa.setCurrentItem(finalI, false);
                 setUi(finalI);
                 service.execute(() -> {
                     Handler handler = new Handler(Looper.getMainLooper());
-                    handler.post(() -> {
-                        pa.startAnimation(aniFade);
-                    });
+                    handler.post(() -> pa.startAnimation(aniFade));
                 });
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             });
         }
+    }
+
+    public void aboutButtonAction(){
+        setUi(7);
+        pa.setCurrentItem(7);
+        imageViewAbout.setVisibility(View.INVISIBLE);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 }

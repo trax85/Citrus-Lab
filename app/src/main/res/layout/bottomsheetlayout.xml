@@ -10,15 +10,25 @@
     android:paddingBottom="@dimen/_10sdp"
     app:layout_behavior="@string/bottom_sheet_behavior" >
 
-    <ImageButton
-        android:id="@+id/close_menu"
-        android:layout_width="@dimen/_35sdp"
-        android:layout_height="@dimen/_35sdp"
-        android:layout_marginStart="@dimen/_250sdp"
-        android:background="#494949"
-        android:foreground="@drawable/rounded_btn"
-        android:src="@drawable/ic_menu" />
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginStart="@dimen/_224sdp"
+            android:layout_marginTop="@dimen/_9sdp"
+            android:id="@+id/about"
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
+            android:src="@drawable/ic_about"/>
+        <ImageButton
+            android:id="@+id/close_menu"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:background="#494949"
+            android:foreground="@drawable/rounded_btn"
+            android:src="@drawable/ic_menu" />
+    </LinearLayout>
     <View
         android:layout_width="@dimen/_100sdp"
         android:layout_height="4dp"
@@ -249,39 +259,6 @@
             android:layout_marginStart="@dimen/_20sdp"
             android:fontFamily="@font/inter"
             android:text="MISCELLANEOUS"
-            android:letterSpacing="0.3"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_11sdp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layoutAbout"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_bottompage"
-        android:backgroundTint="@color/bottom_page"
-        android:layout_marginTop="4dp"
-        android:paddingStart="@dimen/_20sdp"
-        android:paddingTop="@dimen/_12sdp"
-        android:paddingBottom="@dimen/_12sdp" >
-
-        <ImageView
-            android:id="@+id/imageViewAbout"
-            android:layout_width="@dimen/_23sdp"
-            android:layout_height="@dimen/_23sdp"
-            android:src="@drawable/ic_about" />
-
-        <TextView
-            android:id="@+id/textViewAbout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_3sdp"
-            android:layout_marginStart="@dimen/_20sdp"
-            android:fontFamily="@font/inter"
-            android:text="ABOUT"
             android:letterSpacing="0.3"
             android:textColor="@color/white"
             android:textSize="@dimen/_11sdp"

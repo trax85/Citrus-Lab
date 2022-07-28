@@ -59,11 +59,9 @@ public class CustomProfile {
             if(isProfPresent[i]){
                 setOnClickListeners(i);
                 hideAddView(i);
-                Log.d(TAG, "profile present");
             }else{
                 hideView(i);
                 fragment.setAddButton(i);
-                Log.d(TAG, "profile not present");
             }
         }
     }
@@ -145,6 +143,5 @@ public class CustomProfile {
         fragment.textViews[idx].setText(nameArr[idx]);
         fragment.setAddButton(idx);
         setOnClickListeners(idx);
-        Log.d(TAG,"name:" + nameArr[idx]);
     }
 }

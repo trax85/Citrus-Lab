@@ -17,4 +17,7 @@
     <string name="misctemp_info">This page shows various temperature zones and their readings.</string>
     <string name="miscnet_info">This page allows you to change Tcp algorithm which influences your network speed.</string>
     <string name="miscpower_info">This page presents you with power suspend module settings.</string>
+    <string name="prath_about">Helped with android app development. Guiding and teaching me with patience</string>
+    <string name="sky_about">Helped with Ui design and pallet selection for app and finding the right people :)</string>
+    <string name="sha_about">Implimented Utils tools class and exception handling for shell output handling.</string>
 </resources>

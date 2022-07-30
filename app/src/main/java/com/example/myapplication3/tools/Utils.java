@@ -7,7 +7,7 @@ import com.topjohnwu.superuser.Shell;
 import java.util.List;
 
 /**
- * added by sharan
+ * added by sharan raj
  */
 public class Utils {
     final static String TAG = "Utils";

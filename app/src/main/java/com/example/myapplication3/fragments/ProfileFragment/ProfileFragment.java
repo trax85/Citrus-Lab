@@ -34,6 +34,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RequiresApi(api = Build.VERSION_CODES.N)
@@ -161,7 +162,12 @@ public class ProfileFragment extends Fragment {
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 Intent intent = result.getData();
-                Uri uri = intent.getData();
+                Uri uri;
+                try {
+                    uri = intent.getData();
+                }catch (NullPointerException e){
+                    return;
+                }
                 File file = new File(uri.getPath());
                 String name = file.getName();
                 if(!isValidFile(name)){
@@ -172,7 +178,7 @@ public class ProfileFragment extends Fragment {
                 InputStream inputStream;
                 String content;
                 try {
-                    inputStream = getActivity().getContentResolver().openInputStream(uri);
+                    inputStream = requireActivity().getContentResolver().openInputStream(uri);
                     content = new BufferedReader(new InputStreamReader(inputStream))
                             .lines().collect(Collectors.joining("\n"));
                 } catch (FileNotFoundException e) {

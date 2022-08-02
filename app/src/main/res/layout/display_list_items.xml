@@ -40,10 +40,10 @@
 
                 <Switch
                     android:id="@+id/contentSwitch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_30sdp"
                     android:layout_marginLeft="@dimen/_200sdp"
-                    android:layout_marginTop="@dimen/_22sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
                     android:theme="@style/Theme.MyApplication3.Switch" />
 
         </RelativeLayout>

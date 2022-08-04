@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -137,7 +138,7 @@
                 android:fontFamily="@font/nunito_sans"
                 android:letterSpacing="0.0"
                 android:textAlignment="center"
-                android:text="Kernel developer &amp; C Programmer"
+                android:text="Linux Kernel &amp; App Developer"
                 android:textColor="#676767"
                 android:textSize="13sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -206,7 +207,7 @@
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/nunito_sans"
                 android:letterSpacing="0.0"
-                android:text="Helped with android app development. Guiding and teaching me with patience"
+                android:text="@string/prath_about"
                 android:textAlignment="center"
                 android:textColor="#676767"
                 android:textSize="13sp"
@@ -261,7 +262,7 @@
                 android:fontFamily="@font/nunito_sans"
                 android:letterSpacing="0.0"
                 android:textAlignment="center"
-                android:text="Helped with Ui design and pallet selection for app and finding the right people :)"
+                android:text="@string/sky_about"
                 android:textColor="#676767"
                 android:textSize="13sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -289,6 +290,58 @@
                 app:layout_constraintHorizontal_bias="0.58"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cred_sky" />
+
+            <TextView
+                android:id="@+id/sharan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="110dp"
+                android:fontFamily="@font/nunito_sans"
+                android:letterSpacing="0.05"
+                android:text="Sharan Raj"
+                android:textColor="@color/primary_colour"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/skyking" />
+
+            <TextView
+                android:id="@+id/cred_sha"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/nunito_sans"
+                android:letterSpacing="0.0"
+                android:textAlignment="center"
+                android:text="@string/sha_about"
+                android:textColor="#676767"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sharan" />
+
+            <ImageView
+                android:id="@+id/sharan_tele"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_telegram"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.42"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cred_sha" />
+
+            <ImageView
+                android:id="@+id/sharan_git"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="14dp"
+                android:src="@drawable/ic_github"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.58"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cred_sha" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

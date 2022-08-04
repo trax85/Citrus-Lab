@@ -17,7 +17,8 @@ import com.example.myapplication3.R;
 
 public class AboutFragment extends Fragment {
     private final String TAG = "AboutFragment";
-    ImageView imageViewGit, imageViewTele1, imageViewGit1, imageViewTele2, imageViewGit2;
+    ImageView imageViewGit, imageViewTele1, imageViewGit1, imageViewTele2, imageViewGit2,
+            imageViewGit3, imageViewTele3;
     Intent intent;
 
     @Override
@@ -44,6 +45,8 @@ public class AboutFragment extends Fragment {
         imageViewTele1 = view.findViewById(R.id.akash_tele);
         imageViewGit2 = view.findViewById(R.id.prath_git);
         imageViewTele2 = view.findViewById(R.id.prath_tele);
+        imageViewGit3 = view.findViewById(R.id.sharan_git);
+        imageViewTele3 = view.findViewById(R.id.sharan_tele);
     }
 
     public void setUpListeners(){
@@ -65,6 +68,14 @@ public class AboutFragment extends Fragment {
         });
         imageViewTele2.setOnClickListener(v -> {
             intent.setData(Uri.parse("https://t.me/QuickerSilver"));
+            startActivity(intent);
+        });
+        imageViewGit3.setOnClickListener(v -> {
+            intent.setData(Uri.parse("https://github.com/sharan9678"));
+            startActivity(intent);
+        });
+        imageViewTele3.setOnClickListener(v -> {
+            intent.setData(Uri.parse("https://t.me/sharanrajt"));
             startActivity(intent);
         });
     }

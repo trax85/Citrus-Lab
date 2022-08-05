@@ -55,10 +55,9 @@ public class TempFragment extends Fragment {
     public void onResume() {
         super.onResume();
         recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
         UpdateTemps updateTemps = new UpdateTemps();
         executor = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(1);
-        executor.scheduleWithFixedDelay(updateTemps, 2, 2, TimeUnit.SECONDS);
+        executor.scheduleWithFixedDelay(updateTemps, 0, 2, TimeUnit.SECONDS);
     }
 
     @Override
@@ -69,7 +68,6 @@ public class TempFragment extends Fragment {
 
     private void initDataSets(){
         tempValues = new String[numZones][2];
-        getTemps();
     }
 
     public void getTemps(){

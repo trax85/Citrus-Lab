@@ -124,8 +124,10 @@ public class MainActivity extends AppCompatActivity {
             if (bottomSheetBehavior.getState()==BottomSheetBehavior.STATE_EXPANDED) {
                 Rect outRect = new Rect();
                 bottomSheetLayout.getGlobalVisibleRect(outRect);
-                if(!outRect.contains((int)event.getRawX(), (int)event.getRawY()))
+                if(!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
+                    imageViewAbout.setVisibility(View.INVISIBLE);
                     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
             }
         }
         return super.dispatchTouchEvent(event);

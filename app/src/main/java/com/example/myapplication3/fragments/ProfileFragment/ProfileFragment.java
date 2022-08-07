@@ -164,6 +164,7 @@ public class ProfileFragment extends Fragment {
                 Intent intent = result.getData();
                 Uri uri;
                 try {
+                    assert intent != null;
                     uri = intent.getData();
                 }catch (NullPointerException e){
                     return;
@@ -197,7 +198,8 @@ public class ProfileFragment extends Fragment {
     }
 
     public String getFileName(String name){
-        name = name.split(":")[1];
+        if(name.contains("primary"))
+            name = name.split(":")[1];
         name = name.split("\\.")[0];
         return name;
     }

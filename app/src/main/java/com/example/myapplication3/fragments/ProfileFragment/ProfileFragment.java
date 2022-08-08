@@ -2,6 +2,7 @@ package com.example.myapplication3.fragments.ProfileFragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -178,6 +179,16 @@ public class ProfileFragment extends Fragment {
 
                 InputStream inputStream;
                 String content;
+                try {
+                    AssetFileDescriptor fileDescriptor = requireContext().getContentResolver()
+                            .openAssetFileDescriptor(uri, "r");
+                    long fileSize = fileDescriptor.getLength();
+                    if(fileSize > 10000){
+                        Toast.makeText(getContext(),"File too big",Toast.LENGTH_LONG).show();
+                    }
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
                 try {
                     inputStream = requireActivity().getContentResolver().openInputStream(uri);
                     content = new BufferedReader(new InputStreamReader(inputStream))

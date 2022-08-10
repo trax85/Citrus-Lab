@@ -7,7 +7,10 @@ import com.topjohnwu.superuser.Shell;
 import java.util.List;
 
 /**
- * added by sharan
+ * By: Sharan Raj & Tejas Udupa
+ * Utils: A utility class for handling file I/0
+ * it handles read and write errors internally and only throws read error exception which the
+ * implementer can choose to handle in their desired way.
  */
 public class Utils {
     final static String TAG = "Utils";
@@ -19,10 +22,11 @@ public class Utils {
 
     public static String read(int index, String path) throws UtilException{
         Shell.Result result = Shell.cmd("cat " + path).exec();
-        if(isValaidIO(result.getOut().get(index)))
-            return result.getOut().get(index);
-        else
+        if (!isValidIndex(index, result.getOut()) || !isValaidIO(result.getOut().get(index))) {
             throw new UtilException("Read Error");
+        } else {
+            return result.getOut().get(index);
+        }
     }
 
     public static String[] readGetArr(String... cmd) throws UtilException{
@@ -36,10 +40,11 @@ public class Utils {
 
     public static String execCmdRead(int index, String... cmd) throws UtilException{
         Shell.Result result = Shell.cmd(cmd).exec();
-        if(isValaidIO(result.getOut().get(index)))
-            return result.getOut().get(index);
-        else
+        if(!isValidIndex(index, result.getOut()) || !isValaidIO(result.getOut().get(index)))
             throw new UtilException("Read Error");
+        else
+            return result.getOut().get(index);
+
     }
 
     public static void write(String value, String path){
@@ -63,5 +68,9 @@ public class Utils {
         if(out.contains("cat"))
             return false;
         else return !out.contains("Permission");
+    }
+
+    public static boolean isValidIndex(int index, List<String> list){
+        return index <= list.size() && index >= 0;
     }
 }

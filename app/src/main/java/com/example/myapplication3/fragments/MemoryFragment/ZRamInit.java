@@ -6,6 +6,7 @@ import android.os.Looper;
 import android.text.InputType;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.myapplication3.tools.UtilException;
 import com.example.myapplication3.tools.Utils;
@@ -18,6 +19,7 @@ public class ZRamInit {
     String disksize = "/sys/devices/virtual/block/zram0/disksize";
     String algo = "/sys/block/zram0/comp_algorithm";
     String swap = "/proc/sys/vm/swappiness";
+    String SWAP = "/proc/swaps";
     String[] compAlgo;
     MemoryFragment fragment;
     Boolean algoAvailable = false;
@@ -37,13 +39,15 @@ public class ZRamInit {
             String[] outArr;
             double size = 0;
 
+            //read Zram status
             try {
-                out = Utils.read(0,disksize);
-            } catch (UtilException e) { out = "0"; }
-            if (!out.equals("0"))
-                fragment.textView1.setText("Enabled");
-            else
+                out = Utils.read(1, SWAP);
+                if (out.contains(DISK))
+                    fragment.textView1.setText("Enabled");
+            } catch (UtilException e) {
+                Log.d(TAG, "error:"+ e);
                 fragment.textView1.setText("Disabled");
+            }
 
             //get available algorithms
             outArr = Utils.splitStrings(algo, "\\s+");
@@ -67,18 +71,22 @@ public class ZRamInit {
     }
 
     @SuppressLint("SetTextI18n")
-    void setOnClickListeners(){
-
+    void setOnClickListeners()
+    {
         fragment.zramLayout1.setOnClickListener(v -> {
-            try {
-                String out = Utils.read(0,disksize);
-                if (!out.equals("0"))
-                    Utils.execCmdWrite("swapoff /dev/block/zram0 > /dev/null 2>&1");
-                else
+                try {
+                    String out = Utils.read(1, SWAP);
+                    if (out.contains(DISK)){
+                        fragment.textView1.setText("Disabled");
+                        Utils.execCmdWrite("swapoff /dev/block/zram0 > /dev/null 2>&1");
+                        Utils.write("0", DISKSIZE);
+                        Toast.makeText(v.getContext(), "Disabling Zram...",Toast.LENGTH_SHORT).show();
+                    }
+                } catch (UtilException e) {
+                    fragment.textView1.setText("Enabled");
                     Utils.execCmdWrite("swapon /dev/block/zram0 > /dev/null 2>&1");
-            } catch (UtilException e) {
-                Log.d(TAG, "read error: Failed to read zram state");
-            }
+                    Toast.makeText(v.getContext(), "Enabling Zram",Toast.LENGTH_SHORT).show();
+                }
         });
 
         if(algoAvailable)

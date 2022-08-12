@@ -16,9 +16,10 @@ import java.util.Arrays;
 
 public class ZRamInit {
     static String TAG = "MemoryFragment";
-    String disksize = "/sys/devices/virtual/block/zram0/disksize";
-    String algo = "/sys/block/zram0/comp_algorithm";
-    String swap = "/proc/sys/vm/swappiness";
+    String DISKSIZE = "/sys/devices/virtual/block/zram0/disksize";
+    String DISK = "/dev/block/zram0";
+    String AVI_ALGO = "/sys/block/zram0/comp_algorithm";
+    String SWAPPINESS = "/proc/sys/vm/swappiness";
     String SWAP = "/proc/swaps";
     String[] compAlgo;
     MemoryFragment fragment;
@@ -37,7 +38,7 @@ public class ZRamInit {
         handler.post(() -> {
             String out;
             String[] outArr;
-            double size = 0;
+            double size;
 
             //read Zram status
             try {
@@ -50,7 +51,7 @@ public class ZRamInit {
             }
 
             //get available algorithms
-            outArr = Utils.splitStrings(algo, "\\s+");
+            outArr = Utils.splitStrings(AVI_ALGO, "\\s+");
             if(outArr != null){
                 fragment.textView2.setText(getSantizedString(outArr));
                 for (int i = 0; i < outArr.length; i++)
@@ -59,10 +60,19 @@ public class ZRamInit {
                 compAlgo = outArr;
                 algoAvailable = true;
             }
-            size = Double.parseDouble(out);
+
+            //get disksize
+            try{
+                out = Utils.read(0, DISKSIZE);
+                size = Double.parseDouble(out);
+            }catch (UtilException e){
+                size = 0;
+            }
             fragment.textView3.setText((int)(size / (1024 * 1024)) + "Mb");
+
+            //get zram swappiness
             try {
-                out = Utils.read(0,swap);
+                out = Utils.read(0, SWAPPINESS);
             } catch (UtilException e) {
                 out = "0";
             }
@@ -105,7 +115,7 @@ public class ZRamInit {
             builder.setPositiveButton("OK", (dialog, which) -> {
                 int size = Integer.parseInt(weightInput.getText().toString());
                 size = size * 1024 * 1024;
-                Utils.write(Integer.toString(size), disksize);
+                Utils.write(Integer.toString(size), DISKSIZE);
                 fragment.textView3.setText(weightInput.getText().toString() + "Mb");
             });builder.setNegativeButton("Cancle", (dialog, which) -> dialog.cancel());
             builder.show();
@@ -123,7 +133,7 @@ public class ZRamInit {
             builder.setView(weightInput);
 
             builder.setPositiveButton("OK", (dialog, which) -> {
-                Utils.write(weightInput.getText().toString(), swap);
+                Utils.write(weightInput.getText().toString(), SWAPPINESS);
                 fragment.textView4.setText(weightInput.getText().toString() + "%");
             });builder.setNegativeButton("Cancle", (dialog, which) -> dialog.cancel());
             builder.show();
@@ -136,7 +146,7 @@ public class ZRamInit {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(fragment.requireActivity());
         builder.setTitle("Choose Option");
         builder.setSingleChoiceItems(compAlgo, checkedItem, (dialog, which) -> {
-                Utils.write(compAlgo[which], algo);
+                Utils.write(compAlgo[which], AVI_ALGO);
                 fragment.textView2.setText(compAlgo[which]);
                 dialog.dismiss();
         });

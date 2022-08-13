@@ -16,14 +16,14 @@ import java.util.Arrays;
 
 public class ZRamInit {
     static String TAG = "MemoryFragment";
-    String DISKSIZE = "/sys/devices/virtual/block/zram0/disksize";
-    String DISK = "/dev/block/zram0";
-    String AVI_ALGO = "/sys/block/zram0/comp_algorithm";
-    String SWAPPINESS = "/proc/sys/vm/swappiness";
-    String SWAP = "/proc/swaps";
-    String[] compAlgo;
-    MemoryFragment fragment;
-    Boolean algoAvailable = false;
+    private static final String DISKSIZE = "/sys/devices/virtual/block/zram0/disksize";
+    private static final String DISK = "/dev/block/zram0";
+    private static final String AVI_ALGO = "/sys/block/zram0/comp_algorithm";
+    private static final String SWAPPINESS = "/proc/sys/vm/swappiness";
+    private static final String SWAP = "/proc/swaps";
+    private static String[] compAlgo;
+    private final MemoryFragment fragment;
+    private static Boolean algoAvailable = false;
 
     public ZRamInit(MemoryFragment fragment){
         this.fragment = fragment;
@@ -53,12 +53,13 @@ public class ZRamInit {
             //get available algorithms
             outArr = Utils.splitStrings(AVI_ALGO, "\\s+");
             if(outArr != null){
+                algoAvailable = true;
                 fragment.textView2.setText(getSantizedString(outArr));
                 for (int i = 0; i < outArr.length; i++)
                     if (outArr[i].contains("["))
                         outArr[i] = rmBackets(outArr[i]);
                 compAlgo = outArr;
-                algoAvailable = true;
+                Log.d(TAG, "also:" + algoAvailable);
             }
 
             //get disksize
@@ -83,6 +84,11 @@ public class ZRamInit {
     @SuppressLint("SetTextI18n")
     void setOnClickListeners()
     {
+        Log.d(TAG,"algo"+ algoAvailable);
+        if(algoAvailable) {
+            fragment.zramLayout2.setOnClickListener(v -> showDialogue());
+        }
+
         fragment.zramLayout1.setOnClickListener(v -> {
                 try {
                     String out = Utils.read(1, SWAP);
@@ -99,8 +105,7 @@ public class ZRamInit {
                 }
         });
 
-        if(algoAvailable)
-            fragment.zramLayout2.setOnClickListener(v -> showDialogue());
+
 
         fragment.zramLayout3.setOnClickListener(v -> {
             MaterialAlertDialogBuilder builder = new

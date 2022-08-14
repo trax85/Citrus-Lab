@@ -14,7 +14,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.Arrays;
 
-public class ZRamInit {
+public class ZRam {
     static String TAG = "MemoryFragment";
     private static final String DISKSIZE = "/sys/devices/virtual/block/zram0/disksize";
     private static final String DISK = "/dev/block/zram0";
@@ -24,11 +24,49 @@ public class ZRamInit {
     private static String[] compAlgo;
     private final MemoryFragment fragment;
     private static Boolean algoAvailable = false;
+    private static String zramState, zramAlgo, zramSwap, zramDisk;
 
-    public ZRamInit(MemoryFragment fragment){
+    public ZRam(MemoryFragment fragment){
         this.fragment = fragment;
-        setTextViews();
+    }
+
+    public void ZramInit(){
+        initParams();
         setOnClickListeners();
+        setTextViews();
+    }
+
+    public void initParams(){
+        String out;
+        String[] outArr;
+        double size;
+        //get available algorithms
+        outArr = Utils.splitStrings(AVI_ALGO, "\\s+");
+        if(outArr != null){
+            zramAlgo = getSanitizedString(outArr);
+            for (int i = 0; i < outArr.length; i++)
+                if (outArr[i].contains("["))
+                    outArr[i] = rmBackets(outArr[i]);
+            compAlgo = outArr;
+            algoAvailable = true;
+        }
+
+        //get disksize
+        try{
+            out = Utils.read(0, DISKSIZE);
+            size = Double.parseDouble(out);
+            zramDisk = (int)(size / (1024 * 1024)) + "Mb";
+        }catch (UtilException e){
+            zramDisk = "0";
+        }
+
+        //get zram swappiness
+        try {
+            out = Utils.read(0, SWAPPINESS);
+            zramSwap = out + "%";
+        } catch (UtilException e) {
+            zramSwap = "0";
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -50,42 +88,16 @@ public class ZRamInit {
                 fragment.textView1.setText("Disabled");
             }
 
-            //get available algorithms
-            outArr = Utils.splitStrings(AVI_ALGO, "\\s+");
-            if(outArr != null){
-                algoAvailable = true;
-                fragment.textView2.setText(getSantizedString(outArr));
-                for (int i = 0; i < outArr.length; i++)
-                    if (outArr[i].contains("["))
-                        outArr[i] = rmBackets(outArr[i]);
-                compAlgo = outArr;
-                Log.d(TAG, "also:" + algoAvailable);
-            }
-
-            //get disksize
-            try{
-                out = Utils.read(0, DISKSIZE);
-                size = Double.parseDouble(out);
-            }catch (UtilException e){
-                size = 0;
-            }
-            fragment.textView3.setText((int)(size / (1024 * 1024)) + "Mb");
-
-            //get zram swappiness
-            try {
-                out = Utils.read(0, SWAPPINESS);
-            } catch (UtilException e) {
-                out = "0";
-            }
-            fragment.textView4.setText(out + "%");
+            fragment.textView2.setText(zramAlgo);
+            fragment.textView3.setText(zramDisk);
+            fragment.textView4.setText(zramSwap);
         });
     }
 
-    @SuppressLint("SetTextI18n")
     void setOnClickListeners()
     {
-        Log.d(TAG,"algo"+ algoAvailable);
-        if(algoAvailable) {
+        fragment.zramLayout1.setOnClickListener(this::setZramState);
+        if(algoAvailable)
             fragment.zramLayout2.setOnClickListener(v -> showDialogue());
         }
 
@@ -106,43 +118,8 @@ public class ZRamInit {
         });
 
 
-
-        fragment.zramLayout3.setOnClickListener(v -> {
-            MaterialAlertDialogBuilder builder = new
-                    MaterialAlertDialogBuilder(fragment.requireActivity());
-            final EditText weightInput = new EditText(fragment.getActivity());
-
-            builder.setTitle("Set swap size");
-            weightInput.setInputType(InputType.TYPE_CLASS_TEXT);
-            weightInput.setHint(fragment.textView3.getText().toString());
-            builder.setView(weightInput);
-
-            builder.setPositiveButton("OK", (dialog, which) -> {
-                int size = Integer.parseInt(weightInput.getText().toString());
-                size = size * 1024 * 1024;
-                Utils.write(Integer.toString(size), DISKSIZE);
-                fragment.textView3.setText(weightInput.getText().toString() + "Mb");
-            });builder.setNegativeButton("Cancle", (dialog, which) -> dialog.cancel());
-            builder.show();
-        });
-
-        fragment.zramLayout4.setOnClickListener(v -> {
-            MaterialAlertDialogBuilder builder = new
-                    MaterialAlertDialogBuilder(fragment.requireActivity());
-            final EditText weightInput = new EditText(fragment.getActivity());
-
-            builder.setTitle("Set swappiness");
-            weightInput.setInputType(InputType.TYPE_CLASS_TEXT);
-            weightInput.setHint(
-                    fragment.textView4.getText().toString().replace("%", ""));
-            builder.setView(weightInput);
-
-            builder.setPositiveButton("OK", (dialog, which) -> {
-                Utils.write(weightInput.getText().toString(), SWAPPINESS);
-                fragment.textView4.setText(weightInput.getText().toString() + "%");
-            });builder.setNegativeButton("Cancle", (dialog, which) -> dialog.cancel());
-            builder.show();
-        });
+        fragment.zramLayout3.setOnClickListener(v -> setDiskSize());
+        fragment.zramLayout4.setOnClickListener(v -> setSwapiness());
     }
 
     public void showDialogue(){
@@ -158,7 +135,48 @@ public class ZRamInit {
         builder.show();
     }
 
-    String getSantizedString(String[] arr){
+    @SuppressLint("SetTextI18n")
+    public void setDiskSize()
+    {
+        MaterialAlertDialogBuilder builder = new
+                MaterialAlertDialogBuilder(fragment.requireActivity());
+        final EditText weightInput = new EditText(fragment.getActivity());
+
+        builder.setTitle("Set swap size");
+        weightInput.setInputType(InputType.TYPE_CLASS_TEXT);
+        weightInput.setHint(fragment.textView3.getText().toString());
+        builder.setView(weightInput);
+
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            int size = Integer.parseInt(weightInput.getText().toString());
+            size = size * 1024 * 1024;
+            Utils.write(Integer.toString(size), DISKSIZE);
+            fragment.textView3.setText(weightInput.getText().toString() + "Mb");
+        });builder.setNegativeButton("Cancle", (dialog, which) -> dialog.cancel());
+        builder.show();
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void setSwapiness()
+    {
+        MaterialAlertDialogBuilder builder = new
+                MaterialAlertDialogBuilder(fragment.requireActivity());
+        final EditText weightInput = new EditText(fragment.getActivity());
+
+        builder.setTitle("Set swappiness");
+        weightInput.setInputType(InputType.TYPE_CLASS_TEXT);
+        weightInput.setHint(
+                fragment.textView4.getText().toString().replace("%", ""));
+        builder.setView(weightInput);
+
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            Utils.write(weightInput.getText().toString(), SWAPPINESS);
+            fragment.textView4.setText(weightInput.getText().toString() + "%");
+        });builder.setNegativeButton("Cancle", (dialog, which) -> dialog.cancel());
+        builder.show();
+    }
+
+    String getSanitizedString(String[] arr){
         String str = "NULL";
         for (String s : arr) {
             if (s.contains("[")){

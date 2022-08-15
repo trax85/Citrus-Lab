@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.InputType;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -40,6 +41,17 @@ public class ZRam {
         String out;
         String[] outArr;
         double size;
+
+        //read Zram status
+        try {
+            out = Utils.read(1, SWAP);
+            if (out.contains(DISK) || out.contains(DISK.substring(4,15)))
+                zramState = "Enabled";
+        } catch (UtilException e) {
+            Log.d(TAG, "error:"+ e);
+            zramState = "Disabled";
+        }
+
         //get available algorithms
         outArr = Utils.splitStrings(AVI_ALGO, "\\s+");
         if(outArr != null){
@@ -74,20 +86,7 @@ public class ZRam {
     {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(() -> {
-            String out;
-            String[] outArr;
-            double size;
-
-            //read Zram status
-            try {
-                out = Utils.read(1, SWAP);
-                if (out.contains(DISK))
-                    fragment.textView1.setText("Enabled");
-            } catch (UtilException e) {
-                Log.d(TAG, "error:"+ e);
-                fragment.textView1.setText("Disabled");
-            }
-
+            fragment.textView1.setText(zramState);
             fragment.textView2.setText(zramAlgo);
             fragment.textView3.setText(zramDisk);
             fragment.textView4.setText(zramSwap);
@@ -99,25 +98,6 @@ public class ZRam {
         fragment.zramLayout1.setOnClickListener(this::setZramState);
         if(algoAvailable)
             fragment.zramLayout2.setOnClickListener(v -> showDialogue());
-        }
-
-        fragment.zramLayout1.setOnClickListener(v -> {
-                try {
-                    String out = Utils.read(1, SWAP);
-                    if (out.contains(DISK)){
-                        fragment.textView1.setText("Disabled");
-                        Utils.execCmdWrite("swapoff /dev/block/zram0 > /dev/null 2>&1");
-                        Utils.write("0", DISKSIZE);
-                        Toast.makeText(v.getContext(), "Disabling Zram...",Toast.LENGTH_SHORT).show();
-                    }
-                } catch (UtilException e) {
-                    fragment.textView1.setText("Enabled");
-                    Utils.execCmdWrite("swapon /dev/block/zram0 > /dev/null 2>&1");
-                    Toast.makeText(v.getContext(), "Enabling Zram",Toast.LENGTH_SHORT).show();
-                }
-        });
-
-
         fragment.zramLayout3.setOnClickListener(v -> setDiskSize());
         fragment.zramLayout4.setOnClickListener(v -> setSwapiness());
     }
@@ -133,6 +113,28 @@ public class ZRam {
                 dialog.dismiss();
         });
         builder.show();
+    }
+
+    public void setZramState(View v)
+    {
+        Handler handler = new Handler(Looper.getMainLooper());
+        String setText = null;
+        int state = 0;
+        try {
+            String out = Utils.read(1, SWAP);
+            if (out.contains(DISK)) {
+                setText = "Disabling...";
+                Toast.makeText(v.getContext(), "Disabling Zram...", Toast.LENGTH_SHORT).show();
+            }
+        } catch (UtilException e) {
+            setText = "Enabling...";
+            state = 1;
+            Toast.makeText(v.getContext(), "Enabling Zram...", Toast.LENGTH_SHORT).show();
+        }
+        String finalSetText = setText;
+        handler.post(() -> fragment.textView1.setText(finalSetText));
+        AsyncTask asyncTask = new AsyncTask(state, v, fragment);
+        asyncTask.start();
     }
 
     @SuppressLint("SetTextI18n")
@@ -174,6 +176,38 @@ public class ZRam {
             fragment.textView4.setText(weightInput.getText().toString() + "%");
         });builder.setNegativeButton("Cancle", (dialog, which) -> dialog.cancel());
         builder.show();
+    }
+
+    public static class AsyncTask extends Thread {
+        private int state = 0;
+        Handler handle;
+        View v;
+        MemoryFragment fragment;
+
+        public AsyncTask(int state, View v, MemoryFragment fragment){
+            this.state = state;
+            this.v = v;
+            this.fragment = fragment;
+            handle = new Handler(Looper.getMainLooper());
+        }
+        @Override
+        public void run() {
+            String str = null;
+            Log.d(TAG,"run");
+            if(state == 1){
+                Utils.execCmdWrite("swapon /dev/block/zram0 > /dev/null 2>&1");
+                str = "Enabled";
+            }
+            else {
+                Utils.execCmdWrite("swapoff /dev/block/zram0 > /dev/null 2>&1");
+                str = "Disabled";
+            }
+            String finalStr = str;
+            handle.post(() -> {
+                fragment.textView1.setText(finalStr);
+                Toast.makeText(v.getContext(), finalStr, Toast.LENGTH_SHORT).show();
+            });
+        }
     }
 
     String getSanitizedString(String[] arr){

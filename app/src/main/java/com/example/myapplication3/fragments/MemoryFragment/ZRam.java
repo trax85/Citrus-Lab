@@ -38,47 +38,10 @@ public class ZRam {
     }
 
     public void initParams(){
-        String out;
-        String[] outArr;
-        double size;
-
-        //read Zram status
-        try {
-            out = Utils.read(1, SWAP);
-            if (out.contains(DISK) || out.contains(DISK.substring(4,15)))
-                zramState = "Enabled";
-        } catch (UtilException e) {
-            Log.d(TAG, "error:"+ e);
-            zramState = "Disabled";
-        }
-
-        //get available algorithms
-        outArr = Utils.splitStrings(AVI_ALGO, "\\s+");
-        if(outArr != null){
-            zramAlgo = getSanitizedString(outArr);
-            for (int i = 0; i < outArr.length; i++)
-                if (outArr[i].contains("["))
-                    outArr[i] = rmBackets(outArr[i]);
-            compAlgo = outArr;
-            algoAvailable = true;
-        }
-
-        //get disksize
-        try{
-            out = Utils.read(0, DISKSIZE);
-            size = Double.parseDouble(out);
-            zramDisk = (int)(size / (1024 * 1024)) + "Mb";
-        }catch (UtilException e){
-            zramDisk = "0";
-        }
-
-        //get zram swappiness
-        try {
-            out = Utils.read(0, SWAPPINESS);
-            zramSwap = out + "%";
-        } catch (UtilException e) {
-            zramSwap = "0";
-        }
+        getZramState();
+        getZramAlgo();
+        getZramDiskSize();
+        getZramSwappiness();
     }
 
     @SuppressLint("SetTextI18n")
@@ -118,21 +81,20 @@ public class ZRam {
     public void setZramState(View v)
     {
         Handler handler = new Handler(Looper.getMainLooper());
-        String setText = null;
+        String setText;
         int state = 0;
-        try {
-            String out = Utils.read(1, SWAP);
-            if (out.contains(DISK)) {
-                setText = "Disabling...";
-                Toast.makeText(v.getContext(), "Disabling Zram...", Toast.LENGTH_SHORT).show();
-            }
-        } catch (UtilException e) {
-            setText = "Enabling...";
+
+        if(getZramState() == 0){
+                setText = "Disabling";
+        } else {
+            setText = "Enabling";
             state = 1;
-            Toast.makeText(v.getContext(), "Enabling Zram...", Toast.LENGTH_SHORT).show();
         }
         String finalSetText = setText;
-        handler.post(() -> fragment.textView1.setText(finalSetText));
+        handler.post(() -> {
+            fragment.textView1.setText(finalSetText);
+            Toast.makeText(v.getContext(), setText + " Zram...", Toast.LENGTH_SHORT).show();
+        });
         AsyncTask asyncTask = new AsyncTask(state, v, fragment);
         asyncTask.start();
     }
@@ -178,6 +140,56 @@ public class ZRam {
         builder.show();
     }
 
+    public int getZramState(){
+        try {
+            String out = Utils.read(1, SWAP);
+            if (out.contains(DISK) || out.contains(DISK.substring(4,15)))
+                zramState = "Enabled";
+        } catch (UtilException e) {
+            Log.d(TAG, ":"+ e);
+            zramState = "Disabled";
+            return 1;
+        }
+        return 0;
+    }
+
+    public int getZramAlgo(){
+        String[] outArr = Utils.splitStrings(AVI_ALGO, "\\s+");
+        if(outArr != null){
+            zramAlgo = getSanitizedString(outArr);
+            for (int i = 0; i < outArr.length; i++)
+                if (outArr[i].contains("["))
+                    outArr[i] = rmBackets(outArr[i]);
+            compAlgo = outArr;
+            algoAvailable = true;
+            return 0;
+        }
+        return 1;
+    }
+
+    public int getZramDiskSize(){
+        try{
+            String out = Utils.read(0, DISKSIZE);
+            Double size = Double.parseDouble(out);
+            zramDisk = (int)(size / (1024 * 1024)) + "Mb";
+        }catch (UtilException e){
+            zramDisk = "0";
+            return 1;
+        }
+        return 0;
+    }
+
+    public int getZramSwappiness(){
+        try {
+            String out = Utils.read(0, SWAPPINESS);
+            zramSwap = out + "%";
+        } catch (UtilException e) {
+            zramSwap = "0";
+            return 1;
+        }
+        return 0;
+    }
+
     public static class AsyncTask extends Thread {
         private int state = 0;
         Handler handle;
@@ -192,13 +204,12 @@ public class ZRam {
         }
         @Override
         public void run() {
-            String str = null;
-            Log.d(TAG,"run");
+            String str;
+
             if(state == 1){
                 Utils.execCmdWrite("swapon /dev/block/zram0 > /dev/null 2>&1");
                 str = "Enabled";
-            }
-            else {
+            } else {
                 Utils.execCmdWrite("swapoff /dev/block/zram0 > /dev/null 2>&1");
                 str = "Disabled";
             }

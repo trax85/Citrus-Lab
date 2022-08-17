@@ -17,18 +17,13 @@ import java.util.Arrays;
 
 public class ZRam {
     static String TAG = "MemoryFragment";
-    private static final String DISKSIZE = "/sys/devices/virtual/block/zram0/disksize";
-    private static final String DISK = "/dev/block/zram0";
-    private static final String AVI_ALGO = "/sys/block/zram0/comp_algorithm";
-    private static final String SWAPPINESS = "/proc/sys/vm/swappiness";
-    private static final String SWAP = "/proc/swaps";
-    private static String[] compAlgo;
     private final MemoryFragment fragment;
-    private static Boolean algoAvailable = false;
-    private static String zramState, zramAlgo, zramSwap, zramDisk;
+    private static boolean algoAvailable = false;
+    private final Memory.Params zRamParams;
 
     public ZRam(MemoryFragment fragment){
         this.fragment = fragment;
+        zRamParams = new Memory.Params();
     }
 
     public void ZramInit(){
@@ -49,10 +44,10 @@ public class ZRam {
     {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(() -> {
-            fragment.textView1.setText(zramState);
-            fragment.textView2.setText(zramAlgo);
-            fragment.textView3.setText(zramDisk);
-            fragment.textView4.setText(zramSwap);
+            fragment.textView1.setText(zRamParams.getZramState());
+            fragment.textView2.setText(zRamParams.getZramAlgo());
+            fragment.textView3.setText(zRamParams.getZramDisk());
+            fragment.textView4.setText(zRamParams.getZramSwap());
         });
     }
 
@@ -67,12 +62,14 @@ public class ZRam {
 
     public void showDialogue(){
         String str = fragment.textView2.getText().toString();
-        int checkedItem = Arrays.asList(compAlgo).indexOf(str);
+        String[] aviAlgo = zRamParams.getZramAviAlgo();
+
+        int checkedItem = Arrays.asList(aviAlgo).indexOf(str);
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(fragment.requireActivity());
         builder.setTitle("Choose Option");
-        builder.setSingleChoiceItems(compAlgo, checkedItem, (dialog, which) -> {
-                Utils.write(compAlgo[which], AVI_ALGO);
-                fragment.textView2.setText(compAlgo[which]);
+        builder.setSingleChoiceItems(aviAlgo, checkedItem, (dialog, which) -> {
+                Utils.write(aviAlgo[which], Memory.PATH.AVI_ALGO);
+                fragment.textView2.setText(aviAlgo[which]);
                 dialog.dismiss();
         });
         builder.show();
@@ -114,7 +111,7 @@ public class ZRam {
         builder.setPositiveButton("OK", (dialog, which) -> {
             int size = Integer.parseInt(weightInput.getText().toString());
             size = size * 1024 * 1024;
-            Utils.write(Integer.toString(size), DISKSIZE);
+            Utils.write(Integer.toString(size), Memory.PATH.DISKSIZE);
             fragment.textView3.setText(weightInput.getText().toString() + "Mb");
         });builder.setNegativeButton("Cancle", (dialog, which) -> dialog.cancel());
         builder.show();
@@ -134,7 +131,7 @@ public class ZRam {
         builder.setView(weightInput);
 
         builder.setPositiveButton("OK", (dialog, which) -> {
-            Utils.write(weightInput.getText().toString(), SWAPPINESS);
+            Utils.write(weightInput.getText().toString(), Memory.PATH.SWAPPINESS);
             fragment.textView4.setText(weightInput.getText().toString() + "%");
         });builder.setNegativeButton("Cancle", (dialog, which) -> dialog.cancel());
         builder.show();
@@ -142,56 +139,50 @@ public class ZRam {
 
     public int getZramState(){
         try {
-            String out = Utils.read(1, SWAP);
-            if (out.contains(DISK) || out.contains(DISK.substring(4,15)))
-                zramState = "Enabled";
+            String out = Utils.read(1, Memory.PATH.SWAP);
+            if (out.contains(Memory.PATH.DISK) || out.contains(Memory.PATH.DISK.substring(4,15)))
+                zRamParams.setZramState("Enabled");
         } catch (UtilException e) {
             Log.d(TAG, ":"+ e);
-            zramState = "Disabled";
+            zRamParams.setZramState("Disabled");
             return 1;
         }
         return 0;
     }
 
-    public int getZramAlgo(){
-        String[] outArr = Utils.splitStrings(AVI_ALGO, "\\s+");
+    public void getZramAlgo(){
+        String[] outArr = Utils.splitStrings(Memory.PATH.AVI_ALGO, "\\s+");
         if(outArr != null){
-            zramAlgo = getSanitizedString(outArr);
+            zRamParams.setZramAlgo(getSanitizedString(outArr));
             for (int i = 0; i < outArr.length; i++)
                 if (outArr[i].contains("["))
                     outArr[i] = rmBackets(outArr[i]);
-            compAlgo = outArr;
+            zRamParams.setZramAviAlgo(outArr);
             algoAvailable = true;
-            return 0;
         }
-        return 1;
     }
 
-    public int getZramDiskSize(){
+    public void getZramDiskSize(){
         try{
-            String out = Utils.read(0, DISKSIZE);
-            Double size = Double.parseDouble(out);
-            zramDisk = (int)(size / (1024 * 1024)) + "Mb";
+            String out = Utils.read(0, Memory.PATH.DISKSIZE);
+            double size = Double.parseDouble(out);
+            zRamParams.setZramDisk((int)(size / (1024 * 1024)) + "Mb");
         }catch (UtilException e){
-            zramDisk = "0";
-            return 1;
+            zRamParams.setZramDisk("0");
         }
-        return 0;
     }
 
-    public int getZramSwappiness(){
+    public void getZramSwappiness(){
         try {
-            String out = Utils.read(0, SWAPPINESS);
-            zramSwap = out + "%";
+            String out = Utils.read(0, Memory.PATH.SWAPPINESS);
+            zRamParams.setZramSwap(out + "%");
         } catch (UtilException e) {
-            zramSwap = "0";
-            return 1;
+            zRamParams.setZramSwap("0");
         }
-        return 0;
     }
 
     public static class AsyncTask extends Thread {
-        private int state = 0;
+        private final int state;
         Handler handle;
         View v;
         MemoryFragment fragment;

@@ -194,6 +194,7 @@ public class ZRam {
             this.fragment = fragment;
             handle = new Handler(Looper.getMainLooper());
         }
+        
         @Override
         public void run() {
             String str;

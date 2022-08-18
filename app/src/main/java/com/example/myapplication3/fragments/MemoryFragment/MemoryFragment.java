@@ -7,7 +7,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +26,7 @@ public class MemoryFragment extends Fragment {
     RelativeLayout vmLayout1, vmLayout2, vmLayout3, vmLayout4, vmLayout5, vmLayout6;
     RelativeLayout[] relativeLayoutArr;
     TextView[] textViewArr;
-    ZRamInit ramInit;
+    ZRam zramObject;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,12 +45,13 @@ public class MemoryFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initViews(view);
         setOnClickListners();
+        zramObject = new ZRam(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        ramInit = new ZRamInit(this);
+        zramObject.ZramInit();
     }
 
     void initViews(View view){

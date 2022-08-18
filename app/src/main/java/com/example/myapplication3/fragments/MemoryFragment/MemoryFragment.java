@@ -28,9 +28,6 @@ public class MemoryFragment extends Fragment {
     RelativeLayout[] relativeLayoutArr;
     TextView[] textViewArr;
     ZRamInit ramInit;
-    String PATH = "/proc/sys/vm/";
-    String[] VMPaths = {"min_free_kbytes", "extra_free_kbytes", "dirty_ratio",
-            "dirty_background_ratio", "overcommit_ratio", "vfs_cache_pressure"};
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -91,7 +88,7 @@ public class MemoryFragment extends Fragment {
         for(int i = 0; i < relativeLayoutArr.length; i++){
             String out;
             try {
-                out = Utils.read(0,PATH + VMPaths[i]);
+                out = Utils.read(0,Memory.PATH.VM + Memory.PATH.getVMPaths(i));
             } catch (UtilException e) {
                 out = "read error";
             }
@@ -113,7 +110,7 @@ public class MemoryFragment extends Fragment {
 
         builder.setPositiveButton("OK", (dialog, which) -> {
             String out = weightInput.getText().toString();
-            Utils.write(out, PATH + VMPaths[i]);
+            Utils.write(out, Memory.PATH.VM + Memory.PATH.getVMPaths(i));
             textViewArr[i].setText(out);
         });builder.setNegativeButton("Cancle", (dialog, which) -> dialog.cancel());
         builder.show();

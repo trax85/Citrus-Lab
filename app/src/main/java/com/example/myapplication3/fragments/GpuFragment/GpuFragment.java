@@ -41,6 +41,8 @@ public class GpuFragment extends Fragment {
     private final String[] GpuBoostBoundPath = {"/sys/module/ged/parameters/gpu_bottom_freq",
             "/sys/module/ged/parameters/gpu_cust_upbound_freq",
             "/sys/module/ged/parameters/gpu_cust_boost_freq" };
+    final String gpuInfoPath = "/sys/devices/platform/13000000.mali/gpuinfo";
+    final String gpuOppPath = "/proc/gpufreq/gpufreq_opp_dump";
     final static String TAG = "GpuFragment";
 
     private TextView[] textViews;
@@ -51,6 +53,8 @@ public class GpuFragment extends Fragment {
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     private Switch switchDVFS, switchBoost;
     String[] gpuFreqData, gpuFreqDataApp, gpuVoltData;
+    String gpuInfo;
+    Boolean dvfsState, boostState;
     ScheduledThreadPoolExecutor executor;
     StatsLoop statsLoop;
 
@@ -106,47 +110,16 @@ public class GpuFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     public void initData(){
-        String out;
-        try {
-            String gpuOppPath = "/proc/gpufreq/gpufreq_opp_dump";
-            gpuFreqData = Utils.readGetArr("cut -d' ' -f4 " + gpuOppPath);
-            gpuVoltData = Utils.readGetArr("cut -d' ' -f7 " + gpuOppPath);
-        } catch (UtilException e) {
-            //To-do
-            return;
-        }
-        gpuFreqDataApp = new String[gpuFreqData.length];
-        for(int i = 0; i < gpuFreqData.length; i++){
-            gpuFreqData[i] = gpuFreqData[i].replaceFirst(",","");
-            gpuVoltData[i] = gpuVoltData[i].replaceFirst(",","");
-            gpuFreqDataApp[i] = gpuFreqData[i] + " Mhz";
-        }
+        InitGpuData();
+        gpuInfo = getGpuInfo();
+        dvfsState = getDvfsState();
+        boostState = getBoostState();
+    }
 
-        String[] str = new String[gpuFreqDataApp.length + 1];
-        str[0] = "Not fixed";
-        System.arraycopy(gpuFreqDataApp, 0, str, 1, gpuFreqDataApp.length);
-        gpuFreqDataApp = str;
-
-        try {
-            String gpuInfoPath = "/sys/devices/platform/13000000.mali/gpuinfo";
-            out = Utils.read(0, gpuInfoPath);
-            textViewInfo.setText(out);
-        } catch (UtilException e) {
-            textViewInfo.setText("Unavailable");
-        }
-
-        cProgress.setMaxProgress(gpuFreqData.length);
-        try {
-            out = Utils.execCmdRead(0, "cut -d':' -f2 " + DvfsPath);
-            if(out.contains("1"))
-                switchDVFS.setChecked(true);
-        } catch (UtilException ignored) {}
-
-        try {
-            out = Utils.read(0,GpuBoostPath[0]);
-            if(out.contains("1"))
-                switchBoost.setChecked(true);
-        } catch (UtilException ignored) {}
+    public void initText(){
+        textViewInfo.setText(gpuInfo);
+        switchDVFS.setChecked(dvfsState);
+        switchBoost.setChecked(boostState);
     }
 
     @SuppressLint("SetTextI18n")
@@ -277,5 +250,57 @@ public class GpuFragment extends Fragment {
             dialog.dismiss();
         });
         builder.show();
+    }
+
+    private void InitGpuData(){
+        try {
+            gpuFreqData = Utils.readGetArr("cut -d' ' -f4 " + gpuOppPath);
+            gpuVoltData = Utils.readGetArr("cut -d' ' -f7 " + gpuOppPath);
+        } catch (UtilException e) {
+            //To-do
+            return;
+        }
+        gpuFreqDataApp = new String[gpuFreqData.length];
+        for(int i = 0; i < gpuFreqData.length; i++){
+            gpuFreqData[i] = gpuFreqData[i].replaceFirst(",","");
+            gpuVoltData[i] = gpuVoltData[i].replaceFirst(",","");
+            gpuFreqDataApp[i] = gpuFreqData[i] + " Mhz";
+        }
+        cProgress.setMaxProgress(gpuFreqData.length);
+
+        String[] str = new String[gpuFreqDataApp.length + 1];
+        str[0] = "Not fixed";
+        System.arraycopy(gpuFreqDataApp, 0, str, 1, gpuFreqDataApp.length);
+        gpuFreqDataApp = str;
+    }
+
+    private String getGpuInfo(){
+        String out;
+        try {
+            out = Utils.read(0, gpuInfoPath);
+        } catch (UtilException e) {
+            out = "Unavailable";
+        }
+        return out;
+    }
+
+    private Boolean getDvfsState(){
+        String out;
+        try {
+            out = Utils.execCmdRead(0, "cut -d':' -f2 " + DvfsPath);
+            if(out.contains("1"))
+                return true;
+        } catch (UtilException ignored) {}
+        return false;
+    }
+
+    private Boolean getBoostState(){
+        String out;
+        try {
+            out = Utils.read(0,GpuBoostPath[0]);
+            if(out.contains("1"))
+                return true;
+        } catch (UtilException ignored) {}
+        return false;
     }
 }

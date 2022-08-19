@@ -19,6 +19,7 @@ public class ZRam {
     static String TAG = "MemoryFragment";
     private final MemoryFragment fragment;
     private static boolean algoAvailable = false;
+    private static boolean isRunning = false;
     private final Memory.Params zRamParams;
 
     public ZRam(MemoryFragment fragment){
@@ -81,6 +82,9 @@ public class ZRam {
         Handler handler = new Handler(Looper.getMainLooper());
         String setText;
         int state = 0;
+
+        if(isRunning)
+            return;
 
         if(getZramState() == 0){
                 setText = "Disabling";
@@ -199,6 +203,7 @@ public class ZRam {
         public void run() {
             String str;
 
+            isRunning = true;
             if(state == 1){
                 Utils.execCmdWrite("swapon /dev/block/zram0 > /dev/null 2>&1");
                 str = "Enabled";
@@ -211,6 +216,7 @@ public class ZRam {
                 fragment.textView1.setText(finalStr);
                 Toast.makeText(v.getContext(), finalStr, Toast.LENGTH_SHORT).show();
             });
+            isRunning = false;
         }
     }
 

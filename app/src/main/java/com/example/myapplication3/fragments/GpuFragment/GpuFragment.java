@@ -124,20 +124,30 @@ public class GpuFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     public void initLinearLayouts(){
-        String out;
+        Handler handler = new Handler(Looper.getMainLooper());
+        String out, outText;
+        boolean isErr = false;
+
         for(int i = 0; i < linearLayouts.length; i++){
             try {
                 out = Utils.read(0,GpuBoostBoundPath[i]);
                 if(Objects.equals(out, "0"))
-                    textViews[i].setText("Not set");
+                    outText = "Not set";
                 else
-                    textViews[i].setText(out + "Mhz");
-                int finalI = i;
-                linearLayouts[i].setOnClickListener(v -> showBoostSetDialogue(finalI));
+                    outText = out + "Mhz";
             } catch (UtilException e) {
-                textViews[i].setText("Read error");
-                return;
+                outText = "Read error";
+                isErr = true;
             }
+
+            int finalI = i;
+            boolean finalIsErr = isErr;
+            String finalOutText = outText;
+            handler.post(() -> {
+                textViews[finalI].setText(finalOutText);
+                if(!finalIsErr)
+                    linearLayouts[finalI].setOnClickListener(v -> showBoostSetDialogue(finalI));
+            });
         }
     }
 
@@ -158,43 +168,6 @@ public class GpuFragment extends Fragment {
             }
             Utils.write("1", GpuBoostPath[1]);
         });
-    }
-
-    class StatsLoop implements Runnable{
-        String curFreq, curLoad, curVoltage;
-        int idx;
-        @Override
-        public void run() {
-            getStats();
-            setUI();
-        }
-
-        public void getStats(){
-            try {
-                curFreq = Utils.execCmdRead(0,"cut -d' ' -f2 " + GpuCurFreqPath);
-                String gpuLoadPath = "/sys/module/ged/parameters/gpu_loading";
-                curLoad = Utils.read(0, gpuLoadPath);
-                idx = Arrays.asList(gpuFreqData).indexOf(curFreq);
-                curVoltage = gpuVoltData[idx];
-                idx = gpuFreqData.length - idx;
-                curFreq = Integer.parseInt(curFreq) / 1000 + " Mhz";
-            } catch (UtilException e) {
-                curFreq = "0 Mhz";
-                curLoad = "0";
-                curVoltage = "0";
-            }
-        }
-
-        @SuppressLint("SetTextI18n")
-        public void setUI(){
-            Handler handler = new Handler(Looper.getMainLooper());
-            handler.post(() -> {
-                textViewMhz.setText(curFreq);
-                cProgress.setCurrentProgress(idx);
-                textViewLoad.setText(curLoad + "%");
-                textViewVoltage.setText(curVoltage + " uV");
-            });
-        }
     }
 
     public void setListener(){
@@ -302,5 +275,42 @@ public class GpuFragment extends Fragment {
                 return true;
         } catch (UtilException ignored) {}
         return false;
+    }
+
+    class StatsLoop implements Runnable{
+        String curFreq, curLoad, curVoltage;
+        int idx;
+        @Override
+        public void run() {
+            getStats();
+            setUI();
+        }
+
+        public void getStats(){
+            try {
+                curFreq = Utils.execCmdRead(0,"cut -d' ' -f2 " + GpuCurFreqPath);
+                String gpuLoadPath = "/sys/module/ged/parameters/gpu_loading";
+                curLoad = Utils.read(0, gpuLoadPath);
+                idx = Arrays.asList(gpuFreqData).indexOf(curFreq);
+                curVoltage = gpuVoltData[idx];
+                idx = gpuFreqData.length - idx;
+                curFreq = Integer.parseInt(curFreq) / 1000 + " Mhz";
+            } catch (UtilException e) {
+                curFreq = "0 Mhz";
+                curLoad = "0";
+                curVoltage = "0";
+            }
+        }
+
+        @SuppressLint("SetTextI18n")
+        public void setUI(){
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.post(() -> {
+                textViewMhz.setText(curFreq);
+                cProgress.setCurrentProgress(idx);
+                textViewLoad.setText(curLoad + "%");
+                textViewVoltage.setText(curVoltage + " uV");
+            });
+        }
     }
 }

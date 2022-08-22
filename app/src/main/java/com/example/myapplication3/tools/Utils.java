@@ -22,11 +22,13 @@ public class Utils {
 
     public static String read(int index, String path) throws UtilException{
         Shell.Result result = Shell.cmd("cat " + path).exec();
-        if (!isValidIndex(index, result.getOut()) || !isValaidIO(result.getOut().get(index))) {
+
+        if (!isValidIndex(index, result.getOut()))
             throw new UtilException("Read Error");
-        } else {
+        else if (!isValaidIO(result.getOut().get(index)))
+            throw new UtilException("Read Error");
+        else
             return result.getOut().get(index);
-        }
     }
 
     public static String[] readGetArr(String... cmd) throws UtilException{
@@ -44,7 +46,6 @@ public class Utils {
             throw new UtilException("Read Error");
         else
             return result.getOut().get(index);
-
     }
 
     public static void write(String value, String path){
@@ -71,6 +72,6 @@ public class Utils {
     }
 
     public static boolean isValidIndex(int index, List<String> list){
-        return index <= list.size() && index >= 0;
+        return index < list.size() && index >= 0;
     }
 }

@@ -79,40 +79,12 @@ public class MainActivity extends AppCompatActivity {
         pa.setAdapter(vpAdaptor);
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetLayout);
         bottomSheetBehavior.setPeekHeight(178);
-        bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
-                    bottomSheetState = true;
-                } else if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                    bottomSheetState = false;
-                }
-            }
 
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-                if ( slideOffset>=0 && slideOffset<=1 ) {
-                    linearLayout.setAlpha( 1f - (slideOffset * 0.5f) );
-                }
-            }
-        });
         AviFreqData model = new ViewModelProvider(this).get(AviFreqData.class);
-        ImageButton showSheet = findViewById(R.id.close_menu);
-        showSheet.setOnClickListener(v -> {
-            if(bottomSheetState) {
-                imageViewAbout.setVisibility(View.VISIBLE);
-                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                imageViewAbout.setOnClickListener(v1 -> {
-                    aboutButtonAction();
-                });
-            }else{
-                imageViewAbout.setVisibility(View.INVISIBLE);
-                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-            }
-        });
+        closeSheetListener();
         setBottomPageListeners();
         service = Executors.newSingleThreadExecutor();
-
+        setBottomSheetCallBack();
         setUi(0);
         pa.setCurrentItem(0, false);
     }
@@ -200,20 +172,62 @@ public class MainActivity extends AppCompatActivity {
         for(int i = 0; i < vpAdaptor.totalTabs - 1; i++){
             int finalI = i;
             linearLayoutArr[i].setOnClickListener(v -> {
-                pa.setCurrentItem(finalI, false);
+                vpAdaptor.curTab = finalI;
                 setUi(finalI);
-                service.execute(() -> {
-                    Handler handler = new Handler(Looper.getMainLooper());
-                    handler.post(() -> pa.startAnimation(aniFade));
-                });
+                pageChanged = true;
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             });
         }
     }
 
+    private void setBottomSheetCallBack(){
+        bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                if(newState == BottomSheetBehavior.STATE_COLLAPSED){
+                    if(pageChanged) {
+                        service.execute(() -> {
+                            Handler handler = new Handler(Looper.getMainLooper());
+                            handler.post(() -> {
+                                pa.startAnimation(aniFade);
+                                pa.setCurrentItem(vpAdaptor.curTab, false);
+                            });
+                            pageChanged = false;
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                if ( slideOffset>=0 && slideOffset<=1 ) {
+                    linearLayout.setAlpha( 1f - (slideOffset * 0.5f) );
+                }
+            }
+        });
+    }
+
+    public void closeSheetListener(){
+        ImageButton menuButton = findViewById(R.id.close_menu);
+        menuButton.setOnClickListener(v -> {
+            if(bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
+                imageViewAbout.setVisibility(View.VISIBLE);
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                imageViewAbout.setOnClickListener(v1 -> {
+                    aboutButtonAction();
+                });
+            }else{
+                imageViewAbout.setVisibility(View.INVISIBLE);
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            }
+        });
+    }
+
     public void aboutButtonAction(){
-        setUi(7);
-        pa.setCurrentItem(7);
+        int setCurTab = vpAdaptor.totalTabs - 1;
+        setUi(setCurTab);
+        vpAdaptor.curTab = setCurTab;
+        pageChanged = true;
         imageViewAbout.setVisibility(View.INVISIBLE);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }

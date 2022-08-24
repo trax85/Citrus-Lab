@@ -17,9 +17,16 @@ import com.example.myapplication3.R;
 
 public class AboutFragment extends Fragment {
     private final String TAG = "AboutFragment";
+    private static final String[] gitLinks= {"https://github.com/trax85",
+            "https://github.com/Skyking469", "https://github.com/prathameshmm02",
+            "https://github.com/sharan9678"};
+    private static final String[] teleLinks = {"https://t.me/Skyking469",
+            "https://t.me/QuickerSilver", "https://t.me/sharanrajt" };
     ImageView imageViewGit, imageViewTele1, imageViewGit1, imageViewTele2, imageViewGit2,
             imageViewGit3, imageViewTele3;
     Intent intent;
+    private static ImageView[] imageViewsGit;
+    private static ImageView[] imageViewsTel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,12 +38,8 @@ public class AboutFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        intent = new Intent();
-        intent.setAction(Intent.ACTION_VIEW);
-        intent.addCategory(Intent.CATEGORY_BROWSABLE);
-        initViews(view);
-        setUpListeners();
+        AsyncInitTask initTask = new AsyncInitTask(view);
+        initTask.start();
     }
 
     public void initViews(View view){
@@ -47,36 +50,45 @@ public class AboutFragment extends Fragment {
         imageViewTele2 = view.findViewById(R.id.prath_tele);
         imageViewGit3 = view.findViewById(R.id.sharan_git);
         imageViewTele3 = view.findViewById(R.id.sharan_tele);
+        imageViewsGit = new ImageView[]{imageViewGit, imageViewGit1, imageViewGit2, imageViewGit3};
+        imageViewsTel = new ImageView[]{imageViewTele1, imageViewTele2, imageViewTele3};
     }
 
-    public void setUpListeners(){
-        imageViewGit.setOnClickListener(v -> {
-            intent.setData(Uri.parse("https://github.com/trax85"));
-            startActivity(intent);
-        });
-        imageViewGit1.setOnClickListener(v -> {
-            intent.setData(Uri.parse("https://github.com/Skyking469"));
-            startActivity(intent);
-        });
-        imageViewGit2.setOnClickListener(v -> {
-            intent.setData(Uri.parse("https://github.com/prathameshmm02"));
-            startActivity(intent);
-        });
-        imageViewTele1.setOnClickListener(v -> {
-            intent.setData(Uri.parse("https://t.me/Skyking469"));
-            startActivity(intent);
-        });
-        imageViewTele2.setOnClickListener(v -> {
-            intent.setData(Uri.parse("https://t.me/QuickerSilver"));
-            startActivity(intent);
-        });
-        imageViewGit3.setOnClickListener(v -> {
-            intent.setData(Uri.parse("https://github.com/sharan9678"));
-            startActivity(intent);
-        });
-        imageViewTele3.setOnClickListener(v -> {
-            intent.setData(Uri.parse("https://t.me/sharanrajt"));
-            startActivity(intent);
-        });
+    public void setGitListeners(){
+        for(int i = 0; i < imageViewsGit.length; i++){
+            int finalI = i;
+            imageViewsGit[i].setOnClickListener(v -> {
+                intent.setData(Uri.parse(gitLinks[finalI]));
+                startActivity(intent);
+            });
+        }
     }
+
+    public void setTelListeners(){
+        for(int i = 0; i < imageViewsTel.length; i++){
+            int finalI = i;
+            imageViewsTel[i].setOnClickListener(v -> {
+                intent.setData(Uri.parse(teleLinks[finalI]));
+                startActivity(intent);
+            });
+        }
+    }
+
+    class AsyncInitTask extends Thread {
+        View view;
+        public AsyncInitTask(View view) {
+            this.view = view;
+        }
+
+        @Override
+        public void run() {
+            intent = new Intent();
+            intent.setAction(Intent.ACTION_VIEW);
+            intent.addCategory(Intent.CATEGORY_BROWSABLE);
+            initViews(view);
+            setGitListeners();
+            setTelListeners();
+        }
+    }
+
 }

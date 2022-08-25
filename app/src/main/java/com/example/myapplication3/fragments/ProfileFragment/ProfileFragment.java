@@ -165,7 +165,6 @@ public class ProfileFragment extends Fragment {
                 Intent intent = result.getData();
                 Uri uri;
                 try {
-                    assert intent != null;
                     uri = intent.getData();
                 }catch (NullPointerException e){
                     return;

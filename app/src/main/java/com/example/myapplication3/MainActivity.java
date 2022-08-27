@@ -65,11 +65,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         initViews();
-        initList();
-        aniFade = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_in);
+        initViewList();
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
+        animationFade = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_in);
         //Disable swipe left and right
         pa.setUserInputEnabled(false);
         pa.setOffscreenPageLimit(1);
@@ -83,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
         AviFreqData model = new ViewModelProvider(this).get(AviFreqData.class);
         closeSheetListener();
         setBottomPageListeners();
-        service = Executors.newSingleThreadExecutor();
         setBottomSheetCallBack();
         setUi(0);
         pa.setCurrentItem(0, false);
@@ -137,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
         imageViewAbout.setVisibility(View.INVISIBLE);
     }
 
-    private void initList(){
+    private void initViewList(){
         Log.d(TAG,"List initialised");
         textViewArr = new TextView[]{textViewDash, textViewDisp, textViewCpu, textViewGpu,
                 textViewMem, textViewProfile, textViewMisc};
@@ -189,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
                         service.execute(() -> {
                             Handler handler = new Handler(Looper.getMainLooper());
                             handler.post(() -> {
-                                pa.startAnimation(aniFade);
+                                pa.startAnimation(animationFade);
                                 pa.setCurrentItem(vpAdaptor.curTab, false);
                             });
                             pageChanged = false;
@@ -213,9 +212,7 @@ public class MainActivity extends AppCompatActivity {
             if(bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
                 imageViewAbout.setVisibility(View.VISIBLE);
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                imageViewAbout.setOnClickListener(v1 -> {
-                    aboutButtonAction();
-                });
+                imageViewAbout.setOnClickListener(v1 -> aboutButtonAction());
             }else{
                 imageViewAbout.setVisibility(View.INVISIBLE);
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);

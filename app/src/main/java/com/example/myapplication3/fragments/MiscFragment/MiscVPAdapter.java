@@ -11,12 +11,10 @@ public class MiscVPAdapter extends FragmentStateAdapter {
     final private String TAG = "MiscVPA";
     private final Fragment[] mFragments = new Fragment[] {
             new NetworkFragment(),
-            new PowerFragment(),
             new TempFragment(),
     };
     public final String[] mFragmentNames = new String[] {
             "Network",
-            "Power",
             "Temperature"
     };
 

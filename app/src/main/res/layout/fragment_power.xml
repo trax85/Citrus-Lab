@@ -1,19 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cpu_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/page_bg_colour"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.MiscFragment.PowerFragment">
+    tools:context=".fragments.PowerFragment.PowerFragment"
+    android:background="@color/materialGrey_800"
+    android:orientation="horizontal">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:paddingBottom="@dimen/_55sdp">
+        android:background="@color/materialGrey_800"
+        android:theme="@style/myTheme.ActionBar.Text">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:contentScrim="#242424"
+            android:letterSpacing="0.13"
+            app:title="Power &amp; Thermals" >
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar1"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:layout_collapseMode="pin"/>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:background="@drawable/page_bg"
+            android:paddingBottom="@dimen/_54sdp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
 
         <TextView
             android:id="@+id/textView31"
@@ -22,7 +53,7 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_16sdp"
             android:fontFamily="@font/inter"
-            android:text="@string/miscpower_info"
+            android:text="@string/power_info"
             android:textColor="#616161"
             android:textSize="@dimen/_9sdp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -40,104 +71,392 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/zram"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_2sdp"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:layout_marginEnd="@dimen/_2sdp"
-            android:background="@drawable/core_ctrl_container_bg"
-            android:paddingBottom="@dimen/_4sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView31">
-
-            <RelativeLayout
-                android:layout_width="@dimen/_270sdp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/power_suspend_layout"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_2sdp"
                 android:layout_marginStart="@dimen/_2sdp"
-                android:layout_marginTop="@dimen/_2sdp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginEnd="@dimen/_2sdp"
-                app:layout_goneMarginBottom="@dimen/_2sdp"
-                android:background="@drawable/inner_container_bg"
-                app:layout_constraintTop_toTopOf="parent"
+                android:background="@drawable/core_ctrl_container_bg"
+                android:paddingBottom="@dimen/_4sdp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" >
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView31">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_marginTop="@dimen/_1sdp"
+                    android:fontFamily="@font/nunito_sans_semibold"
+                    android:letterSpacing="0.02"
+                    android:paddingBottom="@dimen/_2sdp"
+                    android:text="Power Suspend"
+                    android:textAllCaps="false"
+                    android:textColor="@color/secondary_colour"
+                    android:textSize="@dimen/_13sdp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <RelativeLayout
-                    android:id="@+id/ps_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
-                    android:background="@drawable/rounded_btn">
+                    android:layout_width="@dimen/_270sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_2sdp"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:layout_marginTop="@dimen/_24sdp"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    app:layout_goneMarginBottom="@dimen/_2sdp"
+                    android:background="@drawable/inner_container_bg"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" >
 
-                    <TextView
-                        android:id="@+id/primaryDesc"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_12sdp"
-                        android:layout_marginTop="@dimen/_15sdp"
-                        android:background="@drawable/rounded_btn"
-                        android:fontFamily="@font/inter"
-                        android:text="Power Suspend mode"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_11sdp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/powerSus"
-                        android:layout_width="@dimen/_60sdp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_198sdp"
-                        android:layout_marginTop="@dimen/_16sdp"
-                        android:fontFamily="@font/inter"
-                        android:text="Disabled"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_12sdp"
-                        android:textStyle="normal" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/wireguard_layout"
-                    android:layout_width="match_parent"
-                    android:background="@drawable/rounded_btn"
-                    android:layout_height="@dimen/_45sdp"
-                    android:layout_marginTop="@dimen/_45sdp">
-
-                    <View
+                    <RelativeLayout
+                        android:id="@+id/ps_layout"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1sdp"
-                        android:layout_marginTop="@dimen/_1sdp"
-                        android:background="@android:color/darker_gray" />
+                        android:layout_height="@dimen/_45sdp"
+                        android:background="@drawable/rounded_btn">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_12sdp"
-                        android:layout_marginTop="@dimen/_16sdp"
-                        android:fontFamily="@font/inter"
-                        android:text="Power Suspend version"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_11sdp"
-                        android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/primaryDesc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_12sdp"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:background="@drawable/rounded_btn"
+                            android:fontFamily="@font/inter"
+                            android:text="Power Suspend mode"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_11sdp"
+                            android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/psver"
-                        android:layout_width="@dimen/_90sdp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_180sdp"
-                        android:layout_marginTop="@dimen/_16sdp"
-                        android:fontFamily="@font/inter"
-                        android:lines="1"
-                        android:text="ver"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_12sdp"
-                        android:textStyle="normal" />
+                        <TextView
+                            android:id="@+id/powerSus"
+                            android:layout_width="@dimen/_60sdp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_198sdp"
+                            android:layout_marginTop="@dimen/_16sdp"
+                            android:fontFamily="@font/inter"
+                            android:text="Disabled"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12sdp"
+                            android:textStyle="normal" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/pwr_suspend_layout"
+                        android:layout_width="match_parent"
+                        android:background="@drawable/rounded_btn"
+                        android:layout_height="@dimen/_45sdp"
+                        android:layout_marginTop="@dimen/_45sdp">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_marginTop="@dimen/_1sdp"
+                            android:background="@android:color/darker_gray" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_12sdp"
+                            android:layout_marginTop="@dimen/_16sdp"
+                            android:fontFamily="@font/inter"
+                            android:text="Power Suspend version"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_11sdp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/psver"
+                            android:layout_width="@dimen/_90sdp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_180sdp"
+                            android:layout_marginTop="@dimen/_16sdp"
+                            android:fontFamily="@font/inter"
+                            android:lines="1"
+                            android:text="ver"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12sdp"
+                            android:textStyle="normal" />
+                    </RelativeLayout>
                 </RelativeLayout>
-            </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/charge_ctl_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_2sdp"
+                android:background="@drawable/core_ctrl_container_bg"
+                android:paddingBottom="@dimen/_4sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/power_suspend_layout">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_marginTop="@dimen/_1sdp"
+                    android:fontFamily="@font/nunito_sans_semibold"
+                    android:letterSpacing="0.02"
+                    android:paddingBottom="@dimen/_2sdp"
+                    android:text="Charge Control"
+                    android:textAllCaps="false"
+                    android:textColor="@color/secondary_colour"
+                    android:textSize="@dimen/_13sdp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <RelativeLayout
+                    android:layout_width="@dimen/_270sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_2sdp"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:layout_marginTop="@dimen/_24sdp"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    app:layout_goneMarginBottom="@dimen/_2sdp"
+                    android:background="@drawable/inner_container_bg"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" >
+
+                    <RelativeLayout
+                        android:id="@+id/chrg_enable_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_45sdp"
+                        android:background="@drawable/rounded_btn">
+
+                        <TextView
+                            android:id="@+id/primaryDesc_chrg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_12sdp"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:background="@drawable/rounded_btn"
+                            android:fontFamily="@font/inter"
+                            android:text="Charge Throttle Enable"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_11sdp"
+                            android:textStyle="bold" />
+
+                        <Switch
+                            android:id="@+id/switch_chrg_ctl"
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_marginStart="@dimen/_205sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:theme="@style/Theme.MyApplication3.Switch"
+                            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/charge_thrt_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_45sdp"
+                        android:layout_marginTop="@dimen/_45sdp"
+                        android:background="@drawable/rounded_btn">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_marginTop="@dimen/_1sdp"
+                            android:background="@android:color/darker_gray" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_12sdp"
+                            android:layout_marginTop="@dimen/_16sdp"
+                            android:fontFamily="@font/inter"
+                            android:text="Normal Charge Threshold"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_11sdp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/charge_throt"
+                            android:layout_width="@dimen/_90sdp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_180sdp"
+                            android:layout_marginTop="@dimen/_16sdp"
+                            android:fontFamily="@font/inter"
+                            android:lines="1"
+                            android:text="Degrees"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12sdp"
+                            android:textStyle="normal" />
+
+
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/fastcharge_thrt_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_45sdp"
+                        android:layout_marginTop="@dimen/_95sdp"
+                        android:background="@drawable/rounded_btn">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_marginTop="@dimen/_1sdp"
+                            android:background="@android:color/darker_gray" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_12sdp"
+                            android:layout_marginTop="@dimen/_16sdp"
+                            android:fontFamily="@font/inter"
+                            android:text="Fast Charge Threshold"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_11sdp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/fastcharge_throt"
+                            android:layout_width="@dimen/_90sdp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_180sdp"
+                            android:layout_marginTop="@dimen/_16sdp"
+                            android:fontFamily="@font/inter"
+                            android:lines="1"
+                            android:text="Degrees"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12sdp"
+                            android:textStyle="normal" />
+
+
+                    </RelativeLayout>
+                </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/power_lmt_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_2sdp"
+                android:background="@drawable/core_ctrl_container_bg"
+                android:paddingBottom="@dimen/_4sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/charge_ctl_layout">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_marginTop="@dimen/_1sdp"
+                    android:fontFamily="@font/nunito_sans_semibold"
+                    android:letterSpacing="0.02"
+                    android:paddingBottom="@dimen/_2sdp"
+                    android:text="Power Limiter"
+                    android:textAllCaps="false"
+                    android:textColor="@color/secondary_colour"
+                    android:textSize="@dimen/_13sdp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <RelativeLayout
+                    android:layout_width="@dimen/_270sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_2sdp"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:layout_marginTop="@dimen/_24sdp"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    app:layout_goneMarginBottom="@dimen/_2sdp"
+                    android:background="@drawable/inner_container_bg"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" >
+
+                    <RelativeLayout
+                        android:id="@+id/pwrlmt_enable_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_45sdp"
+                        android:background="@drawable/rounded_btn">
+
+                        <TextView
+                            android:id="@+id/primaryDesc_pwrlmt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_12sdp"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:background="@drawable/rounded_btn"
+                            android:fontFamily="@font/inter"
+                            android:text="Power Limiter Enable"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_11sdp"
+                            android:textStyle="bold" />
+
+                        <Switch
+                            android:id="@+id/switch_power_lmt"
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_marginStart="@dimen/_205sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:theme="@style/Theme.MyApplication3.Switch"
+                            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/pwr_prof_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_45sdp"
+                        android:layout_marginTop="@dimen/_45sdp"
+                        android:background="@drawable/rounded_btn">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_marginTop="@dimen/_1sdp"
+                            android:background="@android:color/darker_gray" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_12sdp"
+                            android:layout_marginTop="@dimen/_16sdp"
+                            android:fontFamily="@font/inter"
+                            android:text="Power Profile"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_11sdp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/pwr_prof"
+                            android:layout_width="@dimen/_90sdp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_180sdp"
+                            android:layout_marginTop="@dimen/_16sdp"
+                            android:fontFamily="@font/inter"
+                            android:lines="1"
+                            android:text="Profile"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12sdp"
+                            android:textStyle="normal" />
+
+
+                    </RelativeLayout>
+                </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

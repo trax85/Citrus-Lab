@@ -33,15 +33,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
-    LinearLayout bottomSheetLayout;
+    private LinearLayout bottomSheetLayout;
     private LinearLayout linearLayout;
-    private BottomSheetBehavior bottomSheetBehavior;
+    private BottomSheetBehavior<View> bottomSheetBehavior;
     private TextView textViewDash, textViewDisp, textViewCpu, textViewGpu, textViewMem,
-            textViewProfile,textViewMisc;
+            textViewPower, textViewProfile,textViewMisc;
     private ImageView imageViewDash, imageViewDisp, imageViewCpu, imageViewGpu ,imageViewMem,
-            imageViewProfile, imageViewMisc, imageViewAbout;
+            imageViewPower, imageViewProfile, imageViewMisc, imageViewAbout;
     private LinearLayout homeLayout, displayLayout ,cpuLayout, memLayout, gpuLayout,
-            profileLayout, miscLayout;
     private TextView[] textViewArr;
     private ImageView[] imageViewArr;
     private LinearLayout[] linearLayoutArr;
@@ -110,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
         textViewCpu = findViewById(R.id.textViewCpu);
         textViewGpu = findViewById(R.id.textViewGpu);
         textViewMem = findViewById(R.id.textViewMem);
+        textViewPower = findViewById(R.id.textViewPow);
         textViewProfile = findViewById(R.id.textViewProfile);
         textViewMisc = findViewById(R.id.textViewMisc);
 
@@ -118,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
         imageViewCpu = findViewById(R.id.imageViewCpu);
         imageViewGpu = findViewById(R.id.imageViewGpu);
         imageViewMem = findViewById(R.id.imageViewMem);
+        imageViewPower = findViewById(R.id.imageViewPow);
         imageViewProfile = findViewById(R.id.imageViewProfile);
         imageViewMisc = findViewById(R.id.imageViewMisc);
         imageViewAbout = findViewById(R.id.about);
@@ -127,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
         cpuLayout = findViewById(R.id.layoutCpu);
         gpuLayout = findViewById(R.id.layoutGpu);
         memLayout = findViewById(R.id.layoutMem);
+        powerLayout = findViewById(R.id.layoutPower);
         profileLayout = findViewById(R.id.layoutProfile);
         miscLayout = findViewById(R.id.layoutMisc);
 
@@ -139,11 +141,11 @@ public class MainActivity extends AppCompatActivity {
     private void initViewList(){
         Log.d(TAG,"List initialised");
         textViewArr = new TextView[]{textViewDash, textViewDisp, textViewCpu, textViewGpu,
-                textViewMem, textViewProfile, textViewMisc};
+                textViewMem, textViewPower, textViewProfile, textViewMisc};
         imageViewArr = new ImageView[]{imageViewDash, imageViewDisp, imageViewCpu, imageViewGpu,
-                imageViewMem, imageViewProfile, imageViewMisc};
+                imageViewMem, imageViewPower, imageViewProfile, imageViewMisc};
         linearLayoutArr = new LinearLayout[]{homeLayout, displayLayout, cpuLayout, gpuLayout,
-                 memLayout, profileLayout, miscLayout};
+                 memLayout, powerLayout, profileLayout, miscLayout};
     }
 
     private void setUi(int position){

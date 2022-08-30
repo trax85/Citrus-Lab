@@ -202,6 +202,40 @@
             android:textStyle="bold" />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutPower"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_bottompage"
+        android:backgroundTint="@color/bottom_page"
+        android:layout_marginTop="4dp"
+        android:paddingStart="@dimen/_20sdp"
+        android:paddingTop="@dimen/_12sdp"
+        android:paddingBottom="@dimen/_12sdp" >
+
+        <ImageView
+            android:id="@+id/imageViewPow"
+            android:layout_width="@dimen/_23sdp"
+            android:layout_height="@dimen/_23sdp"
+            android:src="@drawable/ic_power_thermal" />
+
+        <TextView
+            android:id="@+id/textViewPow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:fontFamily="@font/inter"
+            android:text="POWER &amp; THERMALS"
+            android:letterSpacing="0.3"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_11sdp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/layoutProfile"
         android:orientation="horizontal"

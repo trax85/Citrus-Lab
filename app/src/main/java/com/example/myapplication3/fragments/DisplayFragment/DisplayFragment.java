@@ -6,42 +6,36 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.myapplication3.R;
 import com.example.myapplication3.tools.UtilException;
 import com.example.myapplication3.tools.Utils;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 public class DisplayFragment extends Fragment {
     private static final String TAG = "HomeActivity";
-    String[] DCDPath = {"/sys/kernel/oppo_display/dimlayer_bl_en"};
-    String[] HBMPath = {"/sys/kernel/oppo_display/hbm"};
-    String[] D2W = {"/proc/sys/kernel/slide_boost_enabled",
-            "/proc/touchpanel/double_tap_enable"};
-    String[] TB = {"/proc/touchpanel/sensitive_level",
-            "/proc/touchpanel/smooth_level"};
-    String[] PrimaryDesc = {"DC Dimming","High Brightness Mode","Double-Tap to Wake", "Touch Boost"};
-    String[] SecondaryDesc = {"Stops screen flicker", "Pushes Display to max brightness level",
-            "Double tap on screen wakes up device", "Increases Touch sensitivity"};
+    Button ref60HzBut, ref120HzBut, refAutoBut;
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
+    Switch dcSwitch, hbmSwitch, d2wSwitch, touchBoostSwitch;
 
-    Button button1, button2, button3;
-    ArrayList<DisplayDataModel> displayArrayLists;
+    private String[] stateAction;
+    private String[] curState;
+    Switch[] switches;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_display, container, false);
     }
 
@@ -49,43 +43,57 @@ public class DisplayFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        button1 = view.findViewById(R.id.buttonrerrate1);
-        button2 = view.findViewById(R.id.buttonrerrate2);
-        button3 = view.findViewById(R.id.buttonrerrate3);
-        try {
-            Utils.execCmdRead(0,"ls /sys/kernel/oppo_display");
-            initList();
-            initRecyclerView(view);
-        } catch (UtilException e) {
-            Log.d(TAG, "Oppo feature set not present");
+        AsyncInitTask initTask = new AsyncInitTask(view);
+        initTask.start();
+    }
+
+    private void initViews(View view){
+        ref60HzBut = view.findViewById(R.id.buttonrerrate1);
+        ref120HzBut = view.findViewById(R.id.buttonrerrate2);
+        refAutoBut = view.findViewById(R.id.buttonrerrate3);
+        dcSwitch = view.findViewById(R.id.dcSwitch);
+        hbmSwitch = view.findViewById(R.id.hbmSwitch);
+        d2wSwitch = view.findViewById(R.id.d2wSwitch);
+        touchBoostSwitch = view.findViewById(R.id.touchSwitch);
+        switches = new Switch[]{dcSwitch, hbmSwitch, d2wSwitch, touchBoostSwitch};
+    }
+
+    private void initData() {
+        int count = 0;
+        String[] strings;
+        for(int i = 0;; i++){
+            strings = Display.PATH.getDisplayPaths(i);
+            if(strings == null)
+                break;
+
+            for(String string : strings){
+                try {
+                    Log.d(TAG, "Init Data:" + count);
+                    curState[count++] = Utils.read(0, string);
+                } catch (UtilException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-        initListeners();
     }
 
-    private void initList(){
-        //Everything must be added in correct order/sequence
-        int[][] ActionSet = {{1},{1}, {1,1}, {5,1}};
-        List<String[]> FilePath = setList();
-        displayArrayLists = new ArrayList<>();
-        for(int i = 0; i < PrimaryDesc.length; i++){
-            DisplayDataModel displayList = new DisplayDataModel(PrimaryDesc[i], SecondaryDesc[i],
-                    FilePath.get(i), ActionSet[i]);
-            displayArrayLists.add(displayList);
+    private void setViews(){
+        int count = 0;
+        String[] strings;
+        for (int i = 0;; i++) {
+            strings = Display.PATH.getDisplayPaths(i);
+            if(strings == null)
+                break;
+            for(int j = 0; j < strings.length; j++){
+                Log.d(TAG,"setChecked:" + count + ":" + Objects.equals(curState[count], stateAction[count]));
+                switches[i].setChecked(Objects.equals(curState[count], stateAction[count]));
+                count++;
+            }
         }
     }
 
-    private List<String[]> setList(){
-
-        List<String[]> Filepath = new ArrayList<>();
-        Filepath.add(DCDPath);
-        Filepath.add(HBMPath);
-        Filepath.add(D2W);
-        Filepath.add(TB);
-        return Filepath;
-    }
-
-    private void initListeners(){
-        button1.setOnClickListener(v -> {
+    private void initListeners() {
+        ref60HzBut.setOnClickListener(v -> {
             Utils.execCmdWrite("settings put system peak_refresh_rate 120");
             Utils.execCmdWrite("settings put system min_refresh_rate 120");
             Toast.makeText(getActivity(),
@@ -93,31 +101,64 @@ public class DisplayFragment extends Fragment {
                     Toast.LENGTH_SHORT).show();
 
         });
-        button2.setOnClickListener(v -> {
+        ref120HzBut.setOnClickListener(v -> {
             Utils.execCmdWrite("settings put system peak_refresh_rate 60");
             Utils.execCmdWrite("settings put system min_refresh_rate 60");
             Toast.makeText(getActivity(),
                     "Set 60Hz",
                     Toast.LENGTH_SHORT).show();
         });
-        button3.setOnClickListener(v -> {
+        refAutoBut.setOnClickListener(v -> {
             Utils.execCmdWrite("settings put system peak_refresh_rate 120");
             Utils.execCmdWrite("settings put system min_refresh_rate 60");
             Toast.makeText(getActivity(),
                     "Set to Auto",
                     Toast.LENGTH_SHORT).show();
         });
+
+        int count = 0;
+        for (int i = 0;; i++) {
+            String[] strings = Display.PATH.getDisplayPaths(i);
+            if(strings == null)
+                break;
+
+            int finalCount = count;
+            switches[i].setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (isChecked) {
+                    for (int j = 0; j < strings.length; j++)
+                        Utils.write(stateAction[finalCount + j], strings[j]);
+                } else {
+                    for (String string : strings) Utils.write("0", string);
+                }
+            });
+            count++;
+        }
     }
 
-    private void initRecyclerView(View view){
-        RecyclerView recyclerView = view.findViewById(R.id.display_list);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setOrientation(RecyclerView.VERTICAL);
-        recyclerView. setOverScrollMode(View. OVER_SCROLL_NEVER);
-        recyclerView.setLayoutManager(layoutManager);
-        RVAdapter adapter = new RVAdapter(displayArrayLists);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+
+    class AsyncInitTask extends Thread {
+        final View view;
+        public AsyncInitTask(View view) {
+            this.view = view;
+        }
+
+        @Override
+        public void run() {
+            Handler handler = new Handler(Looper.getMainLooper());
+            stateAction = new String[]{"1","1","1","1","5","1"};
+            curState = new String[stateAction.length];
+            initViews(view);
+            initData();
+            try {
+                Utils.execCmdRead(0,"ls /sys/kernel/oppo_display");
+            } catch (UtilException e) {
+                Log.d(TAG, "Oppo feature set not present");
+                return;
+            }
+            handler.post(() -> {
+                setViews();
+                initListeners();
+            });
+        }
     }
 }

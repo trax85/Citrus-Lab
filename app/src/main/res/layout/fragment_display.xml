@@ -78,7 +78,7 @@
                 android:padding="@dimen/_5sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ic_core_ctl_info">
+                app:layout_constraintTop_toBottomOf="@+id/textView31">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -208,14 +208,176 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/display_list"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/displayLayout"
                     android:layout_width="@dimen/_270sdp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_22sdp"
+                    android:layout_marginTop="@dimen/_23sdp"
+                    android:paddingBottom="@dimen/_16sdp"
                     android:background="@drawable/inner_container_bg"
-                    android:choiceMode="multipleChoice"
-                    tools:listitem="@layout/display_list_items" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0">
+
+                    <TextView
+                        android:id="@+id/dcTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_13sdp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:text="DC Dimming"
+                        android:textColor="@color/item_text_colour"
+                        android:textSize="@dimen/_13sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/dcDesc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_14sdp"
+                        android:layout_marginTop="@dimen/_3sdp"
+                        android:fontFamily="sans-serif"
+                        android:text="Stops screen flicker"
+                        android:textColor="@color/content_desc"
+                        android:textSize="@dimen/_10sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/dcTitle" />
+
+                    <Switch
+                        android:id="@+id/dcSwitch"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginStart="@dimen/_210sdp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:theme="@style/Theme.MyApplication3.Switch"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                    <TextView
+                        android:id="@+id/hbmTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_13sdp"
+                        android:layout_marginTop="@dimen/_25sdp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:text="High Brightness Mode"
+                        android:textColor="@color/item_text_colour"
+                        android:textSize="@dimen/_13sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/dcDesc" />
+
+                    <TextView
+                        android:id="@+id/hbmDesc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_14sdp"
+                        android:layout_marginTop="@dimen/_3sdp"
+                        android:fontFamily="sans-serif"
+                        android:text="Pushes Display to max brightness level"
+                        android:textColor="@color/content_desc"
+                        android:textSize="@dimen/_10sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/hbmTitle" />
+
+                    <Switch
+                        android:id="@+id/hbmSwitch"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginStart="@dimen/_210sdp"
+                        android:layout_marginTop="@dimen/_25sdp"
+                        android:theme="@style/Theme.MyApplication3.Switch"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/dcDesc"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                    <TextView
+                        android:id="@+id/d2wTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_13sdp"
+                        android:layout_marginTop="@dimen/_25sdp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:text="Double Tap To Wake"
+                        android:textColor="@color/item_text_colour"
+                        android:textSize="@dimen/_13sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/hbmDesc" />
+
+                    <TextView
+                        android:id="@+id/d2wDesc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_14sdp"
+                        android:layout_marginTop="@dimen/_3sdp"
+                        android:fontFamily="sans-serif"
+                        android:text="Double tap on screen wakes up device"
+                        android:textColor="@color/content_desc"
+                        android:textSize="@dimen/_10sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/d2wTitle" />
+
+                    <Switch
+                        android:id="@+id/d2wSwitch"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginStart="@dimen/_210sdp"
+                        android:layout_marginTop="@dimen/_25sdp"
+                        android:theme="@style/Theme.MyApplication3.Switch"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/hbmDesc"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                    <TextView
+                        android:id="@+id/touchTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_13sdp"
+                        android:layout_marginTop="@dimen/_25sdp"
+                        android:fontFamily="@font/nunito_sans_semibold"
+                        android:text="Touch Boost"
+                        android:textColor="@color/item_text_colour"
+                        android:textSize="@dimen/_13sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/d2wDesc" />
+
+                    <TextView
+                        android:id="@+id/touchDesc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_13sdp"
+                        android:layout_marginTop="@dimen/_3sdp"
+                        android:fontFamily="sans-serif"
+                        android:text="Increases Touch sensitivity"
+                        android:textColor="@color/content_desc"
+                        android:textSize="@dimen/_10sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/touchTitle" />
+
+                    <Switch
+                        android:id="@+id/touchSwitch"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginStart="@dimen/_210sdp"
+                        android:layout_marginTop="@dimen/_25sdp"
+                        android:theme="@style/Theme.MyApplication3.Switch"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/d2wDesc"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
             </RelativeLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

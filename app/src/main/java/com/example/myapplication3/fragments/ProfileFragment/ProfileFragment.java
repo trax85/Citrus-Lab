@@ -72,7 +72,7 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initViews(view);
         cprofile = new CustomProfile(this);
-        cprofile.initCustomProfiles(getContext());
+        cprofile.initCustomProfiles(requireContext());
         setListeners();
     }
 
@@ -112,17 +112,17 @@ public class ProfileFragment extends Fragment {
 
     void setListeners(){
         power_button.setOnClickListener(v -> {
-            String out = readTextFile(getContext(), R.raw.power);
+            String out = readTextFile(requireContext(), R.raw.power);
             Toast.makeText(getContext(), "Applying Power Profile...",Toast.LENGTH_SHORT).show();
             Utils.execCmdWrite(out);
         });
         balance_button.setOnClickListener(v -> {
-            String out = readTextFile(getContext(), R.raw.balance);
+            String out = readTextFile(requireContext(), R.raw.balance);
             Toast.makeText(getContext(), "Applying Balance Profile...",Toast.LENGTH_SHORT).show();
             Utils.execCmdWrite(out);
         });
         perf_button.setOnClickListener(v -> {
-            String out = readTextFile(getContext(), R.raw.performance);
+            String out = readTextFile(requireContext(), R.raw.performance);
             Toast.makeText(getContext(), "Applying Performance Profile...",Toast.LENGTH_SHORT).show();
             Utils.execCmdWrite(out);
         });

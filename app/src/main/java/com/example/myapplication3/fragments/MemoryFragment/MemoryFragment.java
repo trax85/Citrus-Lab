@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,15 +45,15 @@ public class MemoryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initViews(view);
-        setOnClickListners();
-        zramObject = new ZRam(this);
+        AsyncInitTasks asyncTasks = new AsyncInitTasks(this, view);
+        asyncTasks.start();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        zramObject.ZramInit();
+        AsyncResumeTasks resumeTasks = new AsyncResumeTasks(this);
+        resumeTasks.start();
     }
 
     void initViews(View view){
@@ -84,7 +86,8 @@ public class MemoryFragment extends Fragment {
                 vmLayout5, vmLayout6};
     }
 
-    void setOnClickListners(){
+    void setOnClickListeners(){
+        Handler handler = new Handler(Looper.getMainLooper());
         for(int i = 0; i < relativeLayoutArr.length; i++){
             String out;
             try {
@@ -92,9 +95,13 @@ public class MemoryFragment extends Fragment {
             } catch (UtilException e) {
                 out = "read error";
             }
-            textViewArr[i].setText(out);
-            int finalI = i;
-            relativeLayoutArr[i].setOnClickListener(v -> createDialouge(finalI));
+            int finalI1 = i;
+            String finalOut = out;
+            handler.post(() -> {
+                textViewArr[finalI1].setText(finalOut);
+                relativeLayoutArr[finalI1].setOnClickListener(v -> createDialouge(finalI1));
+            });
+
         }
     }
 
@@ -114,5 +121,33 @@ public class MemoryFragment extends Fragment {
             textViewArr[i].setText(out);
         });builder.setNegativeButton("Cancle", (dialog, which) -> dialog.cancel());
         builder.show();
+    }
+
+    class AsyncInitTasks extends Thread {
+        private final MemoryFragment fragment;
+        private final View view;
+        public AsyncInitTasks(MemoryFragment fragment, View view) {
+            this.fragment = fragment;
+            this.view = view;
+        }
+
+        @Override
+        public void run() {
+            initViews(view);
+            zramObject = new ZRam(fragment);
+            setOnClickListeners();
+        }
+    }
+
+    static class AsyncResumeTasks extends Thread {
+        private final MemoryFragment fragment;
+        public AsyncResumeTasks(MemoryFragment fragment) {
+            this.fragment = fragment;
+        }
+
+        @Override
+        public void run() {
+            fragment.zramObject.ZramInit();
+        }
     }
 }

@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,15 +17,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication3.R;
+import com.example.myapplication3.fragments.CpuFragment.Cpu;
 import com.example.myapplication3.tools.UtilException;
 import com.example.myapplication3.tools.Utils;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 
 public class CoreControlFragment extends Fragment {
     final static String TAG = "CoreControlFrag";
-    String coreControlPath = "/sys/devices/system/cpu/";
     final String GREY = "#757575";
     final String PURPLE = "#FFBB86FC";
     final String GREY_DEEP = "#616060";
@@ -69,7 +69,7 @@ public class CoreControlFragment extends Fragment {
     public void init(){
         try {
             coresArr = Utils.readGetArr("find " +
-                    coreControlPath + " -name 'cpu*[0-9]' | cut -d'/' -f 6");
+                    Cpu.PATH.CORE_CONTROL + "/" + " -name 'cpu*[0-9]' | cut -d'/' -f 6");
             isCpusetinited = true;
         } catch (UtilException e) {
             return;
@@ -114,7 +114,7 @@ public class CoreControlFragment extends Fragment {
         textView1.setOnClickListener(v -> Toast.makeText(getActivity(),
                 "Cannot turn off Core 1", Toast.LENGTH_SHORT).show());
         imageViewBack.setOnClickListener(v -> {
-            getActivity().onBackPressed();
+            requireActivity().onBackPressed();
         });
     }
 
@@ -136,8 +136,8 @@ public class CoreControlFragment extends Fragment {
     public int getState(int pos){
         String out;
         try {
-            out = Utils.read(0,coreControlPath
-                    +coresArr[pos] + "/online");
+            out = Utils.read(0, Cpu.PATH.CORE_CONTROL + "/"
+                    + coresArr[pos] + "/online");
         } catch (UtilException e) {
             out = "0";
         }
@@ -153,10 +153,10 @@ public class CoreControlFragment extends Fragment {
     }
 
     public void setState(int pos, int state){
-        Utils.execCmdWrite("chmod 644 " + coreControlPath + coresArr[pos]+ "/online");
-        Utils.write(String.valueOf(state), coreControlPath
+        Utils.execCmdWrite("chmod 644 " + Cpu.PATH.CORE_CONTROL + "/" +coresArr[pos]+ "/online");
+        Utils.write(String.valueOf(state), Cpu.PATH.CORE_CONTROL
                 + coresArr[pos] + "/online");
-        Utils.execCmdWrite("chmod 444 " + coreControlPath + coresArr[pos]+ "/online");
+        Utils.execCmdWrite("chmod 444 " + Cpu.PATH.CORE_CONTROL + "/" + coresArr[pos]+ "/online");
         coreStateArr[pos] = state;
         setUI(pos, state);
     }

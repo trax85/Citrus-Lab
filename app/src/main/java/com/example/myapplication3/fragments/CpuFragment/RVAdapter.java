@@ -29,12 +29,14 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     private LinearLayout linearLayout1, linearLayout2, linearLayout3, linearLayout4;
     private final CpuFragment fragment;
     ExecutorService service = Executors.newSingleThreadExecutor();
+    Cpu.Params cpuParams;
 
     public RVAdapter(CpuFragment fragment){
         this.fragment = fragment;
     }
     public void setAdapter(List<CpuDataModel> list){
         this.list = list;
+        cpuParams = fragment.cpuParams;
     }
 
     @NonNull
@@ -86,17 +88,17 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                 linearLayout2.setOnClickListener(v -> showMinFreqDialog(curCluster));
                 linearLayout3.setOnClickListener(v -> showGovDialog(curCluster));
                 linearLayout4.setOnClickListener(v -> {
-                    if(!fragment.cpuOnline[curCluster])
+                    if(!cpuParams.getCpuOnline()[curCluster])
                         return;
                     TunableFragment fragment2 = new TunableFragment();
                     Bundle bundle = new Bundle();
                     String curGov = fragment.getGov(curCluster);
-                    bundle.putString("path", fragment.policyArr[curCluster]);
+                    bundle.putString("path", cpuParams.getPolicyArr()[curCluster]);
                     bundle.putString("gov", curGov);
                     fragment2.setArguments(bundle);
 
                     FragmentManager fragmentManager =
-                            fragment.getActivity().getSupportFragmentManager();
+                            fragment.requireActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.activity_main, fragment2, "tag");
                     fragmentTransaction.addToBackStack(null);
@@ -107,11 +109,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     }
 
     public void showMaxFreqDialog(int curCluster){
-        if(!fragment.cpuOnline[curCluster])
+        if(!cpuParams.getCpuOnline()[curCluster])
             return;
-        String[] AppFreqArr = fragment.AppendedFreqArr[curCluster]; //Mhz
-        String[] FreqArr = fragment.FreqArr[curCluster];  //Khz
-        String Freq = fragment.getFreq(curCluster, fragment.maxFreqPath);
+        String[] AppFreqArr = cpuParams.getAppendedFreqArr()[curCluster]; //Mhz
+        String[] FreqArr = cpuParams.getFreqArr()[curCluster];  //Khz
+        String Freq = fragment.getFreq(curCluster, Cpu.PATH.MAX_FREQ);
         int checkedItem = Arrays.asList(FreqArr).indexOf(Freq);
         MaterialAlertDialogBuilder builder =
                 new MaterialAlertDialogBuilder(fragment.requireActivity());
@@ -127,11 +129,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     }
 
     public void showMinFreqDialog(int curCluster){
-        if(!fragment.cpuOnline[curCluster])
+        if(!cpuParams.getCpuOnline()[curCluster])
             return;
-        String[] AppFreqArr = fragment.AppendedFreqArr[curCluster];    //Mhz
-        String[] FreqArr = fragment.FreqArr[curCluster];  //Khz
-        String Freq = fragment.getFreq(curCluster, fragment.minFreqPath);
+        String[] AppFreqArr = cpuParams.getAppendedFreqArr()[curCluster];    //Mhz
+        String[] FreqArr = cpuParams.getFreqArr()[curCluster];  //Khz
+        String Freq = fragment.getFreq(curCluster, Cpu.PATH.MIN_FREQ);
         int checkedItem = Arrays.asList(FreqArr).indexOf(Freq);
         MaterialAlertDialogBuilder builder =
                 new MaterialAlertDialogBuilder(fragment.requireActivity());
@@ -146,9 +148,9 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     }
 
     public void showGovDialog(int curCluster){
-        if(!fragment.cpuOnline[curCluster])
+        if(!cpuParams.getCpuOnline()[curCluster])
             return;
-        String[] aviGov = fragment.GovArr;
+        String[] aviGov = cpuParams.getGovArr();
         MaterialAlertDialogBuilder builder =
                 new MaterialAlertDialogBuilder(fragment.requireActivity());
         builder.setTitle("Choose Governor");

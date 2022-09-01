@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModelProvider;
 import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 
+import com.example.myapplication3.fragments.CpuFragment.Cpu;
 import com.example.myapplication3.tools.UtilException;
 import com.example.myapplication3.tools.Utils;
 
@@ -17,28 +17,32 @@ import java.util.concurrent.TimeUnit;
 
 public class CpuStats {
     private static final String TAG = "CPUstatsAct";
-    public static String policyPath = "/sys/devices/system/cpu/cpufreq";
-    String scalingAviFreqPath = "/scaling_available_frequencies";
-    String curScalingFreqPath = "/scaling_cur_freq";
     public String[] policyArr;
-    private HomeFragment homeFragment;
-    String[][] cpuFreqArr, appCpuFreqArr;
+    private final HomeFragment homeFragment;
+    private String[][] cpuFreqArr;
     int clusterCount;
     boolean[] cpuOnline;
-    AviFreqData viewModel;
+    private AviFreqData viewModel;
     ScheduledThreadPoolExecutor executor;
 
-    public void setCpuClass(HomeFragment fragment){
+    public CpuStats(HomeFragment fragment){
         homeFragment = fragment;
+    }
+
+    public void setViewModel(){
         viewModel = new ViewModelProvider(homeFragment.requireActivity()).get(AviFreqData.class);
-        init();
+        initCpuData();
+    }
+
+    public void startCpuStats(){
+        initCpuArr();
+        startThread();
     }
 
     /* Initialise the cluster count and policy paths for the respective clusters */
-    public void init(){
+    public void initCpuData(){
         try {
-            policyArr = Utils.readGetArr(" ls " + policyPath);
-            Log.d(TAG, "Getpolicy");
+            policyArr = Utils.readGetArr(" ls " + Cpu.PATH.POLICY_PATH);
             clusterCount = policyArr.length;
             //Add '/' so it can be used as a path variable
             for(int i = 0; i < policyArr.length; i++){
@@ -54,7 +58,8 @@ public class CpuStats {
         executor = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(3);
         for(int i = 0; i <= clusterCount; i++){
                 CpuStatsLooper statsLooper = new CpuStatsLooper(i);
-                executor.scheduleWithFixedDelay(statsLooper, 0, 1800, TimeUnit.MILLISECONDS);
+                executor.scheduleWithFixedDelay(statsLooper, 0, 1800,
+                        TimeUnit.MILLISECONDS);
         }
     }
 
@@ -65,13 +70,12 @@ public class CpuStats {
     public void initCpuArr()
     {
         cpuFreqArr = new String[clusterCount][];
-        appCpuFreqArr = new String[clusterCount][];
+        String[][] appCpuFreqArr = new String[clusterCount][];
         cpuOnline = new boolean[clusterCount];
         String[] str;
 
         for(int i = 0;i < clusterCount; i++) {
-            Log.d(TAG, "Getavifreq");
-            str = Utils.splitStrings(policyPath + policyArr[i] + scalingAviFreqPath,
+            str = Utils.splitStrings(Cpu.PATH.POLICY_PATH + policyArr[i] + Cpu.PATH.SCALING_AVI_FREQ,
                     "\\s+");
             /* Check if cluster is online if not we skip to avoid crashing app while
              * converting string to int. if we encounter any alphabet in the string then
@@ -129,10 +133,9 @@ public class CpuStats {
                     progress = 0;
                 }
                 else{
-                    curFreq = getFreq(policyPath + policyArr[cluster] + curScalingFreqPath); //convert to Mhz
+                    curFreq = getFreq(Cpu.PATH.POLICY_PATH + policyArr[cluster] + Cpu.PATH.CUR_SCALING_FREQ);
                     progress = getProgress(cpuFreqArr[cluster], curFreq + "000",
                             cpuFreqArr[cluster].length);
-                    //Log.d(TAG, "Progress:" + progress + " cpu:" + curFreq + " cpufreq:" + cpuFreqArr[i][0]);
                 }
                 handler.post(() -> {
                     homeFragment.cProg[cluster].setCurrentProgress(progress);

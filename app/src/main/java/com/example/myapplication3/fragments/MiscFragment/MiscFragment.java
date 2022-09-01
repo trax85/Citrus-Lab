@@ -1,5 +1,6 @@
 package com.example.myapplication3.fragments.MiscFragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -33,18 +34,21 @@ public class MiscFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_misc, container, false);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         ViewPager2 mViewPager;
         mViewPager = view.findViewById(R.id.viewPager2_misc);
-        mViewPager.setAdapter(new MiscVPAdapter(getActivity()));
+        MiscVPAdapter miscVPAdapter = new MiscVPAdapter(getActivity());
+        mViewPager.setAdapter(miscVPAdapter);
 
         TabLayout tabLayout = view.findViewById(R.id.tablayout);
         new TabLayoutMediator(tabLayout, mViewPager,
                 (tab, position) -> {
-                    tab.setText(((MiscVPAdapter)(mViewPager.getAdapter())).mFragmentNames[position]);
+                    tab.setText(((MiscVPAdapter)(Objects.requireNonNull(mViewPager.getAdapter()))).
+                            mFragmentNames[position]);
                 }
         ).attach();
     }

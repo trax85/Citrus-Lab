@@ -19,12 +19,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.myapplication3.R;
+import com.example.myapplication3.fragments.CpuFragment.Cpu;
 import com.example.myapplication3.fragments.CpuFragment.CpuFragment;
 import com.example.myapplication3.tools.UtilException;
 import com.example.myapplication3.tools.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class TunableFragment extends Fragment {
     final static String TAG = "TunableFrag";
@@ -50,13 +52,13 @@ public class TunableFragment extends Fragment {
 
         textView = view.findViewById(R.id.no_items);
         imageView = view.findViewById(R.id.ic_core_ctl_back);
-        imageView.setOnClickListener(v -> getActivity().onBackPressed());
+        imageView.setOnClickListener(v -> requireActivity().onBackPressed());
         Bundle bundle = getArguments();
         if (bundle != null) {
             policyPath = bundle.getString("path");
             curGov = "/" + bundle.getString("gov");
         }
-        policy = CpuFragment.policyPath;
+        policy = Cpu.PATH.POLICY_PATH;
         ItemList = new ArrayList<>();
         initItems();
         if(!dataSetReceived)

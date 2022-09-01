@@ -10,6 +10,8 @@ public class Memory {
         private static final String[] VMPaths = {"min_free_kbytes", "extra_free_kbytes", "dirty_ratio",
                 "dirty_background_ratio", "overcommit_ratio", "vfs_cache_pressure"};
         public static final String VM = "/proc/sys/vm/";
+        public static final String RESET = "/sys/devices/virtual/block/zram0/reset";
+        public static final String COMP_STREAMS = "/sys/block/zram0/max_comp_streams";
 
         public static String getVMPaths(int index) {
             if(index > VMPaths.length)

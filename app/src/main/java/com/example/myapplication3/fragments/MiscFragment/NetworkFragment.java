@@ -6,12 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,11 +22,8 @@ import java.util.Arrays;
 public class NetworkFragment extends Fragment {
     TextView textViewTcp, textViewWireGuard;
     RelativeLayout relativeLayoutTcp, relativeLayoutWg;
-    final static String Wireguard =  "/sys/module/wireguard/version";
-    final static String TCPAvail = "/proc/sys/net/ipv4/tcp_available_congestion_control";
-    final static String TCPCur = "/proc/sys/net/ipv4/tcp_congestion_control";
-    String[] availTcpAlgo;
-    String curTcp, getWireguardVer;
+    private Misc.Params miscParams;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,8 +39,10 @@ public class NetworkFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        miscParams = new Misc.Params().getInstance();
         initView(view);
-        initPath();
+        initData();
+        setViews();
     }
 
     void initView(View view){
@@ -56,34 +52,53 @@ public class NetworkFragment extends Fragment {
         relativeLayoutWg = view.findViewById(R.id.wireguard_layout);
     }
 
-    void initPath(){
-        String str;
-        try {
-            str = Utils.read(0,Wireguard);
-            textViewWireGuard.setText("v" + str);
-        } catch (UtilException e) {
-            textViewWireGuard.setText("Not present");
-        }
-        try {
-            str = Utils.read(0, TCPCur);
-            availTcpAlgo = Utils.splitStrings(TCPAvail, "\\s+");
-        } catch (UtilException e) {
-            textViewTcp.setText("Read error");
-            return;
-        }
-        textViewTcp.setText(str);
+    void initData(){
+        miscParams.setWireguardVer(getWireGuardVer());
+        miscParams.setCurTcp(getTcpCurrent());
+        miscParams.setAvailTcpAlgo(getAviTcpAlgo());
+    }
+
+    void setViews(){
+        textViewWireGuard.setText(miscParams.getWireguardVer());
+        textViewTcp.setText(miscParams.getCurTcp());
         relativeLayoutTcp.setOnClickListener(v -> showDialog());
     }
 
+    public String getWireGuardVer(){
+        String str;
+        try {
+            str = Utils.read(0,Misc.PATH.WIREGUARD_VER);
+            str = "v" + str;
+        } catch (UtilException e) {
+            str = "Not present";
+        }
+        return str;
+    }
+
+    public String getTcpCurrent(){
+        String str;
+        try {
+            str = Utils.read(0, Misc.PATH.TCP_CUR);
+        } catch (UtilException e) {
+            str = "Read Error";
+        }
+        return str;
+    }
+
+    public String[] getAviTcpAlgo(){
+        String[] str;
+        str = Utils.splitStrings(Misc.PATH.TCP_AVI, "\\s+");
+        return str;
+    }
     public void showDialog(){
         MaterialAlertDialogBuilder builder =
                 new MaterialAlertDialogBuilder(requireActivity());
         builder.setTitle("Choose Algorithm");
-        String curAlgo = curTcp;
-        int checkedItem = Arrays.asList(availTcpAlgo).indexOf(curAlgo);
-        builder.setSingleChoiceItems(availTcpAlgo, checkedItem, (dialog, which) -> {
-            textViewTcp.setText(availTcpAlgo[which]);
-            Utils.execCmdWrite("sysctl -w net.ipv4.tcp_congestion_control=" + availTcpAlgo[which]);
+        String[] aviAlgo = miscParams.getAviAlgo();
+        int checkedItem = Arrays.asList(aviAlgo).indexOf(textViewTcp.getText());
+        builder.setSingleChoiceItems(aviAlgo, checkedItem, (dialog, which) -> {
+            textViewTcp.setText(aviAlgo[which]);
+            Utils.execCmdWrite(Misc.Cmd.TCP_CHANGE + aviAlgo[which]);
             dialog.dismiss();
         });
         builder.show();

@@ -20,7 +20,7 @@ public class TempAdapter extends RecyclerView.Adapter<TempAdapter.ViewHolder> {
     public TempAdapter(String[][] values, TempFragment fragment) {
         tempValues = values;
         this.fragment = fragment;
-        numZones = fragment.numZones;
+        numZones = TempFragment.numZones;
     }
 
     @NonNull

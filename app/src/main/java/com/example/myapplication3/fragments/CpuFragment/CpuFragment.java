@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -35,20 +36,15 @@ import java.util.concurrent.Executors;
 public class CpuFragment extends Fragment {
     static final String TAG = "Cpustats";
     ArrayList<CpuDataModel> cpuArrayList;
-    public static String policyPath = "/sys/devices/system/cpu/cpufreq";
-    String maxFreqPath = "/scaling_max_freq";
-    String minFreqPath = "/scaling_min_freq";
-    String governorPath = "/scaling_governor";
-    String aviGovPath = "/scaling_available_governors";
     static String[] clusterNames = {"Little Cluster", "Big Cluster", "Prime Cluster"};
 
-    String[] policyArr, GovArr;
-    String[][] FreqArr, AppendedFreqArr;
-    boolean[] cpuOnline;
+
     RVAdapter adapter;
     RecyclerView recyclerView;
     ExecutorService service;
     LinearLayout linearLayout1, linearLayout2, linearLayout3;
+    NestedScrollView scrollView;
+    Cpu.Params cpuParams;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,43 +56,42 @@ public class CpuFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        linearLayout1 = view.findViewById(R.id.cpusets_launch);
-        linearLayout2 = view.findViewById(R.id.core_ctrl_launch);
-        linearLayout3 = view.findViewById(R.id.stune_launch);
-        service = Executors.newSingleThreadExecutor();
-        initRecyclerView(view);
-        initListeners();
+        AsyncInitTask initTask = new AsyncInitTask(view);
+        initTask.start();
     }
 
     @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onResume() {
         super.onResume();
-        init();
-        initList();
-        adapter.setAdapter(cpuArrayList);
-        recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        AsyncResumeTask task = new AsyncResumeTask();
+        task.start();
     }
 
     /* Initialise the cluster count and policy paths for the respective clusters */
-    public void init(){
+    public void initData(){
         AviFreqData viewModel = new ViewModelProvider(requireActivity()).get(AviFreqData.class);
-        FreqArr = viewModel.getCpuFreqArr();
-        AppendedFreqArr = viewModel.getAppCpuFreqArr();
-        policyArr = viewModel.getPolicyAttr();
-        cpuOnline = viewModel.getCpuOnline();
-        GovArr =  Utils.splitStrings(policyPath + policyArr[0] + aviGovPath, "\\s+");
+        cpuParams.setFreqArr(viewModel.getCpuFreqArr());
+        cpuParams.setAppendedFreqArr(viewModel.getAppCpuFreqArr());
+        cpuParams.setPolicyArr(viewModel.getPolicyAttr());
+        cpuParams.setCpuOnline(viewModel.getCpuOnline());
+        cpuParams.setGovArr(Utils.splitStrings(Cpu.PATH.POLICY_PATH +
+                cpuParams.getPolicyArr()[0] +
+                Cpu.PATH.AVI_SCALING_GOVERNOR, "\\s+"));
     }
 
     /* Initialise cpuArrayList and append 'Mhz' to cpuArrayList list with variables */
     private void initList(){
         cpuArrayList = new ArrayList<>();
+        String[] policyArr = cpuParams.getPolicyArr();
         for(int i = 0; i < policyArr.length; i++){
             try {
-                String maxFreq = Utils.read(0, policyPath + policyArr[i] + maxFreqPath);
-                String minFreq = Utils.read(0, policyPath + policyArr[i] + minFreqPath);
-                String govName = Utils.read(0, policyPath + policyArr[i] + governorPath);
+                String maxFreq = Utils.read(0, Cpu.PATH.POLICY_PATH + policyArr[i] +
+                        Cpu.PATH.MAX_FREQ);
+                String minFreq = Utils.read(0, Cpu.PATH.POLICY_PATH + policyArr[i] +
+                        Cpu.PATH.MIN_FREQ);
+                String govName = Utils.read(0, Cpu.PATH.POLICY_PATH + policyArr[i] +
+                        Cpu.PATH.SCALING_GOVERNOR);
                 CpuDataModel cpuList = new CpuDataModel(maxFreq, minFreq, clusterNames[i], govName);
                 cpuArrayList.add(cpuList);
             }catch (UtilException e){
@@ -107,29 +102,41 @@ public class CpuFragment extends Fragment {
 
     public void initListeners(){
         linearLayout1.setOnClickListener(v -> {
-            CpuSetFragment frag = new CpuSetFragment();
-            FragmentManager fragmentManager= getActivity().getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.activity_main,frag,"tag #2");
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
+            setCpuSetFragment();
         });
         linearLayout2.setOnClickListener(v -> {
-            CoreControlFragment frag = new CoreControlFragment();
-            FragmentManager fragmentManager= getActivity().getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.activity_main,frag,"tag #3");
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
+            setCoreControlFragment();
         });
         linearLayout3.setOnClickListener(v -> {
-            StuneFragment frag = new StuneFragment();
-            FragmentManager fragmentManager= getActivity().getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.activity_main,frag,"tag #3");
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
+            setStuneFragment();
         });
+    }
+
+    private void setCpuSetFragment(){
+        CpuSetFragment frag = new CpuSetFragment();
+        FragmentManager fragmentManager= requireActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.activity_main,frag,"tag #1");
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+    private void setCoreControlFragment(){
+        CoreControlFragment frag = new CoreControlFragment();
+        FragmentManager fragmentManager= requireActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.activity_main,frag,"tag #2");
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+    private void setStuneFragment(){
+        StuneFragment frag = new StuneFragment();
+        FragmentManager fragmentManager= requireActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.activity_main,frag,"tag #3");
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
     /* Initialise the recyclerView and layout manager */
@@ -147,7 +154,8 @@ public class CpuFragment extends Fragment {
 
     public String getFreq(int cluster, String Path){
         try {
-            return Utils.read(0,policyPath + policyArr[cluster] + Path);
+            return Utils.read(0, Cpu.PATH.POLICY_PATH +
+                    cpuParams.getPolicyArr()[cluster] + Path);
         } catch (UtilException e) {
             return "0";
         }
@@ -155,7 +163,8 @@ public class CpuFragment extends Fragment {
 
     public String getGov(int cluster){
         try {
-            return Utils.read(0,policyPath + policyArr[cluster] + governorPath);
+            return Utils.read(0, Cpu.PATH.POLICY_PATH + cpuParams.getPolicyArr()[cluster] +
+                    Cpu.PATH.SCALING_GOVERNOR);
         } catch (UtilException e) {
             return "Null";
         }
@@ -164,8 +173,8 @@ public class CpuFragment extends Fragment {
     public void setMaxFreq(CpuDataModel list, int curCluster){
         service.execute(() -> {
             int Freq = Integer.parseInt(list.MaxFreq);
-            Utils.write(String.valueOf(Freq), policyPath + policyArr[curCluster]
-                    + maxFreqPath);
+            Utils.write(String.valueOf(Freq), Cpu.PATH.POLICY_PATH +
+                    cpuParams.getPolicyArr()[curCluster] + Cpu.PATH.MAX_FREQ);
             updateData(curCluster);
         });
     }
@@ -173,16 +182,18 @@ public class CpuFragment extends Fragment {
     public void setMinFreq(CpuDataModel list, int curCluster){
         service.execute(() -> {
             int Freq = Integer.parseInt(list.MinFreq);
-            Utils.write(String.valueOf(Freq), policyPath + policyArr[curCluster]
-                    + minFreqPath);
+            Utils.write(String.valueOf(Freq), Cpu.PATH.POLICY_PATH +
+                    cpuParams.getPolicyArr()[curCluster]
+                    + Cpu.PATH.MIN_FREQ);
             updateData(curCluster);
         });
     }
 
     public void setGov(CpuDataModel list, int curCluster){
         service.execute(() -> {
-            Utils.write(list.Governor,
-                    policyPath + policyArr[curCluster] + governorPath);
+            Utils.write(list.Governor, Cpu.PATH.POLICY_PATH +
+                    cpuParams.getPolicyArr()[curCluster]
+                    + Cpu.PATH.SCALING_GOVERNOR);
             updateData(curCluster);
         });
     }
@@ -193,5 +204,39 @@ public class CpuFragment extends Fragment {
             recyclerView.setAdapter(adapter);
             adapter.notifyItemChanged(curCluster);
         });
+    }
+
+    class AsyncInitTask extends Thread {
+        final View view;
+        public AsyncInitTask(View view) {
+            this.view = view;
+        }
+
+        @Override
+        public void run() {
+            scrollView = view.findViewById(R.id.cpu_nestedScrollView);
+            linearLayout1 = view.findViewById(R.id.cpusets_launch);
+            linearLayout2 = view.findViewById(R.id.core_ctrl_launch);
+            linearLayout3 = view.findViewById(R.id.stune_launch);
+            service = Executors.newSingleThreadExecutor();
+            cpuParams = new Cpu.Params().getInstance();
+            initRecyclerView(view);
+            initListeners();
+        }
+    }
+
+    class AsyncResumeTask extends Thread {
+        @SuppressLint("NotifyDataSetChanged")
+        @Override
+        public void run() {
+            Handler handler = new Handler(Looper.getMainLooper());
+            initData();
+            initList();
+            handler.post(() -> {
+                adapter.setAdapter(cpuArrayList);
+                recyclerView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+            });
+        }
     }
 }

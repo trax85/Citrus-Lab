@@ -55,11 +55,14 @@ public class ZRam {
 
     void setOnClickListeners()
     {
-        fragment.zramLayout1.setOnClickListener(this::setZramState);
-        if(algoAvailable)
-            fragment.zramLayout2.setOnClickListener(v -> showDialogue());
-        fragment.zramLayout3.setOnClickListener(v -> setDiskSize());
-        fragment.zramLayout4.setOnClickListener(v -> setSwapiness());
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(() -> {
+            fragment.zramLayout1.setOnClickListener(v -> setZramState(v));
+            if(algoAvailable)
+                fragment.zramLayout2.setOnClickListener(v -> showDialogue());
+            fragment.zramLayout3.setOnClickListener(v -> setDiskSize());
+            fragment.zramLayout4.setOnClickListener(v -> setSwapiness());
+        });
     }
 
     public void showDialogue(){
@@ -97,7 +100,7 @@ public class ZRam {
             fragment.textView1.setText(finalSetText);
             Toast.makeText(v.getContext(), setText + " Zram...", Toast.LENGTH_SHORT).show();
         });
-        AsyncTask asyncTask = new AsyncTask(state, v, fragment);
+        ZramBgTask asyncTask = new ZramBgTask(state, v, fragment);
         asyncTask.start();
     }
 
@@ -115,8 +118,9 @@ public class ZRam {
 
         builder.setPositiveButton("OK", (dialog, which) -> {
             int size = Integer.parseInt(weightInput.getText().toString());
-            size = size * 1024 * 1024;
-            Utils.write(Integer.toString(size), Memory.PATH.DISKSIZE);
+            zRamParams.setZramDisk(String.valueOf(size));
+            ZramSetDisksizeTask setSize = new ZramSetDisksizeTask();
+            setSize.start();
             fragment.textView3.setText(weightInput.getText().toString() + "Mb");
         });builder.setNegativeButton("Cancle", (dialog, which) -> dialog.cancel());
         builder.show();
@@ -186,13 +190,13 @@ public class ZRam {
         }
     }
 
-    public static class AsyncTask extends Thread {
+    public static class ZramBgTask extends Thread {
         private final int state;
         Handler handle;
         View v;
         MemoryFragment fragment;
 
-        public AsyncTask(int state, View v, MemoryFragment fragment){
+        public ZramBgTask(int state, View v, MemoryFragment fragment){
             this.state = state;
             this.v = v;
             this.fragment = fragment;
@@ -212,11 +216,31 @@ public class ZRam {
                 str = "Disabled";
             }
             String finalStr = str;
+            fragment.zramObject.zRamParams.setZramState(str);
             handle.post(() -> {
                 fragment.textView1.setText(finalStr);
                 Toast.makeText(v.getContext(), finalStr, Toast.LENGTH_SHORT).show();
             });
             isRunning = false;
+        }
+    }
+
+    class ZramSetDisksizeTask extends Thread {
+        private int size;
+        public ZramSetDisksizeTask() {
+            size = Integer.parseInt(zRamParams.getZramDisk());
+            size = size * 1024 * 1024;
+        }
+
+        @Override
+        public void run() {
+            Utils.execCmdWrite("swapoff /dev/block/zram0 > /dev/null 2>&1");
+            Utils.write("1", Memory.PATH.RESET);
+            Utils.write("0", Memory.PATH.DISKSIZE);
+            Utils.write("8", Memory.PATH.COMP_STREAMS);
+            Utils.write(String.valueOf(size), Memory.PATH.DISKSIZE);
+            Utils.execCmdWrite("mkswap /dev/block/zram0 > /dev/null 2>&1");
+            Utils.execCmdWrite("swapon /dev/block/zram0 > /dev/null 2>&1");
         }
     }
 

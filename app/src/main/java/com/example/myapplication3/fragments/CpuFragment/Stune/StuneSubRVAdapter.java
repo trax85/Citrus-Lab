@@ -1,7 +1,6 @@
 package com.example.myapplication3.fragments.CpuFragment.Stune;
 
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication3.R;
+import com.example.myapplication3.fragments.CpuFragment.Cpu;
 import com.example.myapplication3.tools.UtilException;
 import com.example.myapplication3.tools.Utils;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -39,7 +39,7 @@ public class StuneSubRVAdapter extends RecyclerView.Adapter<StuneSubRVAdapter.Vi
         subItemValue = new String[subItemNames.length];
         for(int i = 0; i < subItemNames.length; i++){
             try {
-                subItemValue[i] = Utils.read(0, fragment.stunePath + "/" +
+                subItemValue[i] = Utils.read(0, Cpu.PATH.STUNE_PATH + "/" +
                         headerName + "/" + subItemNames[i]);
             } catch (UtilException e) {
                 subItemValue[i] = "read error";

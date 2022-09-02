@@ -31,9 +31,12 @@ public class Gpu {
         private String[] gpuFreqData;
         private String[] gpuFreqDataApp;
         private String[] gpuVoltData;
+        private String gpuCurFreq;
         private String gpuInfo;
-        private boolean dvfsState = false;
-        private boolean boostState = false;
+        private String dvfsState;
+        private boolean boostState;
+        private String[] gpuBoost;
+        private String[] gpuBoostFreq = new String[]{"0", "0", "0"};
 
         private Params params_instance = null;
 
@@ -47,7 +50,7 @@ public class Gpu {
             return gpuInfo;
         }
 
-        public boolean getDvfsState() {
+        public String getDvfsState() {
             return dvfsState;
         }
 
@@ -63,17 +66,29 @@ public class Gpu {
             return gpuFreqDataApp;
         }
 
+        public String getGpuCurFreq() {
+            return gpuCurFreq;
+        }
+
+        public String[] getGpuBoostFreq() {
+            return gpuBoostFreq;
+        }
+
         public String getGpuVoltData(int index) {
             if(index < gpuVoltData.length)
                 return gpuVoltData[index];
             return "0";
         }
 
+        public String[] getGpuBoost(){
+            return gpuBoost;
+        }
+
         public void setGpuInfo(String gpuInfo) {
             this.gpuInfo = gpuInfo;
         }
 
-        public void setDvfsState(boolean dvfsState) {
+        public void setDvfsState(String dvfsState) {
             this.dvfsState = dvfsState;
         }
 
@@ -87,6 +102,19 @@ public class Gpu {
 
         public void setGpuFreqDataApp(String[] gpuFreqDataApp) {
             this.gpuFreqDataApp = gpuFreqDataApp;
+        }
+
+        public void setGpuCurFreq(String gpuCurFreq) {
+            this.gpuCurFreq = gpuCurFreq;
+        }
+
+        public void setGpuBoost(String[] gpuBoost){
+            this.gpuBoost = gpuBoost;
+        }
+
+        public void setGpuBoostFreq(int index, String gpuBoostFreq) {
+            if(index < gpuBoostFreq.length())
+                this.gpuBoostFreq[index] = gpuBoostFreq;
         }
 
         public void setGpuVoltData(String[] gpuVoltData) {

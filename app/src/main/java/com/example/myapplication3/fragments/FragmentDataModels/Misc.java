@@ -13,7 +13,7 @@ public class Misc {
         final static String TCP_CHANGE = "sysctl -w net.ipv4.tcp_congestion_control=";
     }
 
-    static class Params{
+    public static class Params{
 
         private String[] availTcpAlgo;
         private String curTcp;

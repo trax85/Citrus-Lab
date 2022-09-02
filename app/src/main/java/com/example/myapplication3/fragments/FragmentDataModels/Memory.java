@@ -20,19 +20,20 @@ public class Memory {
         }
      }
 
-    public class Params {
+    public static class Params {
+        private String[] vmValues = new String[6];
         private String zramState;
         private String zramAlgo;
         private String zramSwap;
         private String zramDisk;
         private String[] zramAviAlgo;
+        private String zramCurAlgo;
 
-        private Params params_instance = null;
-
-        public Params getInstance(){
-            if(params_instance == null)
-                params_instance = new Params();
-            return params_instance;
+        public String getVmValues(int index) {
+            if(index < vmValues.length)
+                return vmValues[index];
+            else
+                return null;
         }
 
         public String getZramState() {
@@ -55,6 +56,15 @@ public class Memory {
             return zramAviAlgo;
         }
 
+        public String getZramCurAlgo() {
+            return zramCurAlgo;
+        }
+
+        public void setVmValues(int index, String value){
+            if(index < vmValues.length)
+                vmValues[index] = value;
+        }
+
         public void setZramState(String zramState) {
             this.zramState = zramState;
         }
@@ -73,6 +83,10 @@ public class Memory {
 
         public void setZramAviAlgo(String[] zramAviAlgo) {
             this.zramAviAlgo = zramAviAlgo;
+        }
+
+        public void setZramCurAlgo(String zramCurAlgo) {
+            this.zramCurAlgo = zramCurAlgo;
         }
     }
 }

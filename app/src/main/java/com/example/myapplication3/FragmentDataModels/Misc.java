@@ -1,4 +1,4 @@
-package com.example.myapplication3.fragments.MiscFragment;
+package com.example.myapplication3.fragments.FragmentDataModels;
 
 public class Misc {
 

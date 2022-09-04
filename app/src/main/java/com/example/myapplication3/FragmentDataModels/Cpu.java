@@ -1,4 +1,4 @@
-package com.example.myapplication3.fragments.CpuFragment;
+package com.example.myapplication3.fragments.FragmentDataModels;
 
 import android.util.Log;
 

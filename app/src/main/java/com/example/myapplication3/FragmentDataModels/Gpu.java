@@ -1,4 +1,4 @@
-package com.example.myapplication3.fragments.GpuFragment;
+package com.example.myapplication3.fragments.FragmentDataModels;
 
 public class Gpu {
     public static class PATH{
@@ -32,19 +32,11 @@ public class Gpu {
         private String[] gpuFreqDataApp;
         private String[] gpuVoltData;
         private String gpuCurFreq;
-        private String gpuInfo;
         private String dvfsState;
-        private boolean boostState;
         private String[] gpuBoost;
         private String[] gpuBoostFreq = new String[]{"0", "0", "0"};
-
-        private Params params_instance = null;
-
-        public Params getInstance(){
-            if(params_instance == null)
-                params_instance = new Params();
-            return params_instance;
-        }
+        private String gpuInfo;
+        private boolean boostState;
 
         public String getGpuInfo() {
             return gpuInfo;

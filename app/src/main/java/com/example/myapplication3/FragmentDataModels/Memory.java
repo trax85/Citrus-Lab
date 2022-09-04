@@ -1,4 +1,4 @@
-package com.example.myapplication3.fragments.MemoryFragment;
+package com.example.myapplication3.fragments.FragmentDataModels;
 
 public class Memory {
     final static class PATH {

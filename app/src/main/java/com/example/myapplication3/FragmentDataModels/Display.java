@@ -1,4 +1,4 @@
-package com.example.myapplication3.fragments.DisplayFragment;
+package com.example.myapplication3.fragments.FragmentDataModels;
 
 public class Display {
     static class PATH{

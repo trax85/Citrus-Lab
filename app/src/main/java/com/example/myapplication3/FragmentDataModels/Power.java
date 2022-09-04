@@ -1,4 +1,4 @@
-package com.example.myapplication3.fragments.PowerFragment;
+package com.example.myapplication3.fragments.FragmentDataModels;
 
 public class Power {
     static class PATH{

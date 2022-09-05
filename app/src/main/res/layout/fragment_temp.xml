@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/page_bg_colour"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".fragments.MiscFragment.TempFragment.TempFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -41,7 +41,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/zram"
+            android:id="@+id/temperature_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_2sdp"

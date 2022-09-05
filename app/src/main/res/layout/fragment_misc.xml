@@ -32,6 +32,7 @@
                 app:layout_collapseMode="pin"/>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tablayout"
             android:layout_width="match_parent"
@@ -44,7 +45,7 @@
             android:background="@color/page_bg_colour"
             tools:layout_editor_absoluteX="1dp"
             tools:layout_editor_absoluteY="6dp"/>
-    </com.google.android.material.appbar.AppBarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
         android:background="@color/page_bg_colour"

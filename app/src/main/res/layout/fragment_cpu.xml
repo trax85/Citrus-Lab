@@ -35,6 +35,8 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/cpu_nestedScrollView"
+        android:background="@color/page_bg_colour"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -75,7 +77,7 @@
                 android:layout_width="@dimen/_280sdp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_2sdp"
-                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_2sdp"
                 android:choiceMode="multipleChoice"
                 app:layout_constraintBottom_toTopOf="@+id/core_ctrl_launch"

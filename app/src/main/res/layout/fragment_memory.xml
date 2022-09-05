@@ -49,7 +49,7 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:fontFamily="@font/inter"
-                android:text="This page contains settings related to Virtual memory and zram. these settings control the memory management and have impact on device performance."
+                android:text="@string/memInfo"
                 android:textColor="#616161"
                 android:textSize="@dimen/_9sdp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -72,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_2sdp"
-                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginEnd="@dimen/_2sdp"
                 android:background="@drawable/core_ctrl_container_bg"
                 android:padding="@dimen/_4sdp"
@@ -113,8 +113,8 @@
                     <RelativeLayout
                         android:id="@+id/zram_state_layout"
                         android:layout_width="match_parent"
-                        android:background="@drawable/rounded_btn"
-                        android:layout_height="@dimen/_45sdp">
+                        android:layout_height="@dimen/_45sdp"
+                        android:background="@drawable/rounded_btn">
 
                         <TextView
                             android:id="@+id/primaryDesc"
@@ -122,18 +122,18 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_12sdp"
                             android:layout_marginTop="@dimen/_15sdp"
+                            android:background="@drawable/rounded_btn"
                             android:fontFamily="@font/inter"
                             android:text="zRAM enable"
-                            android:background="@drawable/rounded_btn"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_11sdp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/zram_enable"
-                            android:layout_width="@dimen/_60sdp"
+                            android:layout_width="@dimen/_68sdp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_200sdp"
+                            android:layout_marginStart="@dimen/_195sdp"
                             android:layout_marginTop="@dimen/_16sdp"
                             android:fontFamily="@font/inter"
                             android:text="Disabled"

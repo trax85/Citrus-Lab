@@ -82,7 +82,7 @@
                 android:layout_marginBottom="@dimen/_6sdp"
                 android:background="@drawable/core_ctrl_container_bg"
                 android:padding="@dimen/_4sdp"
-                app:layout_constraintBottom_toTopOf="@id/relativeLayoutDvfs"
+                app:layout_constraintBottom_toTopOf="@id/gpufreq_layout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView31"
@@ -159,7 +159,7 @@
                         android:id="@+id/gpu_voltage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginStart="@dimen/_8sdp"
                         android:text="uV"
                         android:textColor="#FF8F8E8E"
                         android:textSize="@dimen/_10sdp"
@@ -188,7 +188,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_8sdp"
-                        android:text="lod%"
+                        android:text="load%"
                         android:textColor="#FF8F8E8E"
                         android:textSize="@dimen/_10sdp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -230,6 +230,41 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <RelativeLayout
+                android:id="@+id/gpufreq_layout"
+                android:layout_width="@dimen/_280sdp"
+                android:layout_height="@dimen/_56sdp"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:layout_marginEnd="@dimen/_2sdp"
+                android:layout_marginBottom="@dimen/_6sdp"
+                android:background="@drawable/inner_container_bg"
+                app:layout_constraintBottom_toTopOf="@+id/relativeLayoutDvfs"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout1">
+
+                <TextView
+                    android:id="@+id/gpufreq"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_17sdp"
+                    android:fontFamily="@font/nunito_sans_semibold"
+                    android:text="Set Fixed GPU Frequency"
+                    android:textColor="@color/item_text_colour"
+                    android:textSize="@dimen/_12sdp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_marginStart="@dimen/_226sdp"
+                    android:layout_marginTop="@dimen/_18sdp"
+                    android:src="@drawable/ic_more" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/relativeLayoutDvfs"
                 android:layout_width="@dimen/_280sdp"
                 android:layout_height="@dimen/_58sdp"
@@ -238,10 +273,10 @@
                 android:layout_marginEnd="@dimen/_2sdp"
                 android:layout_marginBottom="@dimen/_6sdp"
                 android:background="@drawable/inner_container_bg"
-                app:layout_constraintBottom_toTopOf="@+id/gpufreq_layout"
+                app:layout_constraintBottom_toTopOf="@+id/relativeLayoutGpuBoost"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout1">
+                app:layout_constraintTop_toBottomOf="@+id/gpufreq_layout">
 
                 <TextView
                     android:id="@+id/primaryDesc"
@@ -270,45 +305,10 @@
                     android:id="@+id/switch_dvfs"
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_30sdp"
-                    android:layout_marginLeft="@dimen/_220sdp"
-                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginStart="@dimen/_220sdp"
+                    android:layout_marginTop="@dimen/_13sdp"
                     android:theme="@style/Theme.MyApplication3.Switch"
                     tools:ignore="UseSwitchCompatOrMaterialXml" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/gpufreq_layout"
-                android:layout_width="@dimen/_280sdp"
-                android:layout_height="@dimen/_56sdp"
-                android:layout_marginStart="@dimen/_2sdp"
-                android:layout_marginTop="@dimen/_6sdp"
-                android:layout_marginEnd="@dimen/_2sdp"
-                android:layout_marginBottom="@dimen/_6sdp"
-                android:background="@drawable/inner_container_bg"
-                app:layout_constraintBottom_toTopOf="@+id/relativeLayoutGpuBoost"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/relativeLayoutDvfs">
-
-                <TextView
-                    android:id="@+id/gpufreq"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_12sdp"
-                    android:layout_marginTop="@dimen/_17sdp"
-                    android:fontFamily="@font/nunito_sans_semibold"
-                    android:text="Set Fixed GPU Frequency"
-                    android:textColor="@color/item_text_colour"
-                    android:textSize="@dimen/_12sdp"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp"
-                    android:layout_marginStart="@dimen/_226sdp"
-                    android:layout_marginTop="@dimen/_18sdp"
-                    android:src="@drawable/ic_more" />
 
             </RelativeLayout>
 
@@ -324,7 +324,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/gpufreq_Boost_layout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/gpufreq_layout"
+                app:layout_constraintTop_toBottomOf="@+id/relativeLayoutDvfs"
                 tools:ignore="ExtraText">
 
                 <TextView
@@ -352,8 +352,8 @@
                     android:id="@+id/switch_gpuboost"
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_30sdp"
-                    android:layout_marginLeft="@dimen/_220sdp"
-                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginStart="@dimen/_220sdp"
+                    android:layout_marginTop="@dimen/_13sdp"
                     android:theme="@style/Theme.MyApplication3.Switch"
                     tools:ignore="UseSwitchCompatOrMaterialXml" />
 
@@ -373,9 +373,26 @@
                 android:background="@drawable/core_ctrl_container_bg"
                 app:layout_constraintTop_toBottomOf="@+id/relativeLayoutGpuBoost" >
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginTop="@dimen/_1sdp"
+                    android:fontFamily="@font/nunito_sans_semibold"
+                    android:letterSpacing="0.02"
+                    android:paddingBottom="@dimen/_2sdp"
+                    android:text="Boost Parameters"
+                    android:textAllCaps="false"
+                    android:textColor="@color/secondary_colour"
+                    android:textSize="@dimen/_13sdp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <RelativeLayout
                     android:layout_width="@dimen/_270sdp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_25sdp"
                     android:background="@drawable/inner_container_bg"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent">

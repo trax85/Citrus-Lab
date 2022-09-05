@@ -181,13 +181,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_22sdp"
-                    android:layout_marginTop="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_13sdp"
                     android:fontFamily="@font/inter"
                     android:letterSpacing="0.01"
                     android:text="Governor Tunables"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_10sdp"
                     android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp"
+                    android:layout_marginStart="@dimen/_98sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:src="@drawable/ic_more" />
+
             </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>

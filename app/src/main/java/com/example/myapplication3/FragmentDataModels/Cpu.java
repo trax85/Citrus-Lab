@@ -1,9 +1,9 @@
-package com.example.myapplication3.fragments.FragmentDataModels;
+package com.example.myapplication3.FragmentDataModels;
 
-import android.util.Log;
+import java.util.ArrayList;
 
 public class Cpu {
-    public static class PATH{
+    public static class PATH {
         public static String POLICY_PATH = "/sys/devices/system/cpu/cpufreq";
         public static String MAX_FREQ = "/scaling_max_freq";
         public static String MIN_FREQ = "/scaling_min_freq";
@@ -16,22 +16,14 @@ public class Cpu {
         public static String CUR_SCALING_FREQ = "/scaling_cur_freq";
     }
 
-    public static class Params{
+    public static class Params extends FragmentParameter{
         private String[] policyArr;
         private String[] GovArr;
         private String[][] FreqArr;
         private String[][] AppendedFreqArr;
         private boolean[] cpuOnline;
         private String[] stuneItems;
-
-        private Params params_instance = null;
-
-        public Params getInstance(){
-            if(params_instance == null){
-                params_instance = new Params();
-            }
-            return params_instance;
-        }
+        private ArrayList<String> activityLog;
 
         public String[] getPolicyArr() {
             return policyArr;
@@ -79,6 +71,18 @@ public class Cpu {
 
         public void setStuneItems(String[] stuneItems) {
             this.stuneItems = stuneItems;
+        }
+
+        @Override
+        public ArrayList<String> getActivityLog() {
+            if(activityLog == null)
+                activityLog = new ArrayList<>();
+            return activityLog;
+        }
+
+        @Override
+        public void setActivityLog(ArrayList<String> activityLog) {
+            this.activityLog = activityLog;
         }
     }
 }

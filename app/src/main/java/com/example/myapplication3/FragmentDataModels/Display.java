@@ -1,7 +1,9 @@
-package com.example.myapplication3.fragments.FragmentDataModels;
+package com.example.myapplication3.FragmentDataModels;
+
+import java.util.ArrayList;
 
 public class Display {
-    static class PATH{
+    public static class PATH {
         public static final String OPPO_DISPLAY = "/sys/kernel/oppo_display";
         private static final String DCDPath = "/sys/kernel/oppo_display/dimlayer_bl_en";
         private static final String HBMPath = "/sys/kernel/oppo_display/hbm";
@@ -17,7 +19,13 @@ public class Display {
             else return null;
         }
     }
-    public static class Params{
+
+    public class Cmd {
+        public final static String MAX_REFRESH  = "settings put system peak_refresh_rate";
+        public final static String MIN_REFRESH = "settings put system min_refresh_rate";
+    }
+
+    public static class Params extends FragmentParameter {
         private String DimLayer;
         private String hbm;
         private String slideBoost;
@@ -26,6 +34,7 @@ public class Display {
         private String smoothLevel;
         private String[] featureSet = new String[]{DimLayer, hbm, slideBoost, doubleTapToWake,
                 sensitiveLevel, smoothLevel};
+        private ArrayList<String> activityLog;
 
         public void initFeatureSet(String[] featureSet){
             this.featureSet = featureSet;
@@ -35,6 +44,16 @@ public class Display {
             if(index < featureSet.length){
                 featureSet[index] = state;
             }
+        }
+
+        public ArrayList<String> getActivityLog() {
+            if(activityLog == null)
+                activityLog = new ArrayList<>();
+            return activityLog;
+        }
+
+        public void setActivityLog(ArrayList<String> activityLog) {
+            this.activityLog = activityLog;
         }
 
         public String[] getFeatureSet() {

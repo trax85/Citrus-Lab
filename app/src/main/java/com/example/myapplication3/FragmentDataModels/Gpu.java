@@ -1,4 +1,6 @@
-package com.example.myapplication3.fragments.FragmentDataModels;
+package com.example.myapplication3.FragmentDataModels;
+
+import java.util.ArrayList;
 
 public class Gpu {
     public static class PATH{
@@ -27,7 +29,7 @@ public class Gpu {
         }
     }
 
-    public static class Params{
+    public static class Params extends FragmentParameter {
         private String[] gpuFreqData;
         private String[] gpuFreqDataApp;
         private String[] gpuVoltData;
@@ -37,6 +39,7 @@ public class Gpu {
         private String[] gpuBoostFreq = new String[]{"0", "0", "0"};
         private String gpuInfo;
         private boolean boostState;
+        private ArrayList<String> activityLog;
 
         public String getGpuInfo() {
             return gpuInfo;
@@ -111,6 +114,18 @@ public class Gpu {
 
         public void setGpuVoltData(String[] gpuVoltData) {
             this.gpuVoltData = gpuVoltData;
+        }
+
+        @Override
+        public ArrayList<String> getActivityLog() {
+            if(activityLog == null)
+                activityLog = new ArrayList<>();
+            return activityLog;
+        }
+
+        @Override
+        public void setActivityLog(ArrayList<String> activityLog) {
+            this.activityLog = activityLog;
         }
     }
 }

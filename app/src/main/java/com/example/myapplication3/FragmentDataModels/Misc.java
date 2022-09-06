@@ -1,4 +1,6 @@
-package com.example.myapplication3.fragments.FragmentDataModels;
+package com.example.myapplication3.FragmentDataModels;
+
+import java.util.ArrayList;
 
 public class Misc {
 
@@ -9,23 +11,16 @@ public class Misc {
         public final static String THERMAL_ZONE = "/sys/class/thermal/thermal_zone";
     }
 
-    static class Cmd{
-        final static String TCP_CHANGE = "sysctl -w net.ipv4.tcp_congestion_control=";
+    public static class Cmd{
+        public final static String TCP_CHANGE = "sysctl -w net.ipv4.tcp_congestion_control=";
     }
 
-    public static class Params{
+    public static class Params extends FragmentParameter{
 
         private String[] availTcpAlgo;
         private String curTcp;
         private String WireguardVer;
-
-        private Params params_instance = null;
-
-        public Params getInstance(){
-            if(params_instance == null)
-                params_instance = new Params();
-            return params_instance;
-        }
+        private ArrayList<String> activityLog;
 
         public String getCurTcp() {
             return curTcp;
@@ -49,6 +44,18 @@ public class Misc {
 
         public void setAvailTcpAlgo(String[] availTcpAlgo){
             this.availTcpAlgo = availTcpAlgo;
+        }
+
+        @Override
+        public ArrayList<String> getActivityLog() {
+            if(activityLog == null)
+                activityLog = new ArrayList<>();
+            return activityLog;
+        }
+
+        @Override
+        public void setActivityLog(ArrayList<String> activityLog) {
+            this.activityLog = activityLog;
         }
     }
 }

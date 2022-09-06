@@ -1,7 +1,9 @@
-package com.example.myapplication3.fragments.FragmentDataModels;
+package com.example.myapplication3.FragmentDataModels;
+
+import java.util.ArrayList;
 
 public class Memory {
-    final static class PATH {
+    public final static class PATH {
         public static final String DISKSIZE = "/sys/devices/virtual/block/zram0/disksize";
         public static final String DISK = "/dev/block/zram0";
         public static final String AVI_ALGO = "/sys/block/zram0/comp_algorithm";
@@ -20,7 +22,7 @@ public class Memory {
         }
      }
 
-    public static class Params {
+    public static class Params extends FragmentParameter{
         private String[] vmValues = new String[6];
         private String zramState;
         private String zramAlgo;
@@ -28,6 +30,7 @@ public class Memory {
         private String zramDisk;
         private String[] zramAviAlgo;
         private String zramCurAlgo;
+        private ArrayList<String> activityLog;
 
         public String getVmValues(int index) {
             if(index < vmValues.length)
@@ -87,6 +90,18 @@ public class Memory {
 
         public void setZramCurAlgo(String zramCurAlgo) {
             this.zramCurAlgo = zramCurAlgo;
+        }
+
+        @Override
+        public ArrayList<String> getActivityLog() {
+            if(activityLog == null)
+                activityLog = new ArrayList<>();
+            return activityLog;
+        }
+
+        @Override
+        public void setActivityLog(ArrayList<String> activityLog) {
+            this.activityLog = activityLog;
         }
     }
 }

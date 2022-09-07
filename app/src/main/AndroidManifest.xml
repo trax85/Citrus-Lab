@@ -13,16 +13,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication3.NoActionBar"
         tools:targetApi="31">
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:name=".fragments.PowerFragment.ChargeThrottleService" />
 
         <meta-data
             android:name="preloaded_fonts"

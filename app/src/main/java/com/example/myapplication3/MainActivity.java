@@ -80,11 +80,13 @@ public class MainActivity extends AppCompatActivity {
         bottomSheetBehavior.setPeekHeight(178);
 
         AviFreqData model = new ViewModelProvider(this).get(AviFreqData.class);
+        Intent intent = getIntent();
+        pageToSet = intent.getIntExtra("page", 0);
         closeSheetListener();
         setBottomPageListeners();
         setBottomSheetCallBack();
-        setUi(0);
-        pa.setCurrentItem(0, false);
+        setUi(pageToSet);
+        pa.setCurrentItem(pageToSet, false);
     }
 
     //This method collapses opened bottomsheet when touched outside the bottomsheet area

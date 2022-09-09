@@ -2,6 +2,7 @@ package com.example.myapplication3.tools;
 
 import android.util.Log;
 
+import com.example.myapplication3.FragmentDataModels.FragmentParameter;
 import com.topjohnwu.superuser.Shell;
 
 import java.util.List;
@@ -14,6 +15,11 @@ import java.util.List;
  */
 public class Utils {
     final static String TAG = "Utils";
+    private final FragmentParameter parameter;
+
+    public Utils(FragmentParameter parameter) {
+        this.parameter = parameter;
+    }
 
     public static List<String> readGetList(String... cmd) throws UtilException{
         Shell.Result result = Shell.cmd(cmd).exec();
@@ -48,12 +54,32 @@ public class Utils {
             return result.getOut().get(index);
     }
 
-    public static void write(String value, String path){
-        Shell.cmd("echo " + value + " > " + path).exec();
+    public void write(String value, String path){
+        String cmd = "echo " + value + " > ";
+        Shell.cmd( cmd + path).exec();
     }
 
-    public static void execCmdWrite(String... cmd){
+    public static void execCmdString(String... cmd){
         Shell.cmd(cmd).exec();
+    }
+
+    public void execWrite(String... cmd){
+        StringBuilder finalCmd = new StringBuilder();
+        for(String string : cmd)
+            finalCmd.append(string).append(" ");
+        finalCmd.append(";");
+        Shell.cmd(String.valueOf(finalCmd)).exec();
+        logger.logExecWriteActivity(cmd[0], String.valueOf(finalCmd));
+    }
+
+    public void chmodFile(String perm, String path){
+        String cmd = "chmod " + perm + " ";
+        Shell.cmd(cmd + path).exec();
+    }
+
+    public static void serviceWrite(String value, String path){
+        String cmd = "echo " + value + " > ";
+        Shell.cmd( cmd + path).exec();
     }
 
     public static String[] splitStrings(String cmd, String regex){
@@ -68,7 +94,7 @@ public class Utils {
     public static boolean isValaidIO(String out){
         if(out.contains("cat"))
             return false;
-        else return !out.contains("Permission");
+        else return !out.contains("Permission") && !out.contains("No such file or directory");
     }
 
     public static boolean isValidIndex(int index, List<String> list){

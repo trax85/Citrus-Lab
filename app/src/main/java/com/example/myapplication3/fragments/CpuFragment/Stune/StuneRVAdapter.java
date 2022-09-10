@@ -33,12 +33,14 @@ public class StuneRVAdapter extends RecyclerView.Adapter<StuneRVAdapter.ViewHold
     ExecutorService executor = Executors.newSingleThreadExecutor();
     Handler handler = new Handler(Looper.getMainLooper());
     final static String TAG = "RV Parent";
+    Utils utils;
 
     public StuneRVAdapter(String[] string, StuneFragment fragment, View view){
         stuneItems = string;
         this.fragment = fragment;
         this.view = view;
         recyclerViewArr = new RecyclerView[stuneItems.length];
+        utils = fragment.utils;
     }
     @NonNull
     @Override
@@ -92,7 +94,7 @@ public class StuneRVAdapter extends RecyclerView.Adapter<StuneRVAdapter.ViewHold
     @SuppressLint("NotifyDataSetChanged")
     public void setItem(StuneSubRVAdapter adapter, String itemName, String value){
         int pos = Arrays.asList(stuneItems).indexOf(adapter.headerName);
-        Utils.write(value, Cpu.PATH.STUNE_PATH
+        utils.write(value, Cpu.PATH.STUNE_PATH
                 + "/" + adapter.headerName + "/" + itemName);
         recyclerViewArr[pos].setAdapter(adapter);
         adapter.notifyDataSetChanged();

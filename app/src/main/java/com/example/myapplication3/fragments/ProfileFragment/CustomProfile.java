@@ -76,8 +76,8 @@ public class CustomProfile {
             editOpertaion(idx);
         });
         fragment.custProfArr[idx].setOnClickListener(v -> {
-            Utils.execCmdWrite(profArr[idx]);
-            Toast.makeText(fragment.getContext(), "Applying profile " + idx,
+            Utils.execCmdString(profArr[idx]);
+            Toast.makeText(fragment.getContext(), "Applying profile " + (1 + idx),
                     Toast.LENGTH_LONG).show();
         });
         fragment.editNameArr[idx].setOnClickListener(v -> renameOperation(idx));

@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -29,10 +30,10 @@ import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator;
 
 public class HomeFragment extends Fragment {
     private static final String TAG = "HomeActivity";
-    public CpuStats cpuStats;
-    BatteryStats batteryStats;
-    MemoryStats memoryStats;
-    SystemInfo systemInfo;
+    private CpuStats cpuStats;
+    private BatteryStats batteryStats;
+    private MemoryStats memoryStats;
+    private SystemInfo systemInfo;
     IntentFilter filter;
     ScheduledThreadPoolExecutor executor;
     CircularProgressIndicator cProgressIndicator1, cProgressIndicator2, cProgressIndicator3;
@@ -49,29 +50,34 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
+
     @SuppressLint("StaticFieldLeak")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        AsyncInitTask initTask = new AsyncInitTask(this, view);
+        initTask.start();
+        cpuStats = new CpuStats(this);
+        cpuStats.setViewModel();
+    }
 
-        cpuStats = new CpuStats();
-        batteryStats = new BatteryStats();;
-        memoryStats = new MemoryStats();
-        systemInfo = new SystemInfo();
-        filter = new IntentFilter();
 
-        initViews(view);
-        cProgressIndicator1.setMaxProgress(100);
-        cProgressIndicator2.setMaxProgress(100);
-        cProgressIndicator3.setMaxProgress(100);
-        //Register broad cast service
-        filter.addAction(Intent.ACTION_BATTERY_CHANGED);
-        getActivity().registerReceiver(batteryStats.mBroadcastReceiver, filter);
-        
-        initDeviceInfo();
-        cpuStats.setCpuClass(this);
-        batteryStats.setBattClass(this);
-        memoryStats.setMemClass(this);
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        //Kill all threads
+        executor.shutdown();
+        cpuStats.stopThread();
+        Log.d(TAG,"Paused fragment");
+        requireActivity().unregisterReceiver(batteryStats.mBroadcastReceiver);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        AsyncResumeTask resumeTask = new AsyncResumeTask(this);
+        resumeTask.start();
     }
 
     private void initViews(View view){
@@ -111,28 +117,50 @@ public class HomeFragment extends Fragment {
         textView16.setText("v" + BuildConfig.VERSION_NAME);
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        //Kill all threads
-        executor.shutdown();
-        cpuStats.stopThread();
-        Log.d(TAG,"Paused fragment");
-        getActivity().unregisterReceiver(batteryStats.mBroadcastReceiver);
+    class AsyncInitTask extends Thread {
+        private final HomeFragment fragment;
+        private final View view;
+
+        public AsyncInitTask(HomeFragment fragment, View view) {
+            this.fragment = fragment;
+            this.view = view;
+        }
+
+        @Override
+        public void run() {
+            batteryStats = new BatteryStats();
+            memoryStats = new MemoryStats();
+            systemInfo = new SystemInfo();
+            filter = new IntentFilter();
+
+            initViews(view);
+            initDeviceInfo();
+            cProgressIndicator1.setMaxProgress(100);
+            cProgressIndicator2.setMaxProgress(100);
+            cProgressIndicator3.setMaxProgress(100);
+            //Register broad cast service
+            filter.addAction(Intent.ACTION_BATTERY_CHANGED);
+            batteryStats.setBattClass(fragment);
+            memoryStats.setMemClass(fragment);
+        }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        //Init and Start threads
-        cpuStats.initCpuArr();
-        cpuStats.startThread();
-        executor = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(5);
-        //executor.scheduleWithFixedDelay(cpuStats,0,1000, TimeUnit.MILLISECONDS);
-        executor.scheduleWithFixedDelay(batteryStats,0,1300, TimeUnit.MILLISECONDS);
-        executor.scheduleWithFixedDelay(memoryStats,0,1700, TimeUnit.MILLISECONDS);
-        systemInfo.StartSysStats(this);
-        Log.d(TAG,"Resumed fragment");
-        getActivity().registerReceiver(batteryStats.mBroadcastReceiver, filter);
+    class AsyncResumeTask extends Thread {
+        private final HomeFragment fragment;
+
+        public AsyncResumeTask(HomeFragment fragment) {
+            this.fragment = fragment;
+        }
+
+        @Override
+        public void run() {
+            Log.d(TAG,"Resumed fragment");
+            cpuStats.startCpuStats();
+            executor = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(5);
+            executor.scheduleWithFixedDelay(batteryStats,0,1300, TimeUnit.MILLISECONDS);
+            executor.scheduleWithFixedDelay(memoryStats,0,1700, TimeUnit.MILLISECONDS);
+            systemInfo.StartSysStats(fragment);
+            requireActivity().registerReceiver(batteryStats.mBroadcastReceiver, filter);
+        }
     }
 }

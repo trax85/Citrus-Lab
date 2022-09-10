@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetLayout);
         bottomSheetBehavior.setPeekHeight(178);
 
-        AviFreqData model = new ViewModelProvider(this).get(AviFreqData.class);
+        FragmentPersistObject model = new ViewModelProvider(this).get(FragmentPersistObject.class);
         Intent intent = getIntent();
         pageToSet = intent.getIntExtra("page", 0);
         closeSheetListener();

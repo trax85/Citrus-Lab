@@ -114,17 +114,17 @@ public class ProfileFragment extends Fragment {
         power_button.setOnClickListener(v -> {
             String out = readTextFile(requireContext(), R.raw.power);
             Toast.makeText(getContext(), "Applying Power Profile...",Toast.LENGTH_SHORT).show();
-            Utils.execCmdWrite(out);
+            Utils.execCmdString(out);
         });
         balance_button.setOnClickListener(v -> {
             String out = readTextFile(requireContext(), R.raw.balance);
             Toast.makeText(getContext(), "Applying Balance Profile...",Toast.LENGTH_SHORT).show();
-            Utils.execCmdWrite(out);
+            Utils.execCmdString(out);
         });
         perf_button.setOnClickListener(v -> {
             String out = readTextFile(requireContext(), R.raw.performance);
             Toast.makeText(getContext(), "Applying Performance Profile...",Toast.LENGTH_SHORT).show();
-            Utils.execCmdWrite(out);
+            Utils.execCmdString(out);
         });
     }
 

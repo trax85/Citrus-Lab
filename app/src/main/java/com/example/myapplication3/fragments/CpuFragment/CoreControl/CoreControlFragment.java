@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -17,12 +18,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication3.R;
-import com.example.myapplication3.fragments.CpuFragment.Cpu;
+import com.example.myapplication3.FragmentDataModels.Cpu;
+import com.example.myapplication3.fragments.HomeFragment.FragmentPersistObject;
 import com.example.myapplication3.tools.UtilException;
 import com.example.myapplication3.tools.Utils;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 
 public class CoreControlFragment extends Fragment {
@@ -41,6 +42,8 @@ public class CoreControlFragment extends Fragment {
     ImageView[] imageViews;
     TextView[] textViews;
     boolean isCpusetinited = false;
+    private Cpu.Params cpuParams;
+    private Utils utils;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,6 +56,7 @@ public class CoreControlFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         coreStateArr = new int[8];
+        initViewModel();
         init();
         if(!isCpusetinited)
             return;
@@ -64,6 +68,13 @@ public class CoreControlFragment extends Fragment {
     public void onResume() {
         super.onResume();
         initState();
+    }
+
+    public void initViewModel(){
+        FragmentPersistObject viewModel = new ViewModelProvider(requireActivity())
+                .get(FragmentPersistObject.class);
+        cpuParams = viewModel.getCpuParams();
+        utils = new Utils(cpuParams);
     }
 
     public void init(){
@@ -153,10 +164,10 @@ public class CoreControlFragment extends Fragment {
     }
 
     public void setState(int pos, int state){
-        Utils.execCmdWrite("chmod 644 " + Cpu.PATH.CORE_CONTROL + "/" +coresArr[pos]+ "/online");
-        Utils.write(String.valueOf(state), Cpu.PATH.CORE_CONTROL
+        utils.chmodFile("644", Cpu.PATH.CORE_CONTROL + "/" +coresArr[pos]+ "/online");
+        utils.write(String.valueOf(state), Cpu.PATH.CORE_CONTROL
                 + coresArr[pos] + "/online");
-        Utils.execCmdWrite("chmod 444 " + Cpu.PATH.CORE_CONTROL + "/" + coresArr[pos]+ "/online");
+        utils.chmodFile("444", Cpu.PATH.CORE_CONTROL + "/" + coresArr[pos]+ "/online");
         coreStateArr[pos] = state;
         setUI(pos, state);
     }

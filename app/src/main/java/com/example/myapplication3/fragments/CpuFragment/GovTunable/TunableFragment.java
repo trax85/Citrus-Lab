@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,14 +20,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.myapplication3.R;
-import com.example.myapplication3.fragments.CpuFragment.Cpu;
-import com.example.myapplication3.fragments.CpuFragment.CpuFragment;
+import com.example.myapplication3.FragmentDataModels.Cpu;
+import com.example.myapplication3.fragments.HomeFragment.FragmentPersistObject;
 import com.example.myapplication3.tools.UtilException;
 import com.example.myapplication3.tools.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class TunableFragment extends Fragment {
     final static String TAG = "TunableFrag";
@@ -38,6 +38,8 @@ public class TunableFragment extends Fragment {
     RecyclerView recyclerView;
     ImageView imageView;
     boolean dataSetReceived = true;
+    Cpu.Params cpuParams;
+    Utils utils;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,9 +52,8 @@ public class TunableFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        textView = view.findViewById(R.id.no_items);
-        imageView = view.findViewById(R.id.ic_core_ctl_back);
-        imageView.setOnClickListener(v -> requireActivity().onBackPressed());
+        initViewModel();
+        initViews(view);
         Bundle bundle = getArguments();
         if (bundle != null) {
             policyPath = bundle.getString("path");
@@ -61,11 +62,24 @@ public class TunableFragment extends Fragment {
         policy = Cpu.PATH.POLICY_PATH;
         ItemList = new ArrayList<>();
         initItems();
-        if(!dataSetReceived)
-            return;
-        textView.setVisibility(View.INVISIBLE);
-        initItemList();
-        initTunableRVAdapter(view);
+        if(dataSetReceived){
+            textView.setVisibility(View.INVISIBLE);
+            initItemList();
+            initTunableRVAdapter(view);
+        }
+    }
+
+    public void initViewModel(){
+        FragmentPersistObject viewModel = new ViewModelProvider(requireActivity())
+                .get(FragmentPersistObject.class);
+        cpuParams = viewModel.getCpuParams();
+        utils = new Utils(cpuParams);
+    }
+
+    public void initViews(View view){
+        textView = view.findViewById(R.id.no_items);
+        imageView = view.findViewById(R.id.ic_core_ctl_back);
+        imageView.setOnClickListener(v -> requireActivity().onBackPressed());
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -110,7 +124,7 @@ public class TunableFragment extends Fragment {
 
     public void setItemVal(TunableDataModel list, int index){
         Log.d(TAG, "Set gov value");
-        Utils.write(list.tunableAttr,policy +policyPath + curGov
+        utils.write(list.tunableAttr,policy + policyPath + curGov
                 + "/" + list.tunableName);
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(() -> {

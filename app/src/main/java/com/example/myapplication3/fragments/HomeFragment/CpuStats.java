@@ -6,7 +6,7 @@ import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.example.myapplication3.fragments.CpuFragment.Cpu;
+import com.example.myapplication3.FragmentDataModels.Cpu;
 import com.example.myapplication3.tools.UtilException;
 import com.example.myapplication3.tools.Utils;
 
@@ -22,15 +22,16 @@ public class CpuStats {
     private String[][] cpuFreqArr;
     int clusterCount;
     boolean[] cpuOnline;
-    private AviFreqData viewModel;
     ScheduledThreadPoolExecutor executor;
+    private Cpu.Params cpuParams;
 
     public CpuStats(HomeFragment fragment){
         homeFragment = fragment;
     }
 
     public void setViewModel(){
-        viewModel = new ViewModelProvider(homeFragment.requireActivity()).get(AviFreqData.class);
+        FragmentPersistObject viewModel = new ViewModelProvider(homeFragment.requireActivity()).get(FragmentPersistObject.class);
+        cpuParams = viewModel.getCpuParams();
         initCpuData();
     }
 
@@ -51,7 +52,7 @@ public class CpuStats {
         }catch (UtilException e){
             policyArr = null;
         }
-        viewModel.setPolicyAttr(policyArr);
+        cpuParams.setPolicyArr(policyArr);
     }
 
     public void startThread(){
@@ -93,9 +94,9 @@ public class CpuStats {
             appCpuFreqArr[i] = temp;
             cpuOnline[i] = true;
         }
-        viewModel.setCpuOnline(cpuOnline);
-        viewModel.setCpuFreqArr(cpuFreqArr);
-        viewModel.setAppCpuFreqArr(appCpuFreqArr);
+        cpuParams.setCpuOnline(cpuOnline);
+        cpuParams.setFreqArr(cpuFreqArr);
+        cpuParams.setAppendedFreqArr(appCpuFreqArr);
     }
 
     // ---------Set of helper functions-----------

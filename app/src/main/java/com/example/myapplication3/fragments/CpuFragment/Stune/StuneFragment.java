@@ -6,29 +6,30 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.myapplication3.R;
-import com.example.myapplication3.fragments.CpuFragment.Cpu;
+import com.example.myapplication3.FragmentDataModels.Cpu;
+import com.example.myapplication3.fragments.HomeFragment.FragmentPersistObject;
 import com.example.myapplication3.tools.UtilException;
 import com.example.myapplication3.tools.Utils;
 
-import java.util.Arrays;
-import java.util.Objects;
+public class
 
-public class StuneFragment extends Fragment {
+StuneFragment extends Fragment {
     ImageView imageView;
     StuneRVAdapter adapter;
     RecyclerView recyclerView;
     boolean stuneInited = true;
     Cpu.Params cpuParams;
+    Utils utils;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,7 +43,7 @@ public class StuneFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         imageView = view.findViewById(R.id.ic_core_ctl_back);
         imageView.setOnClickListener(v -> requireActivity().onBackPressed());
-        cpuParams = new Cpu.Params().getInstance();
+        initViewModel();
         initData();
         initRecyclerView(view);
     }
@@ -55,6 +56,13 @@ public class StuneFragment extends Fragment {
             return;
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+    }
+
+    private void initViewModel(){
+        FragmentPersistObject viewModel = new ViewModelProvider(requireActivity())
+                .get(FragmentPersistObject.class);
+        cpuParams = viewModel.getCpuParams();
+        utils = new Utils(cpuParams);
     }
 
     public void initData(){

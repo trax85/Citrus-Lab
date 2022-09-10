@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.myapplication3.FragmentDataModels.Memory;
 import com.example.myapplication3.tools.UtilException;
 import com.example.myapplication3.tools.Utils;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -21,11 +22,12 @@ public class ZRam {
     private static boolean algoAvailable = false;
     private static boolean isRunning = false;
     private final Memory.Params zRamParams;
+    Utils utils;
 
     public ZRam(MemoryFragment fragment){
         this.fragment = fragment;
-        Memory memory = new Memory();
-        zRamParams = memory.new Params().getInstance();
+        zRamParams = fragment.memoryParams;
+        utils = new Utils(zRamParams);
     }
 
     public void ZramInit(){
@@ -41,119 +43,14 @@ public class ZRam {
         getZramSwappiness();
     }
 
-    @SuppressLint("SetTextI18n")
-    void setTextViews()
-    {
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(() -> {
-            fragment.textView1.setText(zRamParams.getZramState());
-            fragment.textView2.setText(zRamParams.getZramAlgo());
-            fragment.textView3.setText(zRamParams.getZramDisk());
-            fragment.textView4.setText(zRamParams.getZramSwap());
-        });
-    }
-
-    void setOnClickListeners()
-    {
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(() -> {
-            fragment.zramLayout1.setOnClickListener(v -> setZramState(v));
-            if(algoAvailable)
-                fragment.zramLayout2.setOnClickListener(v -> showDialogue());
-            fragment.zramLayout3.setOnClickListener(v -> setDiskSize());
-            fragment.zramLayout4.setOnClickListener(v -> setSwapiness());
-        });
-    }
-
-    public void showDialogue(){
-        String str = fragment.textView2.getText().toString();
-        String[] aviAlgo = zRamParams.getZramAviAlgo();
-
-        int checkedItem = Arrays.asList(aviAlgo).indexOf(str);
-        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(fragment.requireActivity());
-        builder.setTitle("Choose Option");
-        builder.setSingleChoiceItems(aviAlgo, checkedItem, (dialog, which) -> {
-                Utils.write(aviAlgo[which], Memory.PATH.AVI_ALGO);
-                fragment.textView2.setText(aviAlgo[which]);
-                dialog.dismiss();
-        });
-        builder.show();
-    }
-
-    public void setZramState(View v)
-    {
-        Handler handler = new Handler(Looper.getMainLooper());
-        String setText;
-        int state = 0;
-
-        if(isRunning)
-            return;
-
-        if(getZramState() == 0){
-                setText = "Disabling";
-        } else {
-            setText = "Enabling";
-            state = 1;
-        }
-        String finalSetText = setText;
-        handler.post(() -> {
-            fragment.textView1.setText(finalSetText);
-            Toast.makeText(v.getContext(), setText + " Zram...", Toast.LENGTH_SHORT).show();
-        });
-        ZramBgTask asyncTask = new ZramBgTask(state, v, fragment);
-        asyncTask.start();
-    }
-
-    @SuppressLint("SetTextI18n")
-    public void setDiskSize()
-    {
-        MaterialAlertDialogBuilder builder = new
-                MaterialAlertDialogBuilder(fragment.requireActivity());
-        final EditText weightInput = new EditText(fragment.getActivity());
-
-        builder.setTitle("Set swap size");
-        weightInput.setInputType(InputType.TYPE_CLASS_TEXT);
-        weightInput.setHint(fragment.textView3.getText().toString());
-        builder.setView(weightInput);
-
-        builder.setPositiveButton("OK", (dialog, which) -> {
-            int size = Integer.parseInt(weightInput.getText().toString());
-            zRamParams.setZramDisk(String.valueOf(size));
-            ZramSetDisksizeTask setSize = new ZramSetDisksizeTask();
-            setSize.start();
-            fragment.textView3.setText(weightInput.getText().toString() + "Mb");
-        });builder.setNegativeButton("Cancle", (dialog, which) -> dialog.cancel());
-        builder.show();
-    }
-
-    @SuppressLint("SetTextI18n")
-    public void setSwapiness()
-    {
-        MaterialAlertDialogBuilder builder = new
-                MaterialAlertDialogBuilder(fragment.requireActivity());
-        final EditText weightInput = new EditText(fragment.getActivity());
-
-        builder.setTitle("Set swappiness");
-        weightInput.setInputType(InputType.TYPE_CLASS_TEXT);
-        weightInput.setHint(
-                fragment.textView4.getText().toString().replace("%", ""));
-        builder.setView(weightInput);
-
-        builder.setPositiveButton("OK", (dialog, which) -> {
-            Utils.write(weightInput.getText().toString(), Memory.PATH.SWAPPINESS);
-            fragment.textView4.setText(weightInput.getText().toString() + "%");
-        });builder.setNegativeButton("Cancle", (dialog, which) -> dialog.cancel());
-        builder.show();
-    }
-
     public int getZramState(){
         try {
             String out = Utils.read(1, Memory.PATH.SWAP);
             if (out.contains(Memory.PATH.DISK) || out.contains(Memory.PATH.DISK.substring(4,15)))
-                zRamParams.setZramState("Enabled");
+                zRamParams.setZramState("swapon");
         } catch (UtilException e) {
             Log.d(TAG, ":"+ e);
-            zRamParams.setZramState("Disabled");
+            zRamParams.setZramState("swapoff");
             return 1;
         }
         return 0;
@@ -190,6 +87,116 @@ public class ZRam {
         }
     }
 
+    @SuppressLint("SetTextI18n")
+    void setTextViews()
+    {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(() -> {
+            if(zRamParams.getZramState().contains("swapoff"))
+                fragment.textView1.setText("Disabled");
+            else
+                fragment.textView1.setText("Enabled");
+            fragment.textView2.setText(zRamParams.getZramAlgo());
+            fragment.textView3.setText(zRamParams.getZramDisk());
+            fragment.textView4.setText(zRamParams.getZramSwap());
+        });
+    }
+
+    void setOnClickListeners()
+    {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(() -> {
+            fragment.zramLayout1.setOnClickListener(this::setZramState);
+            if(algoAvailable)
+                fragment.zramLayout2.setOnClickListener(v -> showAviAlgoDialouge());
+            fragment.zramLayout3.setOnClickListener(v -> setDiskSize());
+            fragment.zramLayout4.setOnClickListener(v -> setSwappiness());
+        });
+    }
+
+    public void setZramState(View v)
+    {
+        Handler handler = new Handler(Looper.getMainLooper());
+        String setText;
+        int state = 0;
+
+        if(isRunning)
+            return;
+
+        if(getZramState() == 0){
+            setText = "Disabling";
+        } else {
+            setText = "Enabling";
+            state = 1;
+        }
+        String finalSetText = setText;
+        handler.post(() -> {
+            fragment.textView1.setText(finalSetText);
+            Toast.makeText(v.getContext(), setText + " Zram...", Toast.LENGTH_SHORT).show();
+        });
+        ZramBgTask asyncTask = new ZramBgTask(state, v, fragment);
+        asyncTask.start();
+    }
+
+    public void showAviAlgoDialouge(){
+        String str = fragment.textView2.getText().toString();
+        String[] aviAlgo = zRamParams.getZramAviAlgo();
+
+        int checkedItem = Arrays.asList(aviAlgo).indexOf(str);
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(fragment.requireActivity());
+        builder.setTitle("Choose Option");
+        builder.setSingleChoiceItems(aviAlgo, checkedItem, (dialog, which) -> {
+                utils.write(aviAlgo[which], Memory.PATH.AVI_ALGO);
+                fragment.textView2.setText(aviAlgo[which]);
+                zRamParams.setZramCurAlgo(aviAlgo[which]);
+                dialog.dismiss();
+        });
+        builder.show();
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void setDiskSize()
+    {
+        MaterialAlertDialogBuilder builder = new
+                MaterialAlertDialogBuilder(fragment.requireActivity());
+        final EditText weightInput = new EditText(fragment.getActivity());
+
+        builder.setTitle("Set swap size");
+        weightInput.setInputType(InputType.TYPE_CLASS_TEXT);
+        weightInput.setHint(fragment.textView3.getText().toString());
+        builder.setView(weightInput);
+
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            int size = Integer.parseInt(weightInput.getText().toString());
+            ZramSetDisksizeTask setSize = new ZramSetDisksizeTask(size);
+            setSize.start();
+            fragment.textView3.setText(weightInput.getText().toString() + "Mb");
+        });builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+        builder.show();
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void setSwappiness()
+    {
+        MaterialAlertDialogBuilder builder = new
+                MaterialAlertDialogBuilder(fragment.requireActivity());
+        final EditText weightInput = new EditText(fragment.getActivity());
+
+        builder.setTitle("Set swappiness");
+        weightInput.setInputType(InputType.TYPE_CLASS_TEXT);
+        weightInput.setHint(
+                fragment.textView4.getText().toString().replace("%", ""));
+        builder.setView(weightInput);
+
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            String out = weightInput.getText().toString();
+            fragment.writeVM(out, Memory.PATH.SWAPPINESS);
+            fragment.textView4.setText(out+ "%");
+            zRamParams.setZramSwap(out);
+        });builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+        builder.show();
+    }
+
     public static class ZramBgTask extends Thread {
         private final int state;
         Handler handle;
@@ -206,17 +213,18 @@ public class ZRam {
         @Override
         public void run() {
             String str;
-
+            String cmd;
             isRunning = true;
             if(state == 1){
-                Utils.execCmdWrite("swapon /dev/block/zram0 > /dev/null 2>&1");
+                cmd = "swapon";
                 str = "Enabled";
             } else {
-                Utils.execCmdWrite("swapoff /dev/block/zram0 > /dev/null 2>&1");
+                cmd = "swapoff";
                 str = "Disabled";
             }
+            fragment.zramObject.writeZramState(cmd);
+            fragment.zramObject.zRamParams.setZramState(cmd);
             String finalStr = str;
-            fragment.zramObject.zRamParams.setZramState(str);
             handle.post(() -> {
                 fragment.textView1.setText(finalStr);
                 Toast.makeText(v.getContext(), finalStr, Toast.LENGTH_SHORT).show();
@@ -227,21 +235,30 @@ public class ZRam {
 
     class ZramSetDisksizeTask extends Thread {
         private int size;
-        public ZramSetDisksizeTask() {
-            size = Integer.parseInt(zRamParams.getZramDisk());
-            size = size * 1024 * 1024;
+        public ZramSetDisksizeTask(int size) {
+            this.size = size;
+            this.size = this.size * 1024 * 1024;
         }
 
         @Override
         public void run() {
-            Utils.execCmdWrite("swapoff /dev/block/zram0 > /dev/null 2>&1");
-            Utils.write("1", Memory.PATH.RESET);
-            Utils.write("0", Memory.PATH.DISKSIZE);
-            Utils.write("8", Memory.PATH.COMP_STREAMS);
-            Utils.write(String.valueOf(size), Memory.PATH.DISKSIZE);
-            Utils.execCmdWrite("mkswap /dev/block/zram0 > /dev/null 2>&1");
-            Utils.execCmdWrite("swapon /dev/block/zram0 > /dev/null 2>&1");
+            writeZramDiskSize(size);
+            fragment.zramObject.zRamParams.setZramDisk(String.valueOf(size));
         }
+    }
+
+    private void writeZramDiskSize(int size){
+        writeZramState("swapoff");
+        utils.write("1", Memory.PATH.RESET);
+        utils.write("0", Memory.PATH.DISKSIZE);
+        utils.write("8", Memory.PATH.COMP_STREAMS);
+        utils.write(String.valueOf(size), Memory.PATH.DISKSIZE);
+        writeZramState("mkswap");
+        writeZramState("swapon");
+    }
+
+    private void writeZramState(String cmd){
+        utils.execWrite(cmd, " /dev/block/zram0 > /dev/null 2>&1");
     }
 
     String getSanitizedString(String[] arr){

@@ -22,6 +22,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.example.myapplication3.MainActivity;
 import com.example.myapplication3.R;
+import com.example.myapplication3.FragmentDataModels.Power;
 import com.example.myapplication3.tools.Utils;
 
 import java.util.Objects;
@@ -79,22 +80,22 @@ public class ChargeThrottleService extends Service {
     }
 
     private void clampCharging(){
-        Utils.write("0", Power.PATH.CHG_ENABLE);
+        Utils.serviceWrite("0", Power.PATH.CHG_ENABLE);
         isClamped = true;
     }
 
     private void clampFastCharge(){
-        Utils.write("0", Power.PATH.FAST_CHG_ENABLE);
+        Utils.serviceWrite("0", Power.PATH.FAST_CHG_ENABLE);
         isFastChgClamped = true;
     }
 
     private void unClampCharging(){
-        Utils.write("1", Power.PATH.CHG_ENABLE);
+        Utils.serviceWrite("1", Power.PATH.CHG_ENABLE);
         isClamped = false;
     }
 
     private void unclampFastCharge(){
-        Utils.write("1", Power.PATH.FAST_CHG_ENABLE);
+        Utils.serviceWrite("1", Power.PATH.FAST_CHG_ENABLE);
         isFastChgClamped = false;
     }
 

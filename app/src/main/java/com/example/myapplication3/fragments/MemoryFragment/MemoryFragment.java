@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -13,10 +14,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.myapplication3.R;
+import com.example.myapplication3.FragmentDataModels.Memory;
+import com.example.myapplication3.fragments.HomeFragment.FragmentPersistObject;
+import com.example.myapplication3.fragments.InfoPopupWindow;
 import com.example.myapplication3.tools.UtilException;
 import com.example.myapplication3.tools.Utils;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -29,6 +34,9 @@ public class MemoryFragment extends Fragment {
     RelativeLayout[] relativeLayoutArr;
     TextView[] textViewArr;
     ZRam zramObject;
+    Memory.Params memoryParams;
+    Utils utils;
+    ImageView zramInfo, vmInfo;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,11 +87,20 @@ public class MemoryFragment extends Fragment {
         vmLayout4 = view.findViewById(R.id.vm_bgdirtratio_layout);
         vmLayout5 = view.findViewById(R.id.vm_overcom_layout);
         vmLayout6 = view.findViewById(R.id.vm_vfs_layout);
+        zramInfo = view.findViewById(R.id.zram_info);
+        vmInfo = view.findViewById(R.id.vm_info);
 
         textViewArr = new TextView[]{textView5, textView6, textView7, textView8, textView9,
                 textView10};
         relativeLayoutArr = new RelativeLayout[]{ vmLayout1, vmLayout2, vmLayout3, vmLayout4,
                 vmLayout5, vmLayout6};
+    }
+
+    private void initViewModel(){
+        FragmentPersistObject viewModel = new ViewModelProvider(requireActivity())
+                .get(FragmentPersistObject.class);
+        memoryParams = viewModel.getMemoryParams();
+        utils = new Utils(memoryParams);
     }
 
     void setOnClickListeners(){
@@ -95,6 +112,7 @@ public class MemoryFragment extends Fragment {
             } catch (UtilException e) {
                 out = "read error";
             }
+            memoryParams.setVmValues(i, out);
             int finalI1 = i;
             String finalOut = out;
             handler.post(() -> {
@@ -117,10 +135,23 @@ public class MemoryFragment extends Fragment {
 
         builder.setPositiveButton("OK", (dialog, which) -> {
             String out = weightInput.getText().toString();
-            Utils.write(out, Memory.PATH.VM + Memory.PATH.getVMPaths(i));
+            writeVM(out, Memory.PATH.VM + Memory.PATH.getVMPaths(i));
             textViewArr[i].setText(out);
-        });builder.setNegativeButton("Cancle", (dialog, which) -> dialog.cancel());
+            memoryParams.setVmValues(i, out);
+        });builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
         builder.show();
+    }
+
+    public void writeVM(String out, String Path){
+        utils.write(out, Path);
+    }
+
+    private void setInfoView(){
+        InfoPopupWindow popupWindow = new InfoPopupWindow(this, R.id.activity_main);
+        popupWindow.setInfoWindow(zramInfo, requireActivity().getResources()
+                .getString(R.string.mem_info_zram));
+        popupWindow.setInfoWindow(vmInfo, requireActivity().getResources()
+                .getString(R.string.mem_info_vm));
     }
 
     class AsyncInitTasks extends Thread {
@@ -133,9 +164,11 @@ public class MemoryFragment extends Fragment {
 
         @Override
         public void run() {
-            initViews(view);
+            initViewModel();
             zramObject = new ZRam(fragment);
+            initViews(view);
             setOnClickListeners();
+            setInfoView();
         }
     }
 

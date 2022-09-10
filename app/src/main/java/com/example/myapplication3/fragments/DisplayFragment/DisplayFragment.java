@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -18,6 +19,8 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.myapplication3.R;
+import com.example.myapplication3.FragmentDataModels.Display;
+import com.example.myapplication3.fragments.HomeFragment.FragmentPersistObject;
 import com.example.myapplication3.tools.UtilException;
 import com.example.myapplication3.tools.Utils;
 
@@ -28,10 +31,11 @@ public class DisplayFragment extends Fragment {
     Button ref60HzBut, ref120HzBut, refAutoBut;
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     Switch dcSwitch, hbmSwitch, d2wSwitch, touchBoostSwitch;
-
+    private Display.Params displayParams;
     private String[] stateAction;
     private String[] curState;
     Switch[] switches;
+    private Utils utils;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,6 +49,11 @@ public class DisplayFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         AsyncInitTask initTask = new AsyncInitTask(view);
         initTask.start();
+    }
+
+    private void initViewModel(){
+        FragmentPersistObject viewModel = new ViewModelProvider(requireActivity()).get(FragmentPersistObject.class);
+        displayParams = viewModel.getDisplayParams();
     }
 
     private void initViews(View view){
@@ -68,13 +77,13 @@ public class DisplayFragment extends Fragment {
 
             for(String string : strings){
                 try {
-                    Log.d(TAG, "Init Data:" + count);
                     curState[count++] = Utils.read(0, string);
                 } catch (UtilException e) {
                     e.printStackTrace();
                 }
             }
         }
+        displayParams.initFeatureSet(curState);
     }
 
     private void setViews(){
@@ -94,45 +103,59 @@ public class DisplayFragment extends Fragment {
 
     private void initListeners() {
         ref60HzBut.setOnClickListener(v -> {
-            Utils.execCmdWrite("settings put system peak_refresh_rate 120");
-            Utils.execCmdWrite("settings put system min_refresh_rate 120");
-            Toast.makeText(getActivity(),
-                    "Set 120Hz",
-                    Toast.LENGTH_SHORT).show();
+            write120Hz();
+            Toast.makeText(getActivity(), "Set 120Hz", Toast.LENGTH_SHORT).show();
 
         });
         ref120HzBut.setOnClickListener(v -> {
-            Utils.execCmdWrite("settings put system peak_refresh_rate 60");
-            Utils.execCmdWrite("settings put system min_refresh_rate 60");
-            Toast.makeText(getActivity(),
-                    "Set 60Hz",
-                    Toast.LENGTH_SHORT).show();
+            write60Hz();
+            Toast.makeText(getActivity(), "Set 60Hz", Toast.LENGTH_SHORT).show();
         });
         refAutoBut.setOnClickListener(v -> {
-            Utils.execCmdWrite("settings put system peak_refresh_rate 120");
-            Utils.execCmdWrite("settings put system min_refresh_rate 60");
-            Toast.makeText(getActivity(),
-                    "Set to Auto",
-                    Toast.LENGTH_SHORT).show();
+            writeAutoHz();
+            Toast.makeText(getActivity(),"Set to Auto", Toast.LENGTH_SHORT).show();
         });
 
         int count = 0;
         for (int i = 0;; i++) {
-            String[] strings = Display.PATH.getDisplayPaths(i);
-            if(strings == null)
+            String[] featurePaths = Display.PATH.getDisplayPaths(i);
+            if(featurePaths == null)
                 break;
 
             int finalCount = count;
             switches[i].setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if (isChecked) {
-                    for (int j = 0; j < strings.length; j++)
-                        Utils.write(stateAction[finalCount + j], strings[j]);
+                    for (int j = 0; j < featurePaths.length; j++) {
+                        writePanelFeature(stateAction[finalCount + j], featurePaths[j]);
+                        displayParams.setFeatureSet(finalCount + j, stateAction[finalCount + j]);
+                    }
                 } else {
-                    for (String string : strings) Utils.write("0", string);
+                    Log.d(TAG, "Not checked");
+                    for (int j = 0; j < featurePaths.length; j++) {
+                        writePanelFeature("0", featurePaths[j]);
+                        displayParams.setFeatureSet(finalCount + j, "0");
+                    }
                 }
             });
             count++;
         }
+    }
+
+    private void write120Hz(){
+        utils.execWrite(Display.Cmd.MAX_REFRESH, "120");
+        utils.execWrite(Display.Cmd.MIN_REFRESH, "120");
+    }
+    private void write60Hz(){
+        utils.execWrite(Display.Cmd.MAX_REFRESH, "60");
+        utils.execWrite(Display.Cmd.MIN_REFRESH, "60");
+    }
+    private void writeAutoHz(){
+        utils.execWrite(Display.Cmd.MAX_REFRESH ,"120");
+        utils.execWrite(Display.Cmd.MIN_REFRESH ,"60");
+    }
+    private void writePanelFeature(String out, String Path){
+        Log.d(TAG, "State:" + out);
+        utils.write(out, Path);
     }
 
 
@@ -147,10 +170,11 @@ public class DisplayFragment extends Fragment {
             Handler handler = new Handler(Looper.getMainLooper());
             stateAction = new String[]{"1","1","1","1","5","1"};
             curState = new String[stateAction.length];
+            initViewModel();
             initViews(view);
             initData();
             try {
-                Utils.execCmdRead(0,"ls /sys/kernel/oppo_display");
+                Utils.execCmdRead(0,"ls " + Display.PATH.OPPO_DISPLAY);
             } catch (UtilException e) {
                 Log.d(TAG, "Oppo feature set not present");
                 return;

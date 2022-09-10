@@ -25,7 +25,8 @@ import com.example.myapplication3.R;
 import com.example.myapplication3.fragments.CpuFragment.CoreControl.CoreControlFragment;
 import com.example.myapplication3.fragments.CpuFragment.CpuSets.CpuSetFragment;
 import com.example.myapplication3.fragments.CpuFragment.Stune.StuneFragment;
-import com.example.myapplication3.fragments.HomeFragment.AviFreqData;
+import com.example.myapplication3.FragmentDataModels.Cpu;
+import com.example.myapplication3.fragments.HomeFragment.FragmentPersistObject;
 import com.example.myapplication3.tools.UtilException;
 import com.example.myapplication3.tools.Utils;
 
@@ -45,6 +46,7 @@ public class CpuFragment extends Fragment {
     LinearLayout linearLayout1, linearLayout2, linearLayout3;
     NestedScrollView scrollView;
     Cpu.Params cpuParams;
+    Utils utils;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,11 +72,9 @@ public class CpuFragment extends Fragment {
 
     /* Initialise the cluster count and policy paths for the respective clusters */
     public void initData(){
-        AviFreqData viewModel = new ViewModelProvider(requireActivity()).get(AviFreqData.class);
-        cpuParams.setFreqArr(viewModel.getCpuFreqArr());
-        cpuParams.setAppendedFreqArr(viewModel.getAppCpuFreqArr());
-        cpuParams.setPolicyArr(viewModel.getPolicyAttr());
-        cpuParams.setCpuOnline(viewModel.getCpuOnline());
+        FragmentPersistObject viewModel = new ViewModelProvider(requireActivity()).get(FragmentPersistObject.class);
+        cpuParams = viewModel.getCpuParams();
+        utils = new Utils(cpuParams);
         cpuParams.setGovArr(Utils.splitStrings(Cpu.PATH.POLICY_PATH +
                 cpuParams.getPolicyArr()[0] +
                 Cpu.PATH.AVI_SCALING_GOVERNOR, "\\s+"));
@@ -173,7 +173,7 @@ public class CpuFragment extends Fragment {
     public void setMaxFreq(CpuDataModel list, int curCluster){
         service.execute(() -> {
             int Freq = Integer.parseInt(list.MaxFreq);
-            Utils.write(String.valueOf(Freq), Cpu.PATH.POLICY_PATH +
+            utils.write(String.valueOf(Freq), Cpu.PATH.POLICY_PATH +
                     cpuParams.getPolicyArr()[curCluster] + Cpu.PATH.MAX_FREQ);
             updateData(curCluster);
         });
@@ -182,7 +182,7 @@ public class CpuFragment extends Fragment {
     public void setMinFreq(CpuDataModel list, int curCluster){
         service.execute(() -> {
             int Freq = Integer.parseInt(list.MinFreq);
-            Utils.write(String.valueOf(Freq), Cpu.PATH.POLICY_PATH +
+            utils.write(String.valueOf(Freq), Cpu.PATH.POLICY_PATH +
                     cpuParams.getPolicyArr()[curCluster]
                     + Cpu.PATH.MIN_FREQ);
             updateData(curCluster);
@@ -191,7 +191,7 @@ public class CpuFragment extends Fragment {
 
     public void setGov(CpuDataModel list, int curCluster){
         service.execute(() -> {
-            Utils.write(list.Governor, Cpu.PATH.POLICY_PATH +
+            utils.write(list.Governor, Cpu.PATH.POLICY_PATH +
                     cpuParams.getPolicyArr()[curCluster]
                     + Cpu.PATH.SCALING_GOVERNOR);
             updateData(curCluster);
@@ -219,7 +219,10 @@ public class CpuFragment extends Fragment {
             linearLayout2 = view.findViewById(R.id.core_ctrl_launch);
             linearLayout3 = view.findViewById(R.id.stune_launch);
             service = Executors.newSingleThreadExecutor();
-            cpuParams = new Cpu.Params().getInstance();
+            FragmentPersistObject viewModel = new ViewModelProvider(requireActivity())
+                    .get(FragmentPersistObject.class);
+            cpuParams = viewModel.getCpuParams();
+            utils = new Utils(cpuParams);
             initRecyclerView(view);
             initListeners();
         }

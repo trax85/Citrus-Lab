@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.myapplication3.R;
+import com.example.myapplication3.FragmentDataModels.Misc;
+import com.example.myapplication3.fragments.HomeFragment.FragmentPersistObject;
 import com.example.myapplication3.tools.UtilException;
 import com.example.myapplication3.tools.Utils;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -23,7 +26,8 @@ public class NetworkFragment extends Fragment {
     TextView textViewTcp, textViewWireGuard;
     RelativeLayout relativeLayoutTcp, relativeLayoutWg;
     private Misc.Params miscParams;
-    
+    private Utils utils;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +43,10 @@ public class NetworkFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        miscParams = new Misc.Params().getInstance();
+        FragmentPersistObject viewModel = new ViewModelProvider(requireActivity())
+                .get(FragmentPersistObject.class);
+        miscParams = viewModel.getMiscParams();
+        utils = new Utils(miscParams);
         initView(view);
         initData();
         setViews();
@@ -79,6 +86,7 @@ public class NetworkFragment extends Fragment {
         String str;
         try {
             str = Utils.read(0, Misc.PATH.TCP_CUR);
+            miscParams.setCurTcp(str);
         } catch (UtilException e) {
             str = "Read Error";
         }
@@ -98,7 +106,8 @@ public class NetworkFragment extends Fragment {
         int checkedItem = Arrays.asList(aviAlgo).indexOf(textViewTcp.getText());
         builder.setSingleChoiceItems(aviAlgo, checkedItem, (dialog, which) -> {
             textViewTcp.setText(aviAlgo[which]);
-            Utils.execCmdWrite(Misc.Cmd.TCP_CHANGE + aviAlgo[which]);
+            utils.execWrite(Misc.Cmd.TCP_CHANGE, aviAlgo[which]);
+            miscParams.setCurTcp(aviAlgo[which]);
             dialog.dismiss();
         });
         builder.show();

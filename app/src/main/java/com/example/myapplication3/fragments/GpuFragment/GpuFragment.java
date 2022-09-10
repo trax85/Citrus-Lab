@@ -1,13 +1,15 @@
 package com.example.myapplication3.fragments.GpuFragment;
 
-import static com.example.myapplication3.fragments.GpuFragment.Gpu.PATH.DVFS_STATE;
+import static com.example.myapplication3.FragmentDataModels.Gpu.PATH.DVFS_STATE;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -15,12 +17,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.myapplication3.R;
+import com.example.myapplication3.FragmentDataModels.Gpu;
+import com.example.myapplication3.fragments.HomeFragment.FragmentPersistObject;
+import com.example.myapplication3.fragments.InfoPopupWindow;
 import com.example.myapplication3.tools.UtilException;
 import com.example.myapplication3.tools.Utils;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -44,10 +50,12 @@ public class GpuFragment extends Fragment {
     private TextView textViewMhz, textViewLoad, textViewInfo, textViewVoltage;
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     private Switch switchDVFS, switchBoost;
+    private ImageView setFixedGpuFreq, boostParams;
 
     ScheduledThreadPoolExecutor executor;
     StatsLoop statsLoop;
     private Gpu.Params gpuParams;
+    Utils utils;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,6 +84,13 @@ public class GpuFragment extends Fragment {
         executor.shutdown();
     }
 
+    private void initViewModel(){
+        FragmentPersistObject viewModel = new ViewModelProvider(requireActivity())
+                .get(FragmentPersistObject.class);
+        gpuParams = viewModel.getGpuParams();
+        utils = new Utils(gpuParams);
+    }
+
     public void initView(View v){
         linearLayouts = new LinearLayout[3];
         textViews = new TextView[3];
@@ -93,6 +108,8 @@ public class GpuFragment extends Fragment {
         textViews[0] = v.findViewById(R.id.gpu_btmFreqDat);
         textViews[1] = v.findViewById(R.id.gpu_topFreqDat);
         textViews[2] = v.findViewById(R.id.gpu_boostFreqDat);
+        setFixedGpuFreq = v.findViewById(R.id.set_fixed_freq_info);
+        boostParams = v.findViewById(R.id.boost_params_help);
     }
 
     @SuppressLint("SetTextI18n")
@@ -104,7 +121,8 @@ public class GpuFragment extends Fragment {
 
     public void initText(){
         textViewInfo.setText(gpuParams.getGpuInfo());
-        switchDVFS.setChecked(gpuParams.getDvfsState());
+        if(gpuParams.getDvfsState().contains("1"))
+            switchDVFS.setChecked(true);
         switchBoost.setChecked(gpuParams.getBoostState());
     }
 
@@ -136,7 +154,7 @@ public class GpuFragment extends Fragment {
     }
 
     @SuppressLint("SetTextI18n")
-    public void initLinearLayouts(){
+    public void initBoostLayouts(){
         Handler handler = new Handler(Looper.getMainLooper());
         String out, outText;
         boolean isErr = false;
@@ -150,9 +168,10 @@ public class GpuFragment extends Fragment {
                     outText = out + " Khz";
             } catch (UtilException e) {
                 outText = "Read error";
+                out = "0";
                 isErr = true;
             }
-
+            gpuParams.setGpuBoostFreq(i, out);
             int finalI = i;
             boolean finalIsErr = isErr;
             String finalOutText = outText;
@@ -168,8 +187,10 @@ public class GpuFragment extends Fragment {
         switchDVFS.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked){
                 writeDvfsState("1");
+                gpuParams.setDvfsState("1");
             }else {
                 writeDvfsState("0");
+                gpuParams.setDvfsState("0");
             }
         });
         switchBoost.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -177,9 +198,11 @@ public class GpuFragment extends Fragment {
             if(isChecked) {
                 writeGpuBoost("1");
                 gpuParams.setBoostState(true);
+                gpuParams.setGpuBoost(new String[]{"1", "1"});
             }else {
                 writeGpuBoost("0");
                 gpuParams.setBoostState(false);
+                gpuParams.setGpuBoost(new String[]{"0", "0"});
             }
         });
     }
@@ -199,10 +222,13 @@ public class GpuFragment extends Fragment {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireActivity());
         builder.setTitle("Choose Fixed GPU OPP");
         builder.setSingleChoiceItems(gpuParams.getGpuFreqDataApp(), checkedItem, (dialog, which) -> {
+            String output;
             if(which == 0)
-                Utils.write("0", Gpu.PATH.GPU_OPP_FREQ);
+                output = "0";
             else
-                Utils.write(gpuFreqData[which - 1], Gpu.PATH.GPU_OPP_FREQ);
+                output = gpuFreqData[which - 1];
+            writeFreq(output, Gpu.PATH.GPU_OPP_FREQ);
+            gpuParams.setGpuCurFreq(output);
             dialog.dismiss();
         });
         builder.show();
@@ -220,10 +246,13 @@ public class GpuFragment extends Fragment {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireActivity());
         builder.setTitle("Choose Frequency");
         builder.setSingleChoiceItems(gpuFreqDataApp, checkedItem, (dialog, which) -> {
+            String output;
             if(which == 0)
-                Utils.write("0", Gpu.PATH.getGpuBoostPaths(pos));
+                output = "0";
             else
-                Utils.write(gpuFreqData[which - 1], Gpu.PATH.getGpuBoostPaths(pos));
+                output = gpuFreqData[which - 1];
+            writeFreq(output, Gpu.PATH.getGpuBoostPaths(pos));
+            gpuParams.setGpuBoostFreq(pos, output);
             textViews[pos].setText(gpuFreqDataApp[which]);
             dialog.dismiss();
         });
@@ -240,25 +269,23 @@ public class GpuFragment extends Fragment {
         return out;
     }
 
-    private Boolean getDvfsState(){
+    private String getDvfsState(){
         String out;
         try {
             out = Utils.execCmdRead(0, "cut -d':' -f2 " + DVFS_STATE);
-            if(out.contains("1"))
-                return true;
-        } catch (UtilException ignored) {}
-        return false;
+        } catch (UtilException ignored) { out = "0"; }
+        gpuParams.setDvfsState(out);
+        return out;
     }
 
-    private Boolean getBoostState(){
+    private boolean getBoostState(){
         String out, out1;
         try {
             out = Utils.read(0, Gpu.PATH.getGpuBoostStatePaths(0));
             out1 = Utils.read(0, Gpu.PATH.getGpuBoostStatePaths(1));
-            if(out.contains("1") && out1.contains("1")) {
-                Log.d(TAG,"Enabled");
+            gpuParams.setGpuBoost(new String[]{out, out1});
+            if(out.contains("1") && out1.contains("1"))
                 return true;
-            }
             else
                 Log.d(TAG,"Boost Disabled");
         } catch (UtilException ignored) {}
@@ -275,6 +302,7 @@ public class GpuFragment extends Fragment {
             Log.d(TAG, "Read list error");
             freq = "0";
         }
+        gpuParams.setGpuCurFreq(freq);
         return freq;
     }
 
@@ -288,19 +316,32 @@ public class GpuFragment extends Fragment {
             e.printStackTrace();
             freq = "0";
         }
+        gpuParams.setGpuBoostFreq(pos, freq);
         return freq;
     }
 
     private void writeGpuBoost(String out){
-        Utils.write(out, Gpu.PATH.getGpuBoostStatePaths(0));
-        Utils.write(out, Gpu.PATH.getGpuBoostStatePaths(1));
+        utils.write(out, Gpu.PATH.getGpuBoostStatePaths(0));
+        utils.write(out, Gpu.PATH.getGpuBoostStatePaths(1));
     }
 
     private void writeDvfsState(String out){
-        Utils.write(out, DVFS_STATE);
+        utils.write(out, DVFS_STATE);
     }
 
-    class StatsLoop implements Runnable{
+    private void writeFreq(String out, String Path){
+        utils.write(out, Path);
+    }
+
+    private void setInfoView(){
+        InfoPopupWindow popupWindow = new InfoPopupWindow(this, R.id.gpu_fragment);
+        popupWindow.setInfoWindow(setFixedGpuFreq, requireActivity().getResources()
+                .getString(R.string.gpu_info_setfixedfreq));
+        popupWindow.setInfoWindow(boostParams, requireActivity().getResources()
+                .getString(R.string.gpu_info_boost_info));
+    }
+
+    class StatsLoop implements Runnable {
         String curFreq, curLoad, curVoltage;
         int idx;
         @Override
@@ -317,9 +358,9 @@ public class GpuFragment extends Fragment {
                 idx = Arrays.asList(gpuFreqData).indexOf(curFreq);
                 curVoltage = gpuParams.getGpuVoltData(idx);
                 idx = gpuFreqData.length - idx;
-                curFreq = Integer.parseInt(curFreq) / 1000 + " Mhz";
-            } catch (UtilException e) {
-                curFreq = "0 Mhz";
+                curFreq = String.valueOf(Integer.parseInt(curFreq) / 1000);
+            } catch (Exception e) {
+                curFreq = "0";
                 curLoad = "0";
                 curVoltage = "0";
             }
@@ -329,7 +370,7 @@ public class GpuFragment extends Fragment {
         public void setUI(){
             Handler handler = new Handler(Looper.getMainLooper());
             handler.post(() -> {
-                textViewMhz.setText(curFreq);
+                textViewMhz.setText(curFreq + " Mhz");
                 cProgress.setCurrentProgress(idx);
                 textViewLoad.setText(curLoad + "%");
                 textViewVoltage.setText(curVoltage + " uV");
@@ -346,10 +387,11 @@ public class GpuFragment extends Fragment {
         @Override
         public void run() {
             statsLoop = new StatsLoop();
-            gpuParams = new Gpu.Params().getInstance();
             initView(view);
-            InitGpuData();
+            initViewModel();
             initData();
+            InitGpuData();
+            setInfoView();
         }
     }
 
@@ -362,7 +404,7 @@ public class GpuFragment extends Fragment {
                 initSwitch();
                 setListener();
             });
-            initLinearLayouts();
+            initBoostLayouts();
             executor = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(1);
             executor.scheduleWithFixedDelay(statsLoop, 0, 2000, TimeUnit.MILLISECONDS);
         }

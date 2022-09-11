@@ -2,11 +2,12 @@ package com.example.myapplication3.fragments.HomeFragment;
 
 import androidx.lifecycle.ViewModel;
 
-import com.example.myapplication3.fragments.FragmentDataModels.Cpu;
-import com.example.myapplication3.fragments.FragmentDataModels.Display;
-import com.example.myapplication3.fragments.FragmentDataModels.Gpu;
-import com.example.myapplication3.fragments.FragmentDataModels.Memory;
-import com.example.myapplication3.fragments.FragmentDataModels.Misc;
+import com.example.myapplication3.FragmentDataModels.Cpu;
+import com.example.myapplication3.FragmentDataModels.Display;
+import com.example.myapplication3.FragmentDataModels.Gpu;
+import com.example.myapplication3.FragmentDataModels.Memory;
+import com.example.myapplication3.FragmentDataModels.Misc;
+import com.example.myapplication3.FragmentDataModels.Power;
 
 public class FragmentPersistObject extends ViewModel {
     private Cpu.Params cpuParams;
@@ -14,6 +15,7 @@ public class FragmentPersistObject extends ViewModel {
     private Display.Params displayParams;
     private Memory.Params memoryParams;
     private Misc.Params miscParams;
+    private Power.Params powerParams;
 
     public void setCpuParams(Cpu.Params cpuParams) {
         this.cpuParams = cpuParams;
@@ -61,6 +63,15 @@ public class FragmentPersistObject extends ViewModel {
         }
         else {
             return miscParams = new Misc.Params();
+        }
+    }
+
+    public Power.Params getPowerParams() {
+        if(powerParams != null) {
+            return powerParams;
+        }
+        else {
+            return powerParams = new Power.Params();
         }
     }
 }

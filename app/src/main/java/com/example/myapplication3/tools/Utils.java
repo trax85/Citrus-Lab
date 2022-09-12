@@ -16,11 +16,16 @@ import java.util.List;
 public class Utils {
     final static String TAG = "Utils";
     private final FragmentParameter parameter;
+    private ActivityLogger logger;
 
     public Utils(FragmentParameter parameter) {
         this.parameter = parameter;
     }
 
+    public void initActivityLogger(){
+        logger = new ActivityLogger();
+        logger.activityLog = parameter.getActivityLog();
+    }
     public static List<String> readGetList(String... cmd) throws UtilException{
         Shell.Result result = Shell.cmd(cmd).exec();
         return result.getOut();
@@ -57,6 +62,7 @@ public class Utils {
     public void write(String value, String path){
         String cmd = "echo " + value + " > ";
         Shell.cmd( cmd + path).exec();
+        logger.logWriteActivity(cmd, path);
     }
 
     public static void execCmdString(String... cmd){
@@ -75,6 +81,7 @@ public class Utils {
     public void chmodFile(String perm, String path){
         String cmd = "chmod " + perm + " ";
         Shell.cmd(cmd + path).exec();
+        logger.logWriteActivity(cmd, path);
     }
 
     public static void serviceWrite(String value, String path){

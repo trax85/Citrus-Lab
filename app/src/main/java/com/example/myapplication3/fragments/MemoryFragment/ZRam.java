@@ -28,6 +28,7 @@ public class ZRam {
         this.fragment = fragment;
         zRamParams = fragment.memoryParams;
         utils = new Utils(zRamParams);
+        utils.initActivityLogger();
     }
 
     public void ZramInit(){

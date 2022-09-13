@@ -54,6 +54,8 @@ public class DisplayFragment extends Fragment {
     private void initViewModel(){
         FragmentPersistObject viewModel = new ViewModelProvider(requireActivity()).get(FragmentPersistObject.class);
         displayParams = viewModel.getDisplayParams();
+        utils = new Utils(displayParams);
+        utils.initActivityLogger();
     }
 
     private void initViews(View view){

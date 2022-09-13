@@ -47,6 +47,7 @@ public class NetworkFragment extends Fragment {
                 .get(FragmentPersistObject.class);
         miscParams = viewModel.getMiscParams();
         utils = new Utils(miscParams);
+        utils.initActivityLogger();
         initView(view);
         initData();
         setViews();

@@ -343,6 +343,7 @@ public class PowerFragment extends Fragment {
                 .get(FragmentPersistObject.class);
         powerParams = viewModel.getPowerParams();
         utils = new Utils(powerParams);
+        utils.initActivityLogger();
     }
 
     class AsyncInitTask extends Thread {

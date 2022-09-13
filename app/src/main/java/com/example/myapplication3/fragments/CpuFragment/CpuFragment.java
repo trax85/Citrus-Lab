@@ -75,6 +75,7 @@ public class CpuFragment extends Fragment {
         FragmentPersistObject viewModel = new ViewModelProvider(requireActivity()).get(FragmentPersistObject.class);
         cpuParams = viewModel.getCpuParams();
         utils = new Utils(cpuParams);
+        utils.initActivityLogger();
         cpuParams.setGovArr(Utils.splitStrings(Cpu.PATH.POLICY_PATH +
                 cpuParams.getPolicyArr()[0] +
                 Cpu.PATH.AVI_SCALING_GOVERNOR, "\\s+"));
@@ -223,6 +224,7 @@ public class CpuFragment extends Fragment {
                     .get(FragmentPersistObject.class);
             cpuParams = viewModel.getCpuParams();
             utils = new Utils(cpuParams);
+            utils.initActivityLogger();
             initRecyclerView(view);
             initListeners();
         }

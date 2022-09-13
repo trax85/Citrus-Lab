@@ -74,6 +74,7 @@ public class TunableFragment extends Fragment {
                 .get(FragmentPersistObject.class);
         cpuParams = viewModel.getCpuParams();
         utils = new Utils(cpuParams);
+        utils.initActivityLogger();
     }
 
     public void initViews(View view){

@@ -101,6 +101,7 @@ public class MemoryFragment extends Fragment {
                 .get(FragmentPersistObject.class);
         memoryParams = viewModel.getMemoryParams();
         utils = new Utils(memoryParams);
+        utils.initActivityLogger();
     }
 
     void setOnClickListeners(){

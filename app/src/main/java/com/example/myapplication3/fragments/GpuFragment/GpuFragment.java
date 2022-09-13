@@ -89,6 +89,7 @@ public class GpuFragment extends Fragment {
                 .get(FragmentPersistObject.class);
         gpuParams = viewModel.getGpuParams();
         utils = new Utils(gpuParams);
+        utils.initActivityLogger();
     }
 
     public void initView(View v){

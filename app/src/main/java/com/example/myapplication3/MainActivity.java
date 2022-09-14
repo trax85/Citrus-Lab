@@ -5,14 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.FragmentManager;
 
-import com.example.myapplication3.fragments.HomeFragment.AviFreqData;
+import com.example.myapplication3.fragments.HomeFragment.FragmentPersistObject;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.topjohnwu.superuser.Shell;
 
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;

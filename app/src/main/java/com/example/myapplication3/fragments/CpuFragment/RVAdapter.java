@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication3.R;
 import com.example.myapplication3.fragments.CpuFragment.GovTunable.TunableFragment;
+import com.example.myapplication3.FragmentDataModels.Cpu;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.Arrays;

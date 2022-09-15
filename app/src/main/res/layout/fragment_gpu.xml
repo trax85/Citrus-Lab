@@ -2,7 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cpu_fragment"
+    android:id="@+id/gpu_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -256,6 +256,15 @@
                     android:textStyle="bold" />
 
                 <ImageView
+                    android:id="@+id/set_fixed_freq_info"
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_18sdp"
+                    android:layout_marginStart="@dimen/_160sdp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/ic_help"/>
+
+                <ImageView
                     android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_20sdp"
                     android:layout_marginStart="@dimen/_226sdp"
@@ -374,6 +383,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/relativeLayoutGpuBoost" >
 
                 <TextView
+                    android:id="@+id/boost_params"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_4sdp"
@@ -388,6 +398,16 @@
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/boost_params_help"
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    app:layout_constraintStart_toEndOf="@+id/boost_params"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/ic_help"/>
 
                 <RelativeLayout
                     android:layout_width="@dimen/_270sdp"

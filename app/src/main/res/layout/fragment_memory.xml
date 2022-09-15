@@ -2,6 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/memory_fragment"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".fragments.MemoryFragment.MemoryFragment"
@@ -96,6 +97,16 @@
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/zram_info"
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    app:layout_constraintStart_toEndOf="@+id/header_zram"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/ic_help"/>
 
                 <RelativeLayout
                     android:layout_width="@dimen/_270sdp"
@@ -274,7 +285,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/zram">
 
                 <TextView
-                    android:id="@+id/header"
+                    android:id="@+id/vm_header"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_4sdp"
@@ -289,6 +300,16 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <ImageView
+                    android:id="@+id/vm_info"
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    app:layout_constraintStart_toEndOf="@+id/vm_header"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/ic_help"/>
+
                 <RelativeLayout
                     android:layout_width="@dimen/_270sdp"
                     android:layout_height="wrap_content"
@@ -297,7 +318,7 @@
                     android:layout_marginEnd="@dimen/_2sdp"
                     android:layout_marginBottom="@dimen/_2sdp"
                     android:background="@drawable/inner_container_bg"
-                    app:layout_constraintTop_toBottomOf="@+id/header"
+                    app:layout_constraintTop_toBottomOf="@+id/vm_header"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent">

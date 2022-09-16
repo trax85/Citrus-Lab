@@ -3,6 +3,7 @@ package com.example.myapplication3;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.myapplication3.fragments.HomeFragment.FragmentPersistObject;
@@ -41,14 +42,18 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imageViewDash, imageViewDisp, imageViewCpu, imageViewGpu ,imageViewMem,
             imageViewPower, imageViewProfile, imageViewMisc, imageViewAbout;
     private LinearLayout homeLayout, displayLayout ,cpuLayout, memLayout, gpuLayout,
+            powerLayout, profileLayout, miscLayout;
+    private TextView menuTitle;
     private TextView[] textViewArr;
     private ImageView[] imageViewArr;
     private LinearLayout[] linearLayoutArr;
-    private boolean bottomSheetState = true;
+    private boolean pageChanged = false;
     private ViewPager2 pa;
     ExecutorService service;
-    private Animation aniFade;
+    private Animation animationFade;
     VPAdaptor vpAdaptor;
+    private int pageToSet;
+    public static CoordinatorLayout layout;
     private static final String TAG = "HomeActivity";
 
     static {
@@ -80,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         bottomSheetBehavior.setPeekHeight(178);
 
         FragmentPersistObject model = new ViewModelProvider(this).get(FragmentPersistObject.class);
+        service = Executors.newSingleThreadExecutor();
         Intent intent = getIntent();
         pageToSet = intent.getIntExtra("page", 0);
         closeSheetListener();
@@ -97,7 +103,9 @@ public class MainActivity extends AppCompatActivity {
                 Rect outRect = new Rect();
                 bottomSheetLayout.getGlobalVisibleRect(outRect);
                 if(!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
+                    Log.d("DEBUG", "OUTSIDE");
                     imageViewAbout.setVisibility(View.INVISIBLE);
+                    menuTitle.setVisibility(View.INVISIBLE);
                     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 }
             }
@@ -138,6 +146,9 @@ public class MainActivity extends AppCompatActivity {
         bottomSheetLayout = findViewById(R.id.bottom_sheet);
         pa = findViewById(R.id.viewPager);
         imageViewAbout.setVisibility(View.INVISIBLE);
+
+        layout = findViewById(R.id.activity_main);
+        menuTitle = findViewById(R.id.menu_title);
     }
 
     private void initViewList(){
@@ -162,6 +173,7 @@ public class MainActivity extends AppCompatActivity {
                 imageViewArr[i].setColorFilter(Color.parseColor(PURPLE));
                 linearLayoutArr[position].getBackground().setTint(Color.parseColor(PURPLE_LIGHT));
                 imageViewAbout.setVisibility(View.INVISIBLE);
+                menuTitle.setVisibility(View.INVISIBLE);
                 continue;
             }
 
@@ -215,10 +227,12 @@ public class MainActivity extends AppCompatActivity {
         menuButton.setOnClickListener(v -> {
             if(bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
                 imageViewAbout.setVisibility(View.VISIBLE);
+                menuTitle.setVisibility(View.VISIBLE);
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                 imageViewAbout.setOnClickListener(v1 -> aboutButtonAction());
             }else{
                 imageViewAbout.setVisibility(View.INVISIBLE);
+                menuTitle.setVisibility(View.INVISIBLE);
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             }
         });
@@ -230,6 +244,7 @@ public class MainActivity extends AppCompatActivity {
         vpAdaptor.curTab = setCurTab;
         pageChanged = true;
         imageViewAbout.setVisibility(View.INVISIBLE);
+        menuTitle.setVisibility(View.INVISIBLE);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 }

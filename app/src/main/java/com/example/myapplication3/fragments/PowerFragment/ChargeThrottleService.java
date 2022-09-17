@@ -14,7 +14,6 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -61,7 +60,6 @@ public class ChargeThrottleService extends Service {
             updateNotification();
         }
         else {
-            stopForeground(true);
             stopSelfResult(startId);
         }
         return START_STICKY;
@@ -77,6 +75,7 @@ public class ChargeThrottleService extends Service {
     public void onDestroy() {
         super.onDestroy();
         getApplicationContext().unregisterReceiver(this.mBroadcastReceiver);
+        stopForeground(true);
     }
 
     private void clampCharging(){
@@ -168,12 +167,10 @@ public class ChargeThrottleService extends Service {
     private Notification getMyActivityNotification(String text)
     {
         String CHANNEL_ID = "my_channel_01";
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            ((NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE))
-                    .createNotificationChannel(
-                    new NotificationChannel(CHANNEL_ID, "Channel human readable title",
-                            NotificationManager.IMPORTANCE_DEFAULT));
-        }
+        ((NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE))
+                .createNotificationChannel(
+                new NotificationChannel(CHANNEL_ID, "Channel human readable title",
+                        NotificationManager.IMPORTANCE_DEFAULT));
 
         // The PendingIntent to launch our activity if the user selects
         // this notification

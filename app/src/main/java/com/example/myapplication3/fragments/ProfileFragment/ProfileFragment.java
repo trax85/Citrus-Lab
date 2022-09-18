@@ -146,9 +146,90 @@ public class ProfileFragment extends Fragment {
     }
 
     public void setAddButton(int idx){
-        custProfArr[idx].setOnClickListener(v -> {
-            getFile(idx);
+        custProfArr[idx].setOnClickListener(v -> showPopUpWindow(idx));
+    }
+
+    public void showPopUpWindow(int itemNumber){
+        View view = View.inflate(getContext(), R.layout.profile_popup_menu, null);
+        Button button_cust, button_cur;
+        TextView cancelButton, clearButton;
+        button_cust = view.findViewById(R.id.profile_popup_cust);
+        button_cur = view.findViewById(R.id.profile_popup_cur);
+        cancelButton = view.findViewById(R.id.popup_cancel);
+        clearButton = view.findViewById(R.id.popup_clear);
+        setDIm();
+
+        int width = ConstraintLayout.LayoutParams.WRAP_CONTENT;
+        int height = ConstraintLayout.LayoutParams.WRAP_CONTENT;
+        PopupWindow popupWindow = new PopupWindow(view, width, height, true);
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+        popupWindow.setOnDismissListener(this::unsetDim);
+
+        button_cust.setOnClickListener(v -> {
+            popupWindow.dismiss();
+            getFile(itemNumber);
         });
+        button_cur.setOnClickListener(v -> {
+            popupWindow.dismiss();
+            showCheckBoxDialouge(itemNumber);
+        });
+        clearButton.setOnClickListener(v -> {
+            cprofile.clearItem(itemNumber);
+            cprofile.hideView(itemNumber);
+            popupWindow.dismiss();
+        });
+        cancelButton.setOnClickListener(v -> popupWindow.dismiss());
+    }
+
+    private void showCheckBoxDialouge(int index)
+    {
+        ArrayList<String> selectedList = new ArrayList<>();
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+        builder.setTitle("Choose settings to apply");
+        builder.setMultiChoiceItems(R.array.profile_array, null, (dialog, which, isChecked) -> {
+            String[] items = requireActivity().getResources().getStringArray(R.array.profile_array);
+            if(isChecked){
+                selectedList.add(items[which]);
+            } else selectedList.remove(items[which]);
+        });
+
+        builder.setPositiveButton("Ok", (dialog, which) -> setName(index, selectedList));
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void setDIm(){
+        requireView().findViewById(R.id.profile_layout).setAlpha((float) 0.5);
+    }
+    private void unsetDim(){
+        requireView().findViewById(R.id.profile_layout).setAlpha((float) 1.0);
+    }
+
+    public void setName(int index, ArrayList<String> selectedList){
+        MaterialAlertDialogBuilder builder = new
+                MaterialAlertDialogBuilder(requireActivity());
+        final EditText weightInput = new EditText(getActivity());
+
+        builder.setTitle("Edit Name");
+        weightInput.setInputType(InputType.TYPE_CLASS_TEXT);
+        weightInput.setHint(textViews[index].getText().toString());
+        builder.setView(weightInput);
+
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            String fileName = weightInput.getText().toString();
+            ProfileScriptGenerator scriptGenerator =
+                    new ProfileScriptGenerator(this, selectedList, fileName);
+            cprofile.profArr[index] = scriptGenerator.makeScript();
+            fileName = scriptGenerator.mkFile();
+            textViews[index].setText(fileName);
+            cprofile.nameArr[index] = fileName;
+            cprofile.setItem(index);
+            cprofile.hideAddView(index);
+        });builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+        builder.show();
     }
 
     public void getFile(int idx){

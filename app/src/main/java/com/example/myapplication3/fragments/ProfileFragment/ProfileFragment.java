@@ -128,6 +128,13 @@ public class ProfileFragment extends Fragment {
         });
     }
 
+    private void setInfoView(){
+        InfoPopupWindow popupWindow = new InfoPopupWindow(this, R.id.activity_main);
+        popupWindow.setInfoWindow(defaultProf, requireActivity().getResources()
+                .getString(R.string.profile_info_default));
+        popupWindow.setInfoWindow(customProf, requireActivity().getResources()
+                .getString(R.string.profile_info_custom));
+    }
     public static String readTextFile(Context context, @RawRes int id){
         InputStream inputStream = context.getResources().openRawResource(id);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();

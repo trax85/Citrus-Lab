@@ -107,7 +107,7 @@ public class NetworkFragment extends Fragment {
         int checkedItem = Arrays.asList(aviAlgo).indexOf(textViewTcp.getText());
         builder.setSingleChoiceItems(aviAlgo, checkedItem, (dialog, which) -> {
             textViewTcp.setText(aviAlgo[which]);
-            utils.execWrite(Misc.Cmd.TCP_CHANGE, aviAlgo[which]);
+            utils.execWrite(Misc.Cmd.TCP_CHANGE + aviAlgo[which]);
             miscParams.setCurTcp(aviAlgo[which]);
             dialog.dismiss();
         });

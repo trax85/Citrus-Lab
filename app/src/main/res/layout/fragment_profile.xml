@@ -2,6 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profile_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.ProfileFragment.ProfileFragment"
@@ -40,7 +41,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:paddingBottom="@dimen/_40sdp" >
+            android:paddingBottom="@dimen/_10sdp" >
 
             <TextView
                 android:id="@+id/textView31"
@@ -67,24 +68,53 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/relativeLayout1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_2sdp"
-                android:layout_marginTop="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginEnd="@dimen/_2sdp"
                 android:background="@drawable/core_ctrl_container_bg"
                 android:padding="@dimen/_5sdp"
                 app:layout_constraintBottom_toTopOf="@+id/relativeLayout2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ic_core_ctl_info">
+                app:layout_constraintTop_toBottomOf="@+id/textView31">
 
-                <RelativeLayout
+                <TextView
+                    android:id="@+id/default_prof_header"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_2sdp"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_marginTop="@dimen/_1sdp"
+                    android:fontFamily="@font/nunito_sans_semibold"
+                    android:letterSpacing="0.02"
+                    android:paddingBottom="@dimen/_2sdp"
+                    android:text="Default Profiles"
+                    android:textAllCaps="false"
+                    android:textColor="@color/secondary_colour"
+                    android:textSize="@dimen/_13sdp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/default_prof_info"
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    app:layout_constraintStart_toEndOf="@+id/default_prof_header"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/ic_help"/>
+
+                <RelativeLayout
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_24sdp"
                     android:background="@drawable/inner_container_bg"
                     android:padding="@dimen/_2sdp">
 
@@ -99,7 +129,8 @@
                         android:background="@drawable/rounded_btn"
                         android:elevation="2dp"
                         android:gravity="left"
-                        android:padding="@dimen/_15sdp"
+                        android:paddingTop="@dimen/_12sdp"
+                        android:paddingStart="@dimen/_15sdp"
                         android:text="Power"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
@@ -108,8 +139,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_17sdp"
-                        android:layout_marginTop="@dimen/_41sdp"
+                        android:layout_marginStart="@dimen/_18sdp"
+                        android:layout_marginTop="@dimen/_36sdp"
                         android:fontFamily="@font/inter"
                         android:letterSpacing="0.03"
                         android:text="This mode can save some battery life "
@@ -137,7 +168,8 @@
                         android:background="@drawable/rounded_btn"
                         android:elevation="2dp"
                         android:gravity="left"
-                        android:padding="@dimen/_15sdp"
+                        android:paddingStart="@dimen/_15sdp"
+                        android:paddingTop="@dimen/_12sdp"
                         android:text="Balance"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
@@ -146,8 +178,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_17sdp"
-                        android:layout_marginTop="@dimen/_106sdp"
+                        android:layout_marginStart="@dimen/_18sdp"
+                        android:layout_marginTop="@dimen/_104sdp"
                         android:fontFamily="@font/inter"
                         android:letterSpacing="0.03"
                         android:text="This mode is for normal usage"
@@ -175,7 +207,8 @@
                         android:background="@drawable/rounded_btn"
                         android:elevation="2dp"
                         android:gravity="left"
-                        android:padding="@dimen/_15sdp"
+                        android:paddingTop="@dimen/_12sdp"
+                        android:paddingStart="@dimen/_15sdp"
                         android:text="Performance"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
@@ -184,8 +217,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_17sdp"
-                        android:layout_marginTop="@dimen/_172sdp"
+                        android:layout_marginStart="@dimen/_18sdp"
+                        android:layout_marginTop="@dimen/_168sdp"
                         android:fontFamily="@font/inter"
                         android:letterSpacing="0.03"
                         android:text="This mode is for gaming"
@@ -202,16 +235,15 @@
                         app:tint="#46FFFFFF" />
 
                 </RelativeLayout>
-            </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/relativeLayout2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_2sdp"
-                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_2sdp"
-                android:layout_marginBottom="@dimen/_20sdp"
                 android:background="@drawable/core_ctrl_container_bg"
                 android:padding="@dimen/_5sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -220,22 +252,58 @@
                 app:layout_constraintTop_toBottomOf="@+id/relativeLayout1">
 
                 <TextView
+                    android:id="@+id/cust_prof_header"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_2sdp"
-                    android:layout_marginTop="@dimen/_2sdp"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_marginTop="@dimen/_1sdp"
                     android:fontFamily="@font/nunito_sans_semibold"
                     android:letterSpacing="0.02"
+                    android:paddingBottom="@dimen/_2sdp"
                     android:text="Custom Profiles"
                     android:textAllCaps="false"
                     android:textColor="@color/secondary_colour"
                     android:textSize="@dimen/_13sdp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/cust_profile_info"
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    app:layout_constraintStart_toEndOf="@+id/cust_prof_header"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/ic_help"/>
+
+                <TextView
+                    android:id="@+id/set_on_boot"
+                    android:layout_width="@dimen/_70sdp"
+                    android:layout_height="@dimen/_19sdp"
+                    android:layout_marginStart="@dimen/_70sdp"
+                    android:layout_marginTop="@dimen/_1sdp"
+                    android:background="@drawable/textview_solid_rounded"
+                    android:fontFamily="@font/nunito_sans"
+                    android:letterSpacing="0.02"
+                    android:paddingTop="@dimen/_3sdp"
+                    android:text="Set On Boot"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_9sdp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/cust_profile_info"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_25sdp"
+                    android:layout_marginTop="@dimen/_26sdp"
                     android:background="@drawable/inner_container_bg"
                     android:padding="@dimen/_2sdp">
 
@@ -245,7 +313,7 @@
                         android:layout_height="@dimen/_60sdp"
                         android:layout_alignParentTop="true"
                         android:layout_marginStart="@dimen/_3sdp"
-                        android:layout_marginTop="@dimen/_6sdp"
+                        android:layout_marginTop="@dimen/_3sdp"
                         android:layout_marginEnd="@dimen/_3sdp"
                         android:background="@drawable/profile_button"
                         android:textAllCaps="false"
@@ -308,29 +376,12 @@
                         app:layout_constraintTop_toTopOf="@id/textprof1" />
 
                     <TextView
-                        android:id="@+id/unsetbutton1"
-                        android:layout_width="@dimen/_35sdp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_200sdp"
-                        android:layout_marginTop="@dimen/_35sdp"
-                        android:background="@drawable/textview_solid_rounded"
-                        android:fontFamily="@font/inter"
-                        android:letterSpacing="0.05"
-                        android:text="Clear"
-                        android:textAlignment="center"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_9sdp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="@+id/button_add1"
-                        app:layout_constraintStart_toStartOf="@+id/button_add1"
-                        app:layout_constraintTop_toTopOf="@+id/button_add1" />
-
-                    <TextView
                         android:id="@+id/editbutton1"
-                        android:layout_width="@dimen/_35sdp"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/_45sdp"
+                        android:layout_height="@dimen/_25sdp"
                         android:layout_marginStart="@dimen/_200sdp"
-                        android:layout_marginTop="@dimen/_12sdp"
+                        android:layout_marginTop="@dimen/_18sdp"
+                        android:paddingTop="@dimen/_6sdp"
                         android:background="@drawable/textview_solid_rounded"
                         android:fontFamily="@font/inter"
                         android:letterSpacing="0.05"
@@ -410,29 +461,12 @@
                         app:layout_constraintTop_toTopOf="@+id/button_add2" />
 
                     <TextView
-                        android:id="@+id/unsetbutton2"
-                        android:layout_width="@dimen/_35sdp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_200sdp"
-                        android:layout_marginTop="@dimen/_35sdp"
-                        android:background="@drawable/textview_solid_rounded"
-                        android:fontFamily="@font/inter"
-                        android:letterSpacing="0.05"
-                        android:text="Clear"
-                        android:textAlignment="center"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_9sdp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="@+id/button_add2"
-                        app:layout_constraintStart_toStartOf="@+id/button_add2"
-                        app:layout_constraintTop_toTopOf="@+id/button_add2" />
-
-                    <TextView
                         android:id="@+id/editbutton2"
-                        android:layout_width="@dimen/_35sdp"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/_45sdp"
+                        android:layout_height="@dimen/_25sdp"
                         android:layout_marginStart="@dimen/_200sdp"
-                        android:layout_marginTop="@dimen/_12sdp"
+                        android:layout_marginTop="@dimen/_18sdp"
+                        android:paddingTop="@dimen/_6sdp"
                         android:background="@drawable/textview_solid_rounded"
                         android:fontFamily="@font/inter"
                         android:letterSpacing="0.05"
@@ -512,29 +546,12 @@
                         app:layout_constraintTop_toTopOf="@+id/button_add3" />
 
                     <TextView
-                        android:id="@+id/unsetbutton3"
-                        android:layout_width="@dimen/_35sdp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_200sdp"
-                        android:layout_marginTop="@dimen/_35sdp"
-                        android:background="@drawable/textview_solid_rounded"
-                        android:fontFamily="@font/inter"
-                        android:letterSpacing="0.05"
-                        android:text="Clear"
-                        android:textAlignment="center"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_9sdp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="@+id/button_add3"
-                        app:layout_constraintStart_toStartOf="@+id/button_add3"
-                        app:layout_constraintTop_toTopOf="@+id/button_add3" />
-
-                    <TextView
                         android:id="@+id/editbutton3"
-                        android:layout_width="@dimen/_35sdp"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/_45sdp"
+                        android:layout_height="@dimen/_25sdp"
                         android:layout_marginStart="@dimen/_200sdp"
-                        android:layout_marginTop="@dimen/_12sdp"
+                        android:layout_marginTop="@dimen/_18sdp"
+                        android:paddingTop="@dimen/_6sdp"
                         android:background="@drawable/textview_solid_rounded"
                         android:fontFamily="@font/inter"
                         android:letterSpacing="0.05"
@@ -548,7 +565,7 @@
                         app:layout_constraintTop_toTopOf="@+id/button_add3" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

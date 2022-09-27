@@ -1,5 +1,6 @@
 package com.example.myapplication3.fragments.ProfileFragment;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
@@ -13,20 +14,30 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RawRes;
 import androidx.annotation.RequiresApi;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.text.InputType;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication3.R;
+import com.example.myapplication3.fragments.InfoPopupWindow;
 import com.example.myapplication3.tools.Utils;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -35,23 +46,24 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Objects;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-@RequiresApi(api = Build.VERSION_CODES.N)
 public class ProfileFragment extends Fragment {
-    final static String TAG = "ProfileFragment";
+    private final static String TAG = "ProfileFragment";
 
-    MaterialButton power_button, balance_button, perf_button;
-    RelativeLayout prof1, prof2, prof3;
-    RelativeLayout[] custProfArr;
-    ImageView addProf1, addProf2, addProf3, editName1, editName2, editName3;
-    ImageView[] addProfArr, editNameArr;
-    TextView editText1, editText2, editText3, unsetText1, unsetText2, unsetText3;
-    TextView textView1, textView2, textView3;
-    TextView[] textViews, editTextViews, unSetTextViews;
-    CustomProfile cprofile;
-    Intent intent;
+    private MaterialButton power_button, balance_button, perf_button;
+    private RelativeLayout prof1, prof2, prof3;
+    public RelativeLayout[] custProfArr;
+    private ImageView addProf1, addProf2, addProf3, editName1, editName2, editName3;
+    public ImageView[] addProfArr, editNameArr;
+    private ImageView defaultProf, customProf;
+    private TextView editText1, editText2, editText3;
+    private TextView textView1, textView2, textView3;
+    public TextView[] textViews, editTextViews;
+    public TextView setOnBoot;
+    private CustomProfile cprofile;
+    public SetOnBootListener onBootListener;
     int curIdx;
 
     @Override
@@ -70,10 +82,15 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initViews(view);
-        cprofile = new CustomProfile(this);
-        cprofile.initCustomProfiles(requireContext());
-        setListeners();
+        AsyncInitTask initTask = new AsyncInitTask(view, this);
+        initTask.start();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        AsyncResumeTask resumeTask = new AsyncResumeTask(this);
+        resumeTask.start();
     }
 
     void initViews(View view){
@@ -99,15 +116,15 @@ public class ProfileFragment extends Fragment {
         editText2 = view.findViewById(R.id.editbutton2);
         editText3 = view.findViewById(R.id.editbutton3);
         editTextViews = new TextView[]{editText1, editText2, editText3};
-        unsetText1 = view.findViewById(R.id.unsetbutton1);
-        unsetText2 = view.findViewById(R.id.unsetbutton2);
-        unsetText3 = view.findViewById(R.id.unsetbutton3);
-        unSetTextViews = new TextView[]{unsetText1, unsetText2, unsetText3};
 
         editName1 = view.findViewById(R.id.editName1);
         editName2 = view.findViewById(R.id.editName2);
         editName3 = view.findViewById(R.id.editName3);
         editNameArr = new ImageView[]{editName1, editName2, editName3};
+
+        defaultProf = view.findViewById(R.id.default_prof_info);
+        customProf = view.findViewById(R.id.cust_profile_info);
+        setOnBoot = view.findViewById(R.id.set_on_boot);
     }
 
     void setListeners(){
@@ -135,6 +152,7 @@ public class ProfileFragment extends Fragment {
         popupWindow.setInfoWindow(customProf, requireActivity().getResources()
                 .getString(R.string.profile_info_custom));
     }
+
     public static String readTextFile(Context context, @RawRes int id){
         InputStream inputStream = context.getResources().openRawResource(id);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -239,8 +257,9 @@ public class ProfileFragment extends Fragment {
         builder.show();
     }
 
+
     public void getFile(int idx){
-        intent = new Intent(Intent.ACTION_GET_CONTENT);
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         Uri uri = Uri.parse("/Download"); // a directory
         intent.setDataAndType(uri, "*/*");
         curIdx = idx;
@@ -300,5 +319,40 @@ public class ProfileFragment extends Fragment {
             name = name.split(":")[1];
         name = name.split("\\.")[0];
         return name;
+    }
+
+    private class AsyncInitTask extends Thread {
+        private final View view;
+        private final ProfileFragment fragment;
+        Handler handler;
+        public AsyncInitTask(View view, ProfileFragment fragment) {
+            this.view = view;
+            this.fragment = fragment;
+            handler = new Handler(Looper.getMainLooper());
+        }
+
+        @Override
+        public void run() {
+            initViews(view);
+            cprofile = new CustomProfile(fragment);
+            cprofile.initCustomProfiles(requireContext());
+            onBootListener = new SetOnBootListener(fragment, fragment.requireContext());
+            handler.post(() -> onBootListener.setOnBootListenerButton());
+            setListeners();
+            setInfoView();
+        }
+    }
+
+    private class AsyncResumeTask extends Thread {
+        private final ProfileFragment fragment;
+
+        public AsyncResumeTask(ProfileFragment fragment) {
+            this.fragment = fragment;
+        }
+
+        @Override
+        public void run() {
+
+        }
     }
 }

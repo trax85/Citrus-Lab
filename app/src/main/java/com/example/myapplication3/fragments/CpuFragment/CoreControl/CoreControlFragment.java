@@ -166,7 +166,7 @@ public class CoreControlFragment extends Fragment {
 
     public void setState(int pos, int state){
         utils.chmodFile("644", Cpu.PATH.CORE_CONTROL + "/" +coresArr[pos]+ "/online");
-        utils.write(String.valueOf(state), Cpu.PATH.CORE_CONTROL
+        utils.write(String.valueOf(state), Cpu.PATH.CORE_CONTROL + "/"
                 + coresArr[pos] + "/online");
         utils.chmodFile("444", Cpu.PATH.CORE_CONTROL + "/" + coresArr[pos]+ "/online");
         coreStateArr[pos] = state;

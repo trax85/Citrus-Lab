@@ -4,29 +4,40 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/drawable/btm_page_pill.xml" value="0.1625" />
+        <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/drawable/inner_container_bg.xml" value="0.183" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/drawable/page_bg.xml" value="0.1625" />
+        <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/drawable/popup_bg_container.xml" value="0.183" />
+        <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/drawable/popup_bottom_button.xml" value="0.183" />
+        <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/drawable/popup_info_container.xml" value="0.183" />
+        <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/drawable/popup_top_button.xml" value="0.183" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/drawable/profile_button.xml" value="0.1625" />
+        <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/drawable/rounded_bottompage.xml" value="0.183" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/drawable/rounded_btn.xml" value="0.1625" />
+        <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/drawable/textview_solid_rounded.xml" value="0.1835" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/bottomsheetlayout.xml" value="0.33" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/cpu_list_items.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/cpuset_list_items.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/display_list_items.xml" value="0.2" />
-        <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_about.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/display_list_items.xml" value="0.5391621129326047" />
+        <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_about.xml" value="0.29204069419509276" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_core_control.xml" value="0.33" />
-        <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_cpu.xml" value="0.18841698841698842" />
+        <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_cpu.xml" value="0.33" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_cpuset.xml" value="0.25" />
-        <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_display.xml" value="0.25" />
+        <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_display.xml" value="0.33" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_gpu.xml" value="0.3924050632911392" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_memory.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_misc.xml" value="0.25" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_network.xml" value="0.5" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_power.xml" value="0.33" />
-        <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_profile.xml" value="0.2" />
+        <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_power2.xml" value="0.33" />
+        <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_profile.xml" value="0.33" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_stune.xml" value="0.25" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_temp.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/fragment_tunable.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/info_popup_window.xml" value="0.25" />
+        <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/loading_spinner.xml" value="0.33" />
+        <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/profile_popup_menu.xml" value="0.33" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/stune_list.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/stune_list_items.xml" value="0.33" />
         <entry key="..\:/Users/Admin2/AndroidStudioProjects/Citrus Lab/app/src/main/res/layout/stune_sublist.xml" value="0.25416666666666665" />

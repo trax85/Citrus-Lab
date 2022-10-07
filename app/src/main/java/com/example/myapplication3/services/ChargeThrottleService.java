@@ -1,4 +1,4 @@
-package com.example.myapplication3.fragments.PowerFragment;
+package com.example.myapplication3.services;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -21,7 +21,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.example.myapplication3.MainActivity;
 import com.example.myapplication3.R;
-import com.example.myapplication3.FragmentDataModels.Power;
+import com.example.myapplication3.fragment_data_models.Power;
 import com.example.myapplication3.tools.Utils;
 
 import java.util.Objects;

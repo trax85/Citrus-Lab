@@ -1,4 +1,4 @@
-package com.example.myapplication3.FragmentDataModels;
+package com.example.myapplication3.fragment_data_models;
 
 import java.util.ArrayList;
 

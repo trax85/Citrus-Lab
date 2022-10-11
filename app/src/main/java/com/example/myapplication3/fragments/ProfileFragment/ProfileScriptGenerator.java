@@ -1,13 +1,12 @@
 package com.example.myapplication3.fragments.ProfileFragment;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.myapplication3.FragmentDataModels.FragmentParameter;
+import com.example.myapplication3.fragment_data_models.FragmentParameter;
 import com.example.myapplication3.R;
 import com.example.myapplication3.fragments.HomeFragment.FragmentPersistObject;
 import com.example.myapplication3.tools.UtilException;

@@ -4,8 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
-import android.widget.Toast;
+
+import com.example.myapplication3.services.SetOnBootService;
 
 public class SetOnBootBroadCastReceiver extends BroadcastReceiver {
     private final String TAG = "setOnBootBroadCast";

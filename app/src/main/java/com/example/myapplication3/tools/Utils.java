@@ -1,8 +1,6 @@
 package com.example.myapplication3.tools;
 
-import android.util.Log;
-
-import com.example.myapplication3.FragmentDataModels.FragmentParameter;
+import com.example.myapplication3.fragment_data_models.FragmentParameter;
 import com.topjohnwu.superuser.Shell;
 
 import java.util.List;

@@ -20,7 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.myapplication3.R;
-import com.example.myapplication3.FragmentDataModels.Cpu;
+import com.example.myapplication3.fragment_data_models.Cpu;
 import com.example.myapplication3.fragments.HomeFragment.FragmentPersistObject;
 import com.example.myapplication3.tools.UtilException;
 import com.example.myapplication3.tools.Utils;

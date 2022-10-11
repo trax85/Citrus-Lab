@@ -2,12 +2,12 @@ package com.example.myapplication3.fragments.HomeFragment;
 
 import androidx.lifecycle.ViewModel;
 
-import com.example.myapplication3.FragmentDataModels.Cpu;
-import com.example.myapplication3.FragmentDataModels.Display;
-import com.example.myapplication3.FragmentDataModels.Gpu;
-import com.example.myapplication3.FragmentDataModels.Memory;
-import com.example.myapplication3.FragmentDataModels.Misc;
-import com.example.myapplication3.FragmentDataModels.Power;
+import com.example.myapplication3.fragment_data_models.Cpu;
+import com.example.myapplication3.fragment_data_models.Display;
+import com.example.myapplication3.fragment_data_models.Gpu;
+import com.example.myapplication3.fragment_data_models.Memory;
+import com.example.myapplication3.fragment_data_models.Misc;
+import com.example.myapplication3.fragment_data_models.Power;
 
 public class FragmentPersistObject extends ViewModel {
     private Cpu.Params cpuParams;

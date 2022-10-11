@@ -14,7 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.myapplication3.R;
-import com.example.myapplication3.FragmentDataModels.Misc;
+import com.example.myapplication3.fragment_data_models.Misc;
 import com.example.myapplication3.fragments.HomeFragment.FragmentPersistObject;
 import com.example.myapplication3.tools.UtilException;
 import com.example.myapplication3.tools.Utils;

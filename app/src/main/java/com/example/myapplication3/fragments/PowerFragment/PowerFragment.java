@@ -5,12 +5,10 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -30,9 +28,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication3.R;
-import com.example.myapplication3.FragmentDataModels.Power;
+import com.example.myapplication3.fragment_data_models.Power;
 import com.example.myapplication3.fragments.HomeFragment.FragmentPersistObject;
 import com.example.myapplication3.fragments.InfoPopupWindow;
+import com.example.myapplication3.services.ChargeThrottleService;
 import com.example.myapplication3.tools.UtilException;
 import com.example.myapplication3.tools.Utils;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;

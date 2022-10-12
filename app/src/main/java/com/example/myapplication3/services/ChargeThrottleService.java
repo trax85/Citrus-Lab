@@ -136,7 +136,7 @@ public class ChargeThrottleService extends Service {
     }
 
     public class LocalBinder extends Binder {
-        ChargeThrottleService getService() {
+        public ChargeThrottleService getService() {
             //Log.d(TAG, "Return service");
             return ChargeThrottleService.this;
         }

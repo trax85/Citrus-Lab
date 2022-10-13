@@ -63,13 +63,16 @@ public class CustomProfile {
     }
 
     public void setOnClickListeners(int idx){
-        fragment.editTextViews[idx].setOnClickListener(v -> fragment.showPopUpWindow(idx));
-        fragment.custProfArr[idx].setOnClickListener(v -> {
-            Utils.execCmdString(profArr[idx]);
-            Toast.makeText(fragment.getContext(), "Applying profile " + (1 + idx),
-                    Toast.LENGTH_LONG).show();
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(() -> {
+            fragment.editTextViews[idx].setOnClickListener(v -> fragment.showPopUpWindow(idx));
+            fragment.custProfArr[idx].setOnClickListener(v -> {
+                Utils.execCmdString(profArr[idx]);
+                Toast.makeText(fragment.getContext(), "Applying profile " + (1 + idx),
+                        Toast.LENGTH_LONG).show();
+            });
+            fragment.editNameArr[idx].setOnClickListener(v -> renameOperation(idx));
         });
-        fragment.editNameArr[idx].setOnClickListener(v -> renameOperation(idx));
     }
 
     public void renameOperation(int idx){

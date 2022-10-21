@@ -29,7 +29,7 @@ import android.widget.Toast;
 
 import com.example.myapplication3.R;
 import com.example.myapplication3.fragment_data_models.Power;
-import com.example.myapplication3.fragments.HomeFragment.FragmentPersistObject;
+import com.example.myapplication3.FragmentPersistObject;
 import com.example.myapplication3.fragments.InfoPopupWindow;
 import com.example.myapplication3.services.ChargeThrottleService;
 import com.example.myapplication3.tools.UtilException;

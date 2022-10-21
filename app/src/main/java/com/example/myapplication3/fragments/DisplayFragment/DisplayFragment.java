@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 import com.example.myapplication3.R;
 import com.example.myapplication3.fragment_data_models.Display;
-import com.example.myapplication3.fragments.HomeFragment.FragmentPersistObject;
+import com.example.myapplication3.FragmentPersistObject;
 import com.example.myapplication3.tools.UtilException;
 import com.example.myapplication3.tools.Utils;
 

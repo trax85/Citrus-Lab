@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.example.myapplication3.FragmentPersistObject;
 import com.example.myapplication3.fragment_data_models.Cpu;
 import com.example.myapplication3.tools.UtilException;
 import com.example.myapplication3.tools.Utils;

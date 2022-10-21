@@ -26,7 +26,7 @@ import com.example.myapplication3.fragments.CpuFragment.CoreControl.CoreControlF
 import com.example.myapplication3.fragments.CpuFragment.CpuSets.CpuSetFragment;
 import com.example.myapplication3.fragments.CpuFragment.Stune.StuneFragment;
 import com.example.myapplication3.fragment_data_models.Cpu;
-import com.example.myapplication3.fragments.HomeFragment.FragmentPersistObject;
+import com.example.myapplication3.FragmentPersistObject;
 import com.example.myapplication3.tools.UtilException;
 import com.example.myapplication3.tools.Utils;
 
